@@ -1,0 +1,353 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[style=authoryear,backend=biber,maxcitenames=2,maxbibnames=10,sorting=nyt]{biblatex}
+\addbibresource{references.bib}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!50!black,citecolor=blue!50!black}
+
+% --- Editorial note command: highlights TODOs / decisions for the senior researcher ---
+\newcommand{\note}[1]{\textcolor{red}{\textbf{[NOTE: #1]}}}
+\newcommand{\todo}[1]{\textcolor{blue!60!black}{\textbf{[TODO: #1]}}}
+
+% --- Per-paper notes block -----------------------------------------------
+% Usage: \begin{paper}{bibkey}{literature/bibkey.pdf}
+%          \item ...free-form notes...
+%        \end{paper}
+\newenvironment{paper}[2]{%
+  \subsection{\citetitle{#1}}%
+  \label{paper:#1}%
+  \noindent\textbf{\citeauthor{#1} (\citeyear{#1})} --- \citefield{#1}{journaltitle} \parencite{#1}\\
+  \noindent\small\texttt{\detokenize{#2}}\normalsize
+  \begin{itemize}[leftmargin=1.4em]
+}{%
+  \end{itemize}
+  \paragraph{Notes}\todo{add notes}
+  \medskip
+}
+
+% --- Citable fact / statement ----------------------------------------------
+% Usage: \fact{bibkey}{Statement written as a manuscript-ready sentence.}
+% Renders the sentence with an author-year citation, and prints the raw
+% \parencite{bibkey} snippet so the line can be copy-pasted into a manuscript.
+\newcommand{\fact}[2]{%
+  \item #2~\parencite{#1}
+    \\[-2pt]{\footnotesize\color{gray}\texttt{\textbackslash parencite\{#1\}}}%
+}
+
+\title{\textbf{Effect of Auditory Environment on Mental Workload \& Task Performance: 
+    non-insvie mobile neuroimaging enables this study in naturalistic environments}\\[4pt]
+\large Functional Hemispheric Asymmetry and Multisensory
+Neurofeedback Training to Improve Brain Health\\[6pt]
+\normalsize \emph{A Scoping Review Protocol and Research Framework}}
+
+\author{[Senior Researcher Name]\\ \small [Affiliation]}
+\date{Draft --- \today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent \todo{Write structured abstract last (Background / Objective / Methods /
+Anticipated results). Keep to $\sim$250 words; follow the PRISMA-ScR abstract checklist.}
+\smallskip
+
+\noindent
+\end{abstract}
+
+\tableofcontents
+\bigskip \hrule
+\bigskip
+
+% ============================================================
+\section{Introduction and Rationale}
+\label{sec:intro}
+
+\subsection{Problem statement}
+\begin{itemize}[leftmargin=1.4em]
+    \item The brian is constantly processing the entire auditory environement, yet 
+        attention and task performance is still achieved.
+    \item We know that noisy enviroments are discrtacting and reduces perforamnce,
+        but how and why?
+    \item Gold-standard fMRI is itself a noisy machine requiring supnne
+        subjects, thus mobile neurooimaging enables more naturalist study of
+        these effects.
+    \item EEG-fNIRS can enable this study. 
+\end{itemize}
+
+
+\section{Literature notes}
+\label{sec:litnotes}
+\todo{One block per PDF in \texttt{literature/}. Fill in the \emph{Notes} paragraph as you read; add \texttt{\textbackslash item}s for key findings, methods, sample, relevance.}
+
+\begin{paper}{moore2017fatigue}{literature/moore2017fatigue.pdf}
+  \item EEG/ERP (ERN, N1) + self-report + RT during 50-min auditory choice task; fatigue $\to$ reduced N1 (arousal) and decreased activation in dorsal attention network. Normal-hearing adults (n=19).
+\end{paper}
+
+\begin{paper}{alho2014auditorycortex}{literature/alho2014auditorycortex.pdf}
+  \item Meta-analysis of fMRI studies: stimulus-dependent vs.\ attention-related modulation of auditory cortex. Useful background on where/how attention shapes auditory processing.
+\end{paper}
+
+\begin{paper}{yun2025anc}{literature/yun2025anc.pdf}
+  \item fNIRS; active noise cancellation vs.\ noise during concentration tasks; neurophysiological effect of ANC in noisy environments. Very close to the target question.
+    \item Auditory noisy environments is clearly linked to decreased task
+        performance in humans, likely a consequence of increased stress and fatigue, yet neurophysiological evidence for the mechanics
+        are not yet unassaiable. 
+    \item Under noisy condictions the PFC has been shown to increase activity,
+        potentially leading to ecxessive and unproductive mental workload.
+    \item Inclusion criteria: pure-tone average (PTA) of less than 25 dB at 500,
+        100, 2000 and 4000 Hz.
+    \item Objective task perofmance + subjective questioneere
+    \item HRFs via block-averaged fNIRS data -3 to +55 secnonds to task onset
+    \item Brain activation quantified by $\beta$ via GLM with a modeled double gamma HRF and
+    \item ANC ON vs ANC OFF in a two sample t-test. (+ point biserial
+        correlation coefficent to gauge the time axis).
+    \item channel signficance a Wilcoxon signed-rank test. Benjamin-Hochberg FDR
+        correction, $\alpha = 0.05$
+    \item ANC ON produced signficantly higher task performance than ANC OFF, but
+        not signifiacnt differences in behvoural peforamnce such as reaction
+        time. Indicating the congitivie load. 
+    \item 3 of 4 channels with statistcally signficant difference between the
+        two conditions were located in the right hemispehre (which corresponds
+        to the literature about the right DLPFC in cogntive task and senstivity
+        to cogntive load (MW)).
+    \item Specifically, this study observed strong deactivation of HbO during
+        the task, I beielive this should nuance a little. If the ANC ON had
+        LOWER HBO than ANC OFF, what does that mean? 
+    \item Subjective effort was signfivantly lower for ANC ON. 
+    \item They conclude ANC OFF lead to unnescary consumption of neural
+        resources, in light of the reduced task performance, this indicates ANC
+        as effective to alleviate exxesvive cognitive load during audtiory noise. 
+    \item However, this was a relativily simple task wihtout complexity, we know
+        from the literature that neural effiancy and MW is senstivity to task difficulty. 
+    \item THeir intepretation, that the stronger PFC deactvation during ANC OFF
+        means that more of the brainresources was dedicated to the acutal task,
+        rather than seperating speech from noise, thus refelcting the resuts.
+        This opens a very intersting addition, temporal and pariental channels. 
+    \item Further indicates right PFC as a senstivie area to cogntivie loads and
+        MW. 
+    \item Reccomends physiological measurements to avoid the variablity in
+        subjective VAS listening effort measures. 
+    \end{paper}
+
+\begin{paper}{han2023entrainment}{literature/han2023entrainment.pdf}
+  \item Combined acoustic + visual (acousto-optic) 40-Hz stimulation to drive coherent gamma entrainment. Relevant to the neurofeedback / multisensory-stimulation arm.
+\end{paper}
+
+\begin{paper}{hiwa2018fnirs}{literature/hiwa2018fnirs.pdf}
+  \item fNIRS; auditory environments (e.g.\ silence/noise/music) vs.\ intellectual work performance; neural correlates in PFC.
+  \item How music affects performance varies according to both the music and indiviudal.
+    \item The efficancy of intellectual work is closely related to brain activation.
+    \item Musical effect on intellectual work has been reported, but
+        natrualistic noise environments are yet underreported. 
+    \item Time of day + room humiditity and temprature reported, good. 
+    \item 
+  \end{paper}
+
+\begin{paper}{gabbard2017fnirs}{literature/gabbard2017fnirs.pdf}
+  \item fNIRS (PFC HbO) + eye tracking + RT/accuracy in simulated noisy ISR work; short-intermittent noise $\to$ larger PFC activation than long-intermittent noise.
+  \item Audtiory noise increases cognitive load,, potentially reducing work
+      performance by affecting attention, working memory, etc. 
+    \item Again highlights that this doesnt not nessaercly hold for very simple
+        tasks, touching neural effiancy theory. 
+    \item MW can be asssed by PFC-based fNIRS. Stress can reduce PFC activation.
+    \item Again $\alpha = 0.05$ 
+    \item Their findings are not clear reagiding the "Noise leads to increased PFC
+        activity" which I questioned immediatly and noted a questionmark in my notes. 
+    \item Again task complecity is nuianced. It seems intermittent noise or
+        bursts are more determimental than sustained noise.
+    \item fNIRS is deemed a major canddicate for military applications to asses
+        MW. 
+    \item Specifcically this study found different types of noise affect the
+        brain activation, supported by the Fan et al? 
+    \item Rest-Memorize-Rest/Retain-Answer-Rest design, 8 digit short-term
+        memory recall task. Again uses subjective VAS for pleasentneess,
+        objective physiology would be benefincal here. 
+    \item Used hitachy fnirs + POTATO for tomography analysis. Brain activation
+        quantized via z-score. Functional connectivity by Pearsons into Fishers
+        Z trasnform. 
+    \item Again alpha 0.05. 
+    \item Subjective pleasenett was signficantly higher in silence vs white
+        noise. 
+    \item Motor and visual cortiacal areas showed signficnalty stronger
+        connecitvity in silence vs noise. 
+    \item Strong indivudal differences led the analysis to consider 3 case:
+        positive responsders, neutral and negative responders to the noise.
+    \item For the positvie responsders (White group) no signficant brain
+        activation difference between noise and silence was found. For the
+        average and silence groups the brian activation differed signficantly
+        between noise and silence in the right superior temporal gyrus,
+        subcentral area, frontal pole, dorsolateral prefrontal cortex, and
+        inferair frontal gyros. Again DLPFC seems to be a sensitive area to MW. 
+    \item The silence group showed a signficnane difference in both
+        temporal lobe with increased activation in silence. 
+    \item The average group showed small difference in the pre-motor, sma areas
+        between noise and silence
+    \item The white group showed signcanfly increasd connectivity in the
+        temporal areas during noise. The white group showed high
+        interhemispheric connectivity during noise vs silence. 
+    \item Average and Silence group showed signfiantly stronger PMA-SMA
+        connectivity in silence versus noise (IMPORTANT), indicating motoric
+        areas are downleguted during noise. 
+    \item The silence group PMA-SMA autoconnetivity icnreased in noise, and
+    \item Silece group showed higher DLPFC and pfc connectivity during silence vs
+        noise (BIG)
+    \item The White group shows complex habitation and compesation strategies
+        enabling higher performance. 
+    \item The brain activation between environments differed signficalty of rthe
+        Silence group, not for the white group. 
+    \item The average and silence groups showed decreased PFC-PMA-SMA connectivity
+        during white noise versus silence (BIG). Here we see indicudal
+        differences in neural effieancy or compesnatory behaviour, the average
+        group's performance did not suffer from noise where the silence group
+        did perform poorer during noise. Overall, the effect of noise can be
+        individual and fNIRS may be an approriate tool to gauge how an
+        individual responds to noise.m
+    \end{paper}
+
+\begin{paper}{ravi2021fnirs}{literature/ravi2021fnirs.pdf}
+  \item Review-style paper on using fNIRS for cognitive workload assessment; surveys subjective vs.\ neuroimaging workload measures.
+\end{paper}
+
+\begin{paper}{pieper2021noise}{literature/pieper2021noise.pdf}
+  \item EEG + subjective workload under environmental noise vs.\ noise-cancellation while working; EEG-based workload assessment.
+\end{paper}
+
+\begin{paper}{fan2022noise}{literature/fan2022noise.pdf}
+  \item Noise exposure $\times$ mental workload; multiple physiological responses during task execution (check which modalities---EEG/ECG/EDA?).
+\item Acuoustic noise defined is distrbuging, unpleasent or unwatned sound.
+\item Acoustic noise exporuse is associated with negative health effects 
+\item Physiology reacts signficantly to noise above 70 db. 
+\item 35 to 65 db induces annoyces and subsequently can alter sleep patters. 
+\item 66 to 85 db can cause signficant impairment including pshycological,
+    neurological and hearing damage.
+\item 85 to 115 db can cause signficant hearing damage and pshycological
+    disturbance.
+\item Mental workload (MW) in an optimal range improves human performance, where
+    auditory noise is a signficnant factor in MW. THe mind wants an optimal
+    range of MW, not under or overloaded. Flow state means an optimal amount of
+    challenge to promote fun, learning and performance. 
+\item MW can be measured in many objective and subjective methods, the article points to ECG (HRV), EEG and
+    eyemovements.
+\item Many have focused on dB meters and their effects, but rather we are
+    interested in the characterizstics of the acoustic noise and what components
+    consitutes the damaging or promotion of MW. 
+\item A cogntiive task experiment was conducted with 3 noise levels N85-S1,
+    N80-S1, and N75-S2, where N indictes decibel and S represents sharpness level. 
+\item A NASA-authored cognitive task at different difficutlties were given.
+\item ECG, EEG and eye tracking was monitored. I will only confeer ECG and EEG results.
+\item Overall, the subjects used additional effort to complete the tasks under
+    the noisy condictions and noise level contributes to MW. 
+\item Noise intensity signficantly increased HRV.
+\item Increased MW level decreased alpha power and increased theta power. 
+\item Increased stress signfincaltly increased HRV and theta bandpower. -
+\item Sharper noise decreased alpha power, i.e increase stress.
+\item As MW incrases the body compoesnts by incrasing effort and stress, upto a
+    given point where stress eentually impairs performance. 
+
+\item Takeaway: Use ECG, EEG, fNIRS. Prioretize HRV, alpha \& theta band power,
+    and PFC.
+\end{paper}
+
+\begin{paper}{causse2017workload}{literature/causse2017workload.pdf}
+  \item fNIRS in PFC; mental workload and neural efficiency (piloting-type tasks); good methodological reference for fNIRS workload quantification.
+  \item fNIRS is suitbale to measure MW and neural efficeancy in both labratroy
+      and ecological settings.
+    \item As the fNIRS signal did correlate strongly with percieved MW, but not
+        actual task-perforamcen, indicates the already established existance of
+        neural effieancy. 
+    \item The neural efficancy index may be valid across indivudulas engaging in
+        the same cognitive task, but breaks down when different cognitive domains 
+        are at play.
+    \item Increased task difficulity correletes to increased HbO and decreased
+        HbR, indicating fNIRS are relevant for mental effort measurement. 
+    \item However, predicting task performance from fNIRS alone is not feasable
+        due to varaiblity in neural efficancy.
+    \item See also \parencite{neubauer2009neuralefficiency} (neural efficiency review) and \S\ref{sec:facts}.
+\end{paper}
+
+
+
+\begin{paper}{rosenkranz2024eeg}{literature/rosenkranz2024eeg.pdf}
+  \item Mobile EEG (ERPs, TRFs) during simulated laparoscopic surgery with OR soundscape; auditory work strain under low/high cognitive demand (n=22). Strong naturalistic-mobile-neuroimaging exemplar.
+\end{paper}
+
+\begin{paper}{noboa2025entrainment}{literature/noboa2025entrainment.pdf}
+  \item Neural entrainment to beat + working memory predict sensorimotor synchronisation; relevant to auditory entrainment mechanisms.
+\end{paper}
+
+% NEW PAPER HERE TO ADD
+% Cannon P, Ferrari E, Robie B, Michielli A, Minogue T, O'connor D. Quantification of cognitive load and usability in 3 percutaneous posterior spine surgical workflows using functional Near-Infrared Spectroscopy (fNIRS), Surgical Task Load Index (Surg-TLX) and modified System Usability Survey. Med Eng Phys. 2026 Aug 24. doi: 10.1088/1873-4030/ae9d83. Epub ahead of print. PMID: 42636870.
+\item excessive cognitive load may negativly affect surgical performance
+\item Subjective cogntivie load assment are valuable, but are retrospective and
+    prone to influence by other factors. 
+\item Thus, a multimodal approach may be beneficial to achieve relatime
+    cognitive load assement. 
+\item THe most common method is HRV objective measure, but fNIRS is proving itself 
+\item This study aims not only to quantify and reduce mental fatigue and stress,
+    but also guide the development and integration of technology into the
+    surgical room where coupling task perforamnce, objective and subjective
+    measures can guide proper implemetanions. 
+\item They measure cogntivie load during robot-assisted (ARA), freehand (FHN) and
+    floursopic-guide (FG) surgical proceedurs while measuring fNIRS. 
+\item 6 surgeons, 
+\item Assumes great PFC oxygenation means greater cogntive load, however we do
+    know that there are some nuance here depending on task complexity and the
+    indivudal 
+\item fnirs metrics: Total peak oxygenation, duration-dependnt oxygenation,
+    acerage oxygenation per second (FG vs ARA) and total peak haemoglobin
+\item null-hypothesis is that the nmean of FHN eqauls ARA.
+\item Result: the fNIRS metrics are signficant predictors of the srugical
+    workflow and the null hypothesis is rejected. ARA signficanlty reduced
+    cognitive load. 
+
+% Fehring, D., Gaillard, A., Mazzoli, E. et al. Changes in prefrontal hemodynamics and mood states during screen use: a functional near-infrared spectroscopy study. Sci Rep 15, 28181 (2025). https://doi.org/10.1038/s41598-025-09360-w
+
+% Dryden A, Allen HA, Henshaw H, Heinrich A. The Association Between Cognitive Performance and Speech-in-Noise Perception for Adult Listeners: A Systematic Literature Review and Meta-Analysis. Trends in Hearing. 2017;21. doi:10.1177/2331216517744675
+  
+% ============================================================
+\section{Facts and statements}
+\label{sec:facts}
+\todo{Bank of citable, manuscript-ready sentences. One \texttt{\textbackslash fact\{bibkey\}\{sentence\}} per line; group by theme. Copy the sentence + the grey \texttt{\textbackslash parencite} snippet straight into the manuscript.}
+
+\subsection{Rationale for mobile neuroimaging (vs.\ fMRI)}
+\begin{itemize}[leftmargin=1.4em]
+  \fact{tomasi2005fmrinoise}{The acoustic noise generated by the MRI scanner itself alters brain activation during working-memory tasks, confounding fMRI studies of auditory environment and cognition.}
+\end{itemize}
+
+\subsection{Noise, physiology and mental workload}
+\begin{itemize}[leftmargin=1.4em]
+  \fact{fan2022noise}{Acoustic noise is defined as disturbing, unpleasant or unwanted sound, and chronic noise exposure is associated with negative health effects.}
+  \fact{fan2022noise}{Physiological responses to noise become significant above roughly 70~dB; 35--65~dB induces annoyance and can disrupt sleep, 66--85~dB can cause psychological, neurological and auditory impairment, and 85--115~dB can cause significant hearing damage.}
+  \fact{fan2022noise}{Under noisy conditions participants exert additional effort to maintain task performance; noise intensity increases heart-rate-variability-based stress indices, and higher mental workload decreases EEG alpha power while increasing theta power.}
+\end{itemize}
+
+\subsection{Auditory environment and task performance}
+\begin{itemize}[leftmargin=1.4em]
+  \item \todo{add facts from \parencite{hiwa2018fnirs,gabbard2017fnirs,yun2025anc,pieper2021noise} as you read them.}
+\end{itemize}
+
+\subsection{Neural efficiency}
+\begin{itemize}[leftmargin=1.4em]
+  \fact{neubauer2009neuralefficiency}{The neural efficiency hypothesis that more able individuals show lower task-related brain activation holds primarily for tasks of low to moderate difficulty; in highly complex tasks, or in well-trained individuals, the relationship can invert such that increased activation accompanies better performance.}
+  \fact{causse2017workload}{Prefrontal fNIRS signals correlate strongly with perceived mental workload but not with actual task performance, consistent with neural efficiency: individuals differ in how much activation they need to achieve the same outcome.}
+  \fact{causse2017workload}{A neural efficiency index may be comparable across individuals performing the same cognitive task, but it does not transfer across different cognitive domains.}
+  \fact{causse2017workload}{Increasing task difficulty produces increased prefrontal HbO and decreased HbR, supporting fNIRS as a measure of mental effort in both laboratory and ecological settings; however, predicting task performance from fNIRS alone is not feasible because of inter-individual variability in neural efficiency.}
+\end{itemize}
+
+
+% ============================================================
+
+\nocite{arksey2005scoping,levac2010scoping,tricco2018prismascr}
+\printbibliography[heading=bibintoc,title={References}]
+\note{Scoping-review methodology refs (Arksey \& O'Malley 2005; Levac et al.\ 2010; Tricco et al.\ 2018) are in \texttt{references.bib} and forced into the list via \texttt{\textbackslash nocite}. Still to add: fNIRS-BCI review; neurofeedback review; sonification of neural signals; HAROLD / ageing lateralization; MCI \& neurodegeneration monitoring.}
+
+\end{document}
