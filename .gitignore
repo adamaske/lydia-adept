@@ -25,3 +25,6 @@ piano-noise/stimuli/*.wav
 piano-noise/data/raw/
 __pycache__/
 !piano-noise/montage/out/**/*.aux
+
+# Paper PDFs stay local (copyright); the repo is public
+literature/*.pdf
