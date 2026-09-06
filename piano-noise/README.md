@@ -114,4 +114,10 @@ Marker codes (`python scripts/triggers.py`):
 99 ABORT
 ```
 
+MIDI logging is optional. Without `--midi` nothing MIDI-related is imported;
+with `--midi` any failure (no mido, no such port, driver error) prints a warning
+and the session runs on without it. Every marker in the session JSON carries
+both the LSL time and the wall-clock time (`t_wall`), so a MIDI recording made
+on the keyboard or another computer can be aligned afterwards.
+
 After the session commit `logs/` and `data/` and push.

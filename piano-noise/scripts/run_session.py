@@ -258,18 +258,28 @@ def main():
 
     outlet = MarkerOutlet(not args.no_lsl, args.stream_name, args.stream_type, args.source_id)
     noise = NoisePlayer(args.noise)
+    # MIDI logging is optional and must never break a session: any failure here
+    # (library missing, no such port, driver error) is logged and the session
+    # continues without MIDI. The keyboard's own recording can be aligned later
+    # via the wall-clock times (t_wall) stored with every marker.
     midi = None
     if args.midi:
-        import midi_log
-        ports = [n for n in midi_log.list_ports() if args.midi.lower() in n.lower()]
-        if not ports:
-            sys.exit(f"no MIDI input port matching {args.midi!r}; available: {midi_log.list_ports()}")
-        os.makedirs(MIDI_DIR, exist_ok=True)
-        midi_csv = os.path.join(MIDI_DIR, base + "_midi.csv")
-        midi = midi_log.MidiLogger(ports[0], midi_csv, lsl_clock=outlet.clock, lsl_outlet=args.midi_lsl and not args.no_lsl,
-                                   source_id=args.source_id + "-midi")
-        session["midi"] = {"port": ports[0], "csv": os.path.relpath(midi_csv, ROOT)}
-        print(f"MIDI logging from '{ports[0]}' -> {session['midi']['csv']}")
+        try:
+            import midi_log
+            ports = [n for n in midi_log.list_ports() if args.midi.lower() in n.lower()]
+            if not ports:
+                raise RuntimeError(f"no MIDI input port matching {args.midi!r}; available: {midi_log.list_ports()}")
+            os.makedirs(MIDI_DIR, exist_ok=True)
+            midi_csv = os.path.join(MIDI_DIR, base + "_midi.csv")
+            midi = midi_log.MidiLogger(ports[0], midi_csv, lsl_clock=outlet.clock, lsl_outlet=args.midi_lsl and not args.no_lsl,
+                                       source_id=args.source_id + "-midi")
+            session["midi"] = {"port": ports[0], "csv": os.path.relpath(midi_csv, ROOT)}
+            print(f"MIDI logging from '{ports[0]}' -> {session['midi']['csv']}")
+        except Exception as e:
+            logging.warning(f"MIDI logging disabled: {e}")
+            print(f"  (MIDI logging disabled: {e})\n  Continuing without MIDI.")
+            session["midi"] = {"error": str(e)}
+            midi = None
 
     def cue(times=1):
         if not args.no_beep:
@@ -353,15 +363,18 @@ def main():
     finally:
         noise.stop()
         if midi is not None:
-            midi.close()
-            session["midi"]["events"] = midi.n
+            try:
+                midi.close()
+                session["midi"]["events"] = midi.n
+            except Exception as e:
+                logging.warning(f"MIDI close failed: {e}")
         session["ended"] = dt.datetime.now().isoformat()
         save()
         append_csv(SESSIONS_CSV, {
             "subject": args.subject, "session": args.session, "room": args.room, "date": started.strftime("%Y-%m-%d %H:%M"),
             "blocks_completed": completed_blocks, "blocks_planned": args.runs * args.blocks, "seed": seed,
             "noise_file": os.path.basename(args.noise) if args.noise else "manual",
-            "midi_events": midi.n if midi else "", "completed": int(session["completed"]), "log": base, "comment": args.comment,
+            "midi_events": midi.n if midi is not None else "", "completed": int(session["completed"]), "log": base, "comment": args.comment,
         })
         print(f"Log written: logs/{base}.json")
 
