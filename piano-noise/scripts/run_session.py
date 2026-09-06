@@ -14,10 +14,12 @@ Durations are jittered uniformly; the schedule is derived from --seed (logged),
 so a session can be reproduced.
 
 Cues: a 1 kHz beep at every play onset (1 beep) and rest onset (2 beeps).
-Noise (--condition noise): --noise babble.wav is looped either during the play
-blocks only (--noise-mode blocks, default: starts with the play marker, stops at
-the rest marker) or for the whole session (--noise-mode continuous). Without
---noise the console tells the experimenter to switch the noise on/off by hand.
+Noise (--condition noise), --noise-mode:
+    ambient     the noise is in the room already; the script only marks (default without --noise)
+    blocks      --noise babble.wav looped during play blocks only (default with --noise):
+                starts with the play marker, stops at the rest marker
+    continuous  --noise babble.wav looped from SESSION_START to SESSION_END
+    manual      the console tells the experimenter to switch an external source on/off per block
 
 Markers are int32 samples on an LSL stream (name "Trigger", type "Markers"),
 selected in Aurora as the trigger source.  Codes: triggers.py.
@@ -170,8 +172,10 @@ def main():
     p.add_argument("--run-rest", type=float, default=120.0, help="rest between runs, s")
     p.add_argument("--seed", type=int, default=None, help="RNG seed for the schedule (default: from timestamp)")
     p.add_argument("--noise", default=None, help="PCM WAV with multi-talker babble, looped in noise sessions")
-    p.add_argument("--noise-mode", choices=["blocks", "continuous"], default="blocks",
-                   help="blocks: babble only during play blocks; continuous: from session start to end")
+    p.add_argument("--noise-mode", choices=["ambient", "blocks", "continuous", "manual"], default=None,
+                   help="ambient: noise comes from the room (default without --noise); blocks: play --noise during play "
+                        "blocks only (default with --noise); continuous: --noise from session start to end; "
+                        "manual: prompt the experimenter to switch an external source per block")
     p.add_argument("--noise-test", type=float, default=None, metavar="SECONDS", help="play --noise for SECONDS (SPL calibration) and exit")
     p.add_argument("--midi", default=None, metavar="PORT", help="log a MIDI input port (substring of its name) to data/midi/")
     p.add_argument("--midi-lsl", action="store_true", help="also push MIDI note events on an LSL stream 'PianoMIDI'")
@@ -205,6 +209,12 @@ def main():
     if args.condition == "quiet" and args.noise:
         sys.exit("--noise given for a quiet session; drop one of them")
     cond = "Q" if args.condition == "quiet" else "N"
+    if args.noise_mode is None:
+        args.noise_mode = "blocks" if args.noise else "ambient"
+    if args.noise_mode in ("blocks", "continuous") and not args.noise:
+        sys.exit(f"--noise-mode {args.noise_mode} needs --noise FILE")
+    if args.noise_mode in ("ambient", "manual") and args.noise:
+        sys.exit(f"--noise-mode {args.noise_mode} does not play a file; drop --noise")
 
     os.makedirs(LOG_DIR, exist_ok=True)
     os.makedirs(DATA_DIR, exist_ok=True)
@@ -249,7 +259,9 @@ def main():
     print(f" planned duration {total / 60:.1f} min | seed {seed}")
     print(f" LSL stream: {args.stream_name} ({args.stream_type})" + ("  [DISABLED]" if args.no_lsl else ""))
     if cond == "N":
-        print(f" noise: {args.noise or 'MANUAL (experimenter switches babble on/off)'} ({args.noise_mode})")
+        desc = {"ambient": "from the room (script only marks)", "manual": "external source, switched by hand per block",
+                "blocks": f"{args.noise} during play blocks", "continuous": f"{args.noise} for the whole session"}[args.noise_mode]
+        print(f" noise: {desc}")
     if args.speed != 1.0:
         print(f" SPEED x{args.speed:g} (dry run)")
     print("=" * 78)
@@ -302,10 +314,11 @@ def main():
             print(f"  ***** NOISE {'ON' if on else 'OFF'} (manual) *****")
 
     continuous = cond == "N" and args.noise_mode == "continuous"
-    per_block = cond == "N" and not continuous
+    per_block = cond == "N" and args.noise_mode in ("blocks", "manual")
 
     print("Checklist: Aurora recording with 'Trigger' selected as LSL trigger; subject seated, hands on keys, eyes on the cross;"
-          + ("" if cond == "Q" else (" babble level calibrated." if args.noise else " babble source ready (manual).")))
+          + {"Q": "", "N": {"ambient": " room noise running.", "manual": " external noise source ready.",
+                             "blocks": " babble level calibrated.", "continuous": " babble level calibrated."}[args.noise_mode]}[cond])
     input("Press ENTER to start the session...")
 
     completed_blocks = 0

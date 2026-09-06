@@ -96,7 +96,8 @@ python scripts\run_session.py --noise stimuli\babble.wav --noise-test 30
 ```
 python scripts\run_session.py --list-midi
 python scripts\run_session.py --subject 1 --condition quiet                                   # quiet room
-python scripts\run_session.py --subject 1 --condition noise --noise stimuli\babble.wav        # noisy room
+python scripts\run_session.py --subject 1 --condition noise                                   # noisy room (ambient noise)
+python scripts\run_session.py --subject 1 --condition noise --noise stimuli\babble.wav        # synthetic babble per block
 python scripts\run_session.py --subject 1 --condition noise --noise stimuli\babble.wav --noise-mode continuous --midi "Keystation"
 python scripts\run_session.py --no-lsl --speed 20                 # 1-minute dry run, no LSL
 python scripts\run_session.py --help
@@ -116,19 +117,17 @@ SESSION_END                                          (~26 min)
 
 Block lengths are jittered from `--seed` (printed and logged). The 1 kHz beep
 marks every play onset (1 beep) and rest onset (2 beeps). In a noise session
-the babble is looped during the play blocks (`--noise-mode blocks`, default:
-starts with the play marker, stops at the rest marker) or from SESSION_START to
-SESSION_END (`--noise-mode continuous`); without `--noise` the console tells you
-to switch it by hand.
+`--noise-mode` says where the noise comes from:
 
-Marker codes (`python scripts/triggers.py`):
+| mode | what the script does | default |
+|---|---|---|
+| `ambient` | nothing but marking: the noise is already in the room | yes, without `--noise` |
+| `blocks` | loops `--noise babble.wav` during play blocks (play marker to rest marker) | yes, with `--noise` |
+| `continuous` | loops `--noise babble.wav` from SESSION_START to SESSION_END | |
+| `manual` | prints NOISE ON / OFF at each block for an external source you switch by hand | |
 
-```
- 1 SESSION_START   2 SESSION_END   3 ROOM_NATURAL   4 ROOM_ADJUSTED
-10 BASELINE       11 RUN_START
-20 PLAY_QUIET     21 PLAY_NOISE   30 REST          40 RUN_REST
-99 ABORT
-```
+So a real noisy-room session is simply `--condition noise`; the synthetic babble
+stays available for a lab session with `--noise stimuli\babble.wav`.
 
 MIDI logging is optional. Without `--midi` nothing MIDI-related is imported;
 with `--midi` any failure (no mido, no such port, driver error) prints a warning
