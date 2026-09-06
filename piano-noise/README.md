@@ -23,14 +23,19 @@ data/blocks.csv              one row per block; data/sessions.csv one row per se
 data/midi/                   MIDI event CSVs
 ```
 
-## Montage (`PianoNoise`, 16 sources x 16 detectors, 49 channels, 30-42 mm)
+## Montage (`PianoNoise`, 16 sources x 16 detectors, 47 channels, 30-42 mm)
 
 | region | optodes | channels |
 |---|---|---|
-| prefrontal (DLPFC / VLPFC-IFG) | S: F7 AF3 AF4 F8 Fz F3 F4; D: F5 F1 AFz F2 F6 | F7-F5, AF3-F5, AF3-AFz, Fz-F1/F2/AFz, F3-F5/F1, mirrored right |
-| premotor / SMA | S: FC5 FC1 FC2 FC6 Cz; D: FC3 FCz FC4 | FC-row pairs, Fz-FCz, FC1/FC2-FCz, Cz-FCz |
-| sensorimotor (C3/C4) | S: C3 C4; D: C5 C1 C2 C6 | C3-C5, C3-C1, C3-FC3, FC1-C1, Cz-C1, mirrored right |
-| temporal (auditory) | S: T7 T8; D: FT7 TP7 FT8 TP8 | T7-FT7, T7-TP7, T7-C5, F7-FT7, FC5-FT7, mirrored right |
+| frontal pole / VLPFC | S: Fpz AF7 AF8; D: Fp1 Fp2 AFz | Fpz-Fp1/Fp2/AFz, AF7-Fp1, AF7-F5, mirrored right |
+| DLPFC | S: AF3 AF4 Fz F3 F4; D: F5 F1 F2 F6 | AF3-Fp1/AFz/F5, Fz-F1/F2/AFz, F3-F5/F1/FC3, mirrored right |
+| premotor / SMA | S: FC5 FC1 FC2 FC6; D: FC3 FCz FC4 | FC5-F5/FC3/C5/FT7, FC1-F1/FC3/FCz, Fz-FCz, mirrored right |
+| sensorimotor (C3/C4) | S: C3 C4; D: C5 C6 | C3-C5, C3-FC3, C4-C6, C4-FC4 |
+| temporal (auditory) | S: T7 T8; D: FT7 TP7 FT8 TP8 | T7-FT7, T7-TP7, T7-C5, mirrored right |
+
+The hemispheres are joined only across the prefrontal midline (AFz, Fz, FCz);
+motor and temporal coverage is two separate left/right strips (no Cz/C1/C2),
+which paid for the frontal-pole row.
 
 ![montage](montage/out/PianoNoise/montage.png)
 
@@ -41,14 +46,20 @@ Notes for the protocol questions:
 - No short-separation channels (as the protocol says). The `.ncfg` has the
   accelerometer enabled. Rebuild with `--biosignals` if WINGS2 is used through Aurora.
 
-### Rebuilding or changing the montage
+### Rebuilding, changing or viewing a montage
 
 ```sh
-pip install numpy scipy matplotlib
 python montage/make_montage.py                  # default PianoNoise montage
 python montage/make_montage.py --list-labels    # which 10-10 labels are available
 python montage/make_montage.py --name Test --sources Fz,Cz --detectors FCz,F1,C1
+python montage/view_montage.py montage/out/PianoNoise/Standard_probeInfo.mat            # interactive 2-D + 3-D
+python montage/view_montage.py "~/nirs/Configurations/Montages/DLPFCACC/Standard_probeInfo.mat" --table
+python montage/view_montage.py a.mat b.mat --save compare.png                            # side by side
 ```
+
+`view_montage.py` opens any `Standard_probeInfo.mat` (ours or NIRSite's):
+NIRSite-style top view on the left, rotatable 3-D scalp view on the right,
+channel colour = source-detector distance.
 
 Edit `PIANO_NOISE` in `make_montage.py` to move optodes; channels are all
 source-detector pairs within `min_mm..max_mm` (plus `include`/`exclude`).
@@ -67,7 +78,7 @@ git clone https://github.com/adamaske/lydia-adept
 cd lydia-adept\piano-noise
 python -m venv .venv
 .venv\Scripts\activate
-pip install -r requirements.txt          # pylsl (+ mido, python-rtmidi for MIDI logging)
+pip install -r requirements.txt          # one venv for the session runner and the montage tools
 ```
 
 Copy `montage\out\PianoNoise\` to `%USERPROFILE%\Documents\NIRx\Configurations\Montages\PianoNoise\`
@@ -84,26 +95,31 @@ python scripts\run_session.py --noise stimuli\babble.wav --noise-test 30
 
 ```
 python scripts\run_session.py --list-midi
-python scripts\run_session.py --subject 1 --room natural  --noise stimuli\babble.wav --midi "Keystation"
-python scripts\run_session.py --subject 1 --room adjusted --noise stimuli\babble.wav --midi "Keystation"
+python scripts\run_session.py --subject 1 --condition quiet                                   # quiet room
+python scripts\run_session.py --subject 1 --condition noise --noise stimuli\babble.wav        # noisy room
+python scripts\run_session.py --subject 1 --condition noise --noise stimuli\babble.wav --noise-mode continuous --midi "Keystation"
 python scripts\run_session.py --no-lsl --speed 20                 # 1-minute dry run, no LSL
 python scripts\run_session.py --help
 ```
 
+One session is one condition: all QP is recorded in the quiet room, then the
+whole setup moves and all NP is recorded in the noisy room (`--condition`).
+`--room natural|adjusted` is an optional extra label that adds a ROOM_* marker.
 Start the Aurora recording first with the `Trigger` LSL stream selected as
 trigger source. The session is fully timed: after ENTER it runs
 
 ```
-SESSION_START, ROOM_*, BASELINE 60 s,
-3 runs x [ RUN_START, 6 x ( PLAY 40+/-8 s (QP or NP)  ->  REST 30+/-5 s ) ], RUN_REST 120 s between runs,
+SESSION_START, [ROOM_*], BASELINE 60 s,
+3 runs x [ RUN_START, 6 x ( PLAY 40+/-8 s  ->  REST 30+/-5 s ) ], RUN_REST 120 s between runs,
 SESSION_END                                          (~26 min)
 ```
 
-QP/NP is 3/3 per run, shuffled (max two in a row), first condition alternating
-across runs; everything is derived from `--seed` (printed and logged). The 1 kHz
-beep marks every play onset (1 beep) and rest onset (2 beeps). During NP the
-babble starts with the play marker and stops at the rest marker; without
-`--noise` the console tells you to switch it by hand.
+Block lengths are jittered from `--seed` (printed and logged). The 1 kHz beep
+marks every play onset (1 beep) and rest onset (2 beeps). In a noise session
+the babble is looped during the play blocks (`--noise-mode blocks`, default:
+starts with the play marker, stops at the rest marker) or from SESSION_START to
+SESSION_END (`--noise-mode continuous`); without `--noise` the console tells you
+to switch it by hand.
 
 Marker codes (`python scripts/triggers.py`):
 

@@ -10,7 +10,7 @@ writes everything Aurora needs:
     out/<name>/Standard_Optodes.txt     optode positions, mm (NIRSite-style)
     out/<name>/Standard_Channels.txt    channel list, mm (NIRSite-style)
     out/<name>/digpts.txt               fiducials + optodes, mm (NIRSite-style)
-    out/<name>/montage.png              top-view figure
+    out/<name>/montage.png              top-view + 3-D figure (see view_montage.py for an interactive viewer)
     out/<name>.ncfg                     Aurora configuration referencing the montage
 
 Usage:
@@ -50,25 +50,28 @@ FIDUCIALS = {
 # --------------------------------------------------------------------------- #
 # The LYDIA piano-in-noise montage (NIRSport2, 16 sources x 16 detectors)
 #
-# Coverage asked for by the protocol: bilateral DLPFC/VLPFC, premotor (FC row),
-# SMA (Fz-FCz-Cz midline), a few sensorimotor channels (C3/C4) and the
-# temporal lobe (auditory cortex, T7/T8 with FT7/TP7 and FT8/TP8).
+# Priorities: dense bilateral prefrontal coverage (frontal pole, VLPFC, DLPFC,
+# joined across the midline via AFz/Fz/FCz), premotor FC row and SMA (Fz-FCz),
+# a few sensorimotor channels (C3/C4) and the temporal lobe (T7/T8 with
+# FT7/TP7, FT8/TP8). Motor and temporal regions are NOT bridged across the
+# hemispheres (no Cz/C1/C2): those optodes were spent on the frontal pole.
 # Every channel is an adjacent 10-10 pair, 30-42 mm on the ICBM152 template.
 # --------------------------------------------------------------------------- #
 PIANO_NOISE = {
     "name": "PianoNoise",
     "sources": [
-        "F7", "AF3", "AF4", "F8",        # S01-S04  prefrontal (VLPFC/IFG, DLPFC)
-        "Fz", "F3", "F4",                # S05-S07  DLPFC + pre-SMA midline
-        "FC5", "FC1", "FC2", "FC6",      # S08-S11  premotor row
-        "Cz", "C3", "C4",                # S12-S14  SMA / sensorimotor
-        "T7", "T8",                      # S15-S16  temporal (auditory)
+        "Fpz", "AF7", "AF3", "AF4", "AF8",   # S01-S05  frontal pole / VLPFC / DLPFC
+        "Fz", "F3", "F4",                    # S06-S08  DLPFC + pre-SMA midline
+        "FC5", "FC1", "FC2", "FC6",          # S09-S12  premotor row
+        "C3", "C4",                          # S13-S14  sensorimotor
+        "T7", "T8",                          # S15-S16  temporal (auditory)
     ],
     "detectors": [
-        "F5", "F1", "AFz", "F2", "F6",   # D01-D05  prefrontal
-        "FC3", "FCz", "FC4",             # D06-D08  premotor / SMA
-        "C5", "C1", "C2", "C6",          # D09-D12  sensorimotor
-        "FT7", "TP7", "FT8", "TP8",      # D13-D16  temporal
+        "Fp1", "Fp2", "AFz",                 # D01-D03  frontal pole
+        "F5", "F1", "F2", "F6",              # D04-D07  DLPFC
+        "FC3", "FCz", "FC4",                 # D08-D10  premotor / SMA
+        "C5", "C6",                          # D11-D12  sensorimotor (lateral)
+        "FT7", "TP7", "FT8", "TP8",          # D13-D16  temporal
     ],
     # Channels are every source-detector pair within [min_mm, max_mm].
     "min_mm": 20.0,
@@ -208,37 +211,11 @@ def write_ncfg(m, path, accelerometer=True, biosignals=False, origin_dir=r"C:\Us
 
 def write_figure(m, path):
     try:
-        import matplotlib
-        matplotlib.use("Agg")
-        import matplotlib.pyplot as plt
+        import view_montage
     except ImportError:
         print("matplotlib not installed, skipping figure")
         return
-    pos = load_positions()
-    fig, ax = plt.subplots(figsize=(9, 9))
-    ax.add_patch(plt.Circle((0, 0), 1.0, fill=False, color="0.6"))
-    ax.plot([0, -0.08, 0.08, 0], [1.0, 1.06, 1.06, 1.0], color="0.6")  # nose
-    ax.plot([-1.0, -1.06, -1.0], [0.08, 0, -0.08], color="0.6"); ax.plot([1.0, 1.06, 1.0], [0.08, 0, -0.08], color="0.6")
-    used = set(m["sources"]) | set(m["detectors"])
-    used_xy = np.vstack([m["s2"], m["d2"]])
-    for l, p in pos.items():
-        if l not in used and np.linalg.norm(p["c2"]) < 1.02 and np.linalg.norm(used_xy - p["c2"], axis=1).min() > 0.09:
-            ax.text(p["c2"][0], p["c2"][1], l, ha="center", va="center", fontsize=6, color="0.55")
-    for k, (i, j) in enumerate(m["index_c"].astype(int)):
-        a, b = m["s2"][i - 1], m["d2"][j - 1]
-        ax.plot([a[0], b[0]], [a[1], b[1]], color="#9b7fcf", lw=2.5, zorder=1)
-        ax.text(*((a + b) / 2), str(k + 1), fontsize=6, ha="center", va="center", color="#4b3a80", zorder=2,
-                bbox=dict(boxstyle="round,pad=0.15", fc="white", ec="none", alpha=0.8))
-    for i, (p, l) in enumerate(zip(m["s2"], m["sources"])):
-        ax.add_patch(plt.Circle(p, 0.045, color="#d62728", zorder=3))
-        ax.text(p[0], p[1], f"S{i + 1}\n{l}", ha="center", va="center", fontsize=6.5, color="white", zorder=4)
-    for j, (p, l) in enumerate(zip(m["d2"], m["detectors"])):
-        ax.add_patch(plt.Circle(p, 0.045, color="#1f77b4", zorder=3))
-        ax.text(p[0], p[1], f"D{j + 1}\n{l}", ha="center", va="center", fontsize=6.5, color="white", zorder=4)
-    ax.set_aspect("equal"); ax.set_xlim(-1.15, 1.15); ax.set_ylim(-1.15, 1.15); ax.axis("off")
-    ax.set_title(f"{m['name']}: {len(m['sources'])} sources, {len(m['detectors'])} detectors, {len(m['index_c'])} channels "
-                 f"({m['dist_mm'].min():.0f}-{m['dist_mm'].max():.0f} mm)")
-    fig.tight_layout(); fig.savefig(path, dpi=160); plt.close(fig)
+    view_montage.save_png(view_montage.from_build(m), path)
 
 
 def print_summary(m):

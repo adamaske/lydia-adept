@@ -1,8 +1,9 @@
+# LYDIA piano-noise: one venv runs both the session scripts and the montage tools.
+#   python -m venv .venv && .venv/Scripts/activate (Windows) or source .venv/bin/activate
+#   pip install -r requirements.txt
 pylsl>=1.16
-# optional, MIDI logging:
-mido>=1.3
-python-rtmidi>=1.5
-# optional, montage building:
 numpy
 scipy
 matplotlib
+mido>=1.3
+python-rtmidi>=1.5

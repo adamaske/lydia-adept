@@ -1,30 +1,31 @@
 #!/usr/bin/env python3
 """LYDIA piano-in-noise fNIRS session runner (LSL markers + block timing).
 
-Protocol (test_protocol_Lydia.pdf), fully timed, no key presses during the session:
+Protocol (test_protocol_Lydia.pdf), fully timed, no key presses during the session.
+One session = ONE condition (the whole setup moves between the quiet and the
+noisy room), so every play block of a session is QP or every block is NP:
 
-    SESSION_START -> ROOM_* -> BASELINE (60 s)
-    run 1..R:  RUN_START -> R x [ PLAY (40 s +/- 8 s, QP or NP) -> REST (30 s +/- 5 s) ]
+    SESSION_START -> [ROOM_*] -> BASELINE (60 s)
+    run 1..R:  RUN_START -> N x [ PLAY (40 s +/- 8 s) -> REST (30 s +/- 5 s) ]
                -> RUN_REST (120 s) between runs
     SESSION_END
 
-QP/NP is balanced within each run (half/half), shuffled with at most two
-identical conditions in a row, and the first condition of a run alternates
-across runs.  Durations are jittered uniformly.  The full schedule is derived
-from --seed (logged), so a session can be reproduced.
+Durations are jittered uniformly; the schedule is derived from --seed (logged),
+so a session can be reproduced.
 
 Cues: a 1 kHz beep at every play onset (1 beep) and rest onset (2 beeps).
-Noise: --noise babble.wav is looped during NP blocks (starts with the play
-marker, stops at the rest marker).  Without --noise the console tells the
-experimenter to switch the noise on/off by hand.
+Noise (--condition noise): --noise babble.wav is looped either during the play
+blocks only (--noise-mode blocks, default: starts with the play marker, stops at
+the rest marker) or for the whole session (--noise-mode continuous). Without
+--noise the console tells the experimenter to switch the noise on/off by hand.
 
 Markers are int32 samples on an LSL stream (name "Trigger", type "Markers"),
 selected in Aurora as the trigger source.  Codes: triggers.py.
 
 Usage:
-    python scripts/run_session.py --subject 1 --room natural --noise stimuli/babble.wav
-    python scripts/run_session.py --subject 1 --room adjusted --noise stimuli/babble.wav --midi "Keystation"
-    python scripts/run_session.py --no-lsl --speed 20 --room natural        # 1-minute dry run
+    python scripts/run_session.py --subject 1 --condition quiet
+    python scripts/run_session.py --subject 1 --condition noise --noise stimuli/babble.wav --midi "Keystation"
+    python scripts/run_session.py --no-lsl --speed 20 --condition quiet     # 1-minute dry run
     python scripts/run_session.py --noise-test 20 --noise stimuli/babble.wav # SPL calibration
     python scripts/run_session.py --list-midi
 
@@ -90,24 +91,16 @@ class MarkerOutlet:
 # --------------------------------------------------------------------------- #
 # Schedule
 # --------------------------------------------------------------------------- #
-def make_schedule(runs, blocks, play, play_jit, rest, rest_jit, seed):
-    """Return a list of runs; each run is a list of blocks {cond, play_s, rest_s}."""
+def make_schedule(runs, blocks, play, play_jit, rest, rest_jit, seed, cond):
+    """Return a list of runs; each run is a list of blocks {cond, play_s, rest_s}.
+    cond is "Q" or "N" for the whole session (jitter is the only randomisation)."""
     rng = random.Random(seed)
     sched = []
     for r in range(runs):
-        n_q = blocks // 2 + (1 if (blocks % 2 and r % 2 == 0) else 0)
-        conds = ["Q"] * n_q + ["N"] * (blocks - n_q)
-        first = "Q" if r % 2 == 0 else "N"   # counterbalance the starting condition across runs
-        for _ in range(10000):
-            rng.shuffle(conds)
-            ok = conds[0] == first or conds.count(first) == 0
-            ok = ok and all(not (conds[i] == conds[i - 1] == conds[i - 2]) for i in range(2, blocks))
-            if ok:
-                break
         run = []
-        for c in conds:
+        for _ in range(blocks):
             run.append({
-                "cond": c,
+                "cond": cond,
                 "play_s": round(play + rng.uniform(-play_jit, play_jit), 1),
                 "rest_s": round(rest + rng.uniform(-rest_jit, rest_jit), 1),
             })
@@ -165,7 +158,8 @@ def main():
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--subject", type=int, default=1)
     p.add_argument("--session", type=int, default=None, help="session number (default: auto-increment from data/sessions.csv)")
-    p.add_argument("--room", choices=["natural", "adjusted"], default=None, help="room acoustics condition (required for a real session)")
+    p.add_argument("--condition", choices=["quiet", "noise"], default=None, help="QP or NP for the whole session (required for a real session)")
+    p.add_argument("--room", choices=["natural", "adjusted"], default=None, help="optional room label; pushes a ROOM_* marker and is logged")
     p.add_argument("--runs", type=int, default=3)
     p.add_argument("--blocks", type=int, default=6, help="play/rest blocks per run (default 6)")
     p.add_argument("--play", type=float, default=40.0, help="play block length, s")
@@ -175,7 +169,9 @@ def main():
     p.add_argument("--baseline", type=float, default=60.0, help="baseline rest before run 1, s")
     p.add_argument("--run-rest", type=float, default=120.0, help="rest between runs, s")
     p.add_argument("--seed", type=int, default=None, help="RNG seed for the schedule (default: from timestamp)")
-    p.add_argument("--noise", default=None, help="PCM WAV with multi-talker babble, looped during NP blocks")
+    p.add_argument("--noise", default=None, help="PCM WAV with multi-talker babble, looped in noise sessions")
+    p.add_argument("--noise-mode", choices=["blocks", "continuous"], default="blocks",
+                   help="blocks: babble only during play blocks; continuous: from session start to end")
     p.add_argument("--noise-test", type=float, default=None, metavar="SECONDS", help="play --noise for SECONDS (SPL calibration) and exit")
     p.add_argument("--midi", default=None, metavar="PORT", help="log a MIDI input port (substring of its name) to data/midi/")
     p.add_argument("--midi-lsl", action="store_true", help="also push MIDI note events on an LSL stream 'PianoMIDI'")
@@ -201,11 +197,14 @@ def main():
         print(f"Playing {args.noise} for {args.noise_test:.0f} s. Adjust the volume to ~65 dB SPL at the listening position.")
         np_.start(); countdown("NOISE TEST", args.noise_test, "stop"); np_.stop()
         return
-    if args.room is None:
+    if args.condition is None:
         if args.no_lsl:
-            args.room = "natural"
+            args.condition = "quiet"
         else:
-            sys.exit("--room natural|adjusted is required for a recorded session")
+            sys.exit("--condition quiet|noise is required for a recorded session")
+    if args.condition == "quiet" and args.noise:
+        sys.exit("--noise given for a quiet session; drop one of them")
+    cond = "Q" if args.condition == "quiet" else "N"
 
     os.makedirs(LOG_DIR, exist_ok=True)
     os.makedirs(DATA_DIR, exist_ok=True)
@@ -214,7 +213,7 @@ def main():
 
     started = dt.datetime.now()
     stamp = started.strftime("%Y%m%d_%H%M%S")
-    base = f"sub-{args.subject:02d}_ses-{args.session:02d}_{args.room}_{stamp}"
+    base = f"sub-{args.subject:02d}_ses-{args.session:02d}_{args.condition}_{stamp}"
     seed = args.seed if args.seed is not None else int(started.timestamp())
 
     logging.basicConfig(
@@ -224,11 +223,11 @@ def main():
     )
     logging.getLogger().handlers[1].setLevel(logging.WARNING)
 
-    sched = make_schedule(args.runs, args.blocks, args.play, args.play_jitter, args.rest, args.rest_jitter, seed)
+    sched = make_schedule(args.runs, args.blocks, args.play, args.play_jitter, args.rest, args.rest_jitter, seed, cond)
     total = schedule_duration(sched, args.baseline, args.run_rest)
 
     session = {
-        "subject": args.subject, "session": args.session, "room": args.room, "started": started.isoformat(),
+        "subject": args.subject, "session": args.session, "condition": args.condition, "room": args.room or "", "started": started.isoformat(),
         "params": dict(vars(args)), "seed": seed,
         "stream": {"name": args.stream_name, "type": args.stream_type, "source_id": args.source_id},
         "triggers": {c: n for c, (n, _) in TRIGGERS.items()},
@@ -243,17 +242,19 @@ def main():
     save()
 
     print("=" * 78)
-    print(f" LYDIA piano-in-noise fNIRS | subject {args.subject} session {args.session} | room: {args.room.upper()} | {started:%Y-%m-%d %H:%M}")
+    print(f" LYDIA piano-in-noise fNIRS | subject {args.subject} session {args.session} | condition: {args.condition.upper()}"
+          + (f" | room: {args.room}" if args.room else "") + f" | {started:%Y-%m-%d %H:%M}")
     print(f" baseline {args.baseline:.0f} s, {args.runs} runs x {args.blocks} blocks "
           f"(play {args.play:.0f}+/-{args.play_jitter:.0f} s, rest {args.rest:.0f}+/-{args.rest_jitter:.0f} s), run rest {args.run_rest:.0f} s")
     print(f" planned duration {total / 60:.1f} min | seed {seed}")
     print(f" LSL stream: {args.stream_name} ({args.stream_type})" + ("  [DISABLED]" if args.no_lsl else ""))
-    print(f" noise: {args.noise or 'MANUAL (experimenter switches babble on/off)'}")
+    if cond == "N":
+        print(f" noise: {args.noise or 'MANUAL (experimenter switches babble on/off)'} ({args.noise_mode})")
     if args.speed != 1.0:
         print(f" SPEED x{args.speed:g} (dry run)")
     print("=" * 78)
     for r, run in enumerate(sched, 1):
-        print(f"  run {r}: " + "  ".join(f"{b['cond']}P {b['play_s']:.0f}/{b['rest_s']:.0f}" for b in run))
+        print(f"  run {r} ({cond}P play/rest s): " + "  ".join(f"{b['play_s']:.0f}/{b['rest_s']:.0f}" for b in run))
     print()
 
     outlet = MarkerOutlet(not args.no_lsl, args.stream_name, args.stream_type, args.source_id)
@@ -300,14 +301,20 @@ def main():
         else:
             print(f"  ***** NOISE {'ON' if on else 'OFF'} (manual) *****")
 
+    continuous = cond == "N" and args.noise_mode == "continuous"
+    per_block = cond == "N" and not continuous
+
     print("Checklist: Aurora recording with 'Trigger' selected as LSL trigger; subject seated, hands on keys, eyes on the cross;"
-          + (" babble level calibrated." if args.noise else " babble source ready (manual)."))
+          + ("" if cond == "Q" else (" babble level calibrated." if args.noise else " babble source ready (manual).")))
     input("Press ENTER to start the session...")
 
     completed_blocks = 0
     try:
         mark("SESSION_START"); gap()
-        mark("ROOM_NATURAL" if args.room == "natural" else "ROOM_ADJUSTED"); gap()
+        if args.room:
+            mark("ROOM_NATURAL" if args.room == "natural" else "ROOM_ADJUSTED"); gap()
+        if continuous:
+            noise_on(True)
 
         mark("BASELINE")
         countdown("BASELINE", args.baseline, "run 1", args.speed)
@@ -324,11 +331,11 @@ def main():
                 cue(1)
                 m = mark("PLAY_NOISE" if is_noise else "PLAY_QUIET")
                 rec["t_play"] = m["t_lsl"]
-                if is_noise:
+                if per_block:
                     noise_on(True)
                 countdown("PLAY " + ("NOISE" if is_noise else "QUIET"), blk["play_s"], "rest", args.speed)
 
-                if is_noise:
+                if per_block:
                     noise_on(False)
                 cue(2)
                 m = mark("REST")
@@ -342,8 +349,8 @@ def main():
                 completed_blocks += 1
                 save()
                 append_csv(BLOCKS_CSV, {
-                    "subject": args.subject, "session": args.session, "room": args.room, "date": started.strftime("%Y-%m-%d"),
-                    "run": r, "block": b, "cond": blk["cond"], "planned_play_s": blk["play_s"], "planned_rest_s": blk["rest_s"],
+                    "subject": args.subject, "session": args.session, "condition": args.condition, "room": args.room or "",
+                    "date": started.strftime("%Y-%m-%d"), "run": r, "block": b, "cond": blk["cond"], "planned_play_s": blk["play_s"], "planned_rest_s": blk["rest_s"],
                     "play_s": rec["play_s"], "rest_s": rec["rest_s"], "t_play_lsl": round(rec["t_play"], 4), "t_rest_lsl": round(rec["t_rest"], 4),
                 })
 
@@ -353,6 +360,8 @@ def main():
                 countdown("RUN REST", args.run_rest, f"run {r + 1}", args.speed)
 
         cue(2)
+        if continuous:
+            noise_on(False)
         mark("SESSION_END")
         session["completed"] = True
         print("\nSession complete. Stop the Aurora recording now.")
@@ -371,7 +380,8 @@ def main():
         session["ended"] = dt.datetime.now().isoformat()
         save()
         append_csv(SESSIONS_CSV, {
-            "subject": args.subject, "session": args.session, "room": args.room, "date": started.strftime("%Y-%m-%d %H:%M"),
+            "subject": args.subject, "session": args.session, "condition": args.condition, "room": args.room or "",
+            "date": started.strftime("%Y-%m-%d %H:%M"),
             "blocks_completed": completed_blocks, "blocks_planned": args.runs * args.blocks, "seed": seed,
             "noise_file": os.path.basename(args.noise) if args.noise else "manual",
             "midi_events": midi.n if midi is not None else "", "completed": int(session["completed"]), "log": base, "comment": args.comment,
