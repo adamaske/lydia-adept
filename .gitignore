@@ -18,3 +18,10 @@ build/
 # Editor/OS
 .DS_Store
 Thumbs.db
+
+# piano-noise
+piano-noise/.venv/
+piano-noise/stimuli/*.wav
+piano-noise/data/raw/
+__pycache__/
+!piano-noise/montage/out/**/*.aux
