@@ -40,9 +40,9 @@ which paid for the frontal-pole row.
 ![montage](montage/out/PianoNoise/montage.png)
 
 Notes for the protocol questions:
-- 16 sources on one NIRSport2 give ~5.1 Hz (the 16x16 recordings in `~/nirs` are 5.09 Hz).
-  Halving the sources would give ~10 Hz but loses a region; 5 Hz is plenty for a
-  40/30 s block design and still resolves the heartbeat for QC.
+- With Aurora 2025.2 this 16x16 montage records at 12.2 Hz (checked on the
+  first test recording, 2026-09-06), plenty for a 40/30 s block design and for
+  resolving the heartbeat for QC.
 - No short-separation channels (as the protocol says). The `.ncfg` has the
   accelerometer enabled. Rebuild with `--biosignals` if WINGS2 is used through Aurora.
 
