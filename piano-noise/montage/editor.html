@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Montage editor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ground: #EEF1F4; --panel: #F7F9FB; --ink: #17212B; --ink-2: #4F5B67; --ink-3: #8C97A3;
+    --rule: #C6CDD6; --rule-soft: #DDE2E8;
+    --src: #C4322A; --det: #1F5BA6; --src-soft: #F3D6D3; --det-soft: #D4E0F1;
+    --ok: #1C9A8A; --warn: #D98A1F; --bad: #B3261E;
+    --font: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    font: 14px/1.45 var(--font); color: var(--ink); background: var(--ground);
+    font-variant-numeric: tabular-nums; display: grid; grid-template-rows: auto 1fr; overflow: hidden;
+  }
+  button, input, select { font: inherit; color: inherit; }
+  button { cursor: pointer; }
+  :focus-visible { outline: 2px solid var(--det); outline-offset: 2px; }
+
+  /* ---------- top strip ---------- */
+  header {
+    display: grid; grid-template-columns: minmax(200px, 1fr) auto auto auto; align-items: center; gap: 28px;
+    padding: 14px 24px 12px; border-bottom: 1px solid var(--rule); background: var(--panel);
+  }
+  #name {
+    font-size: 22px; font-weight: 600; letter-spacing: -0.01em; border: 0; background: transparent;
+    padding: 2px 6px; margin-left: -6px; border-radius: 4px; width: 100%; min-width: 0;
+  }
+  #name:hover, #name:focus { background: var(--ground); outline: none; box-shadow: inset 0 0 0 1px var(--rule); }
+  .ports { display: grid; grid-template-columns: 14px repeat(16, 30px); grid-auto-rows: 20px; gap: 3px 2px; align-items: center; }
+  .ports .row-name { font-size: 11px; color: var(--ink-3); font-weight: 500; }
+  .port {
+    height: 20px; border-radius: 3px; background: var(--rule-soft); font-size: 10.5px; font-weight: 600; color: #fff;
+    display: flex; align-items: center; justify-content: center; cursor: default; user-select: none;
+  }
+  .port.s { background: var(--src); } .port.d { background: var(--det); }
+  .port.s.hot, .port.d.hot { box-shadow: 0 0 0 2px var(--ink); }
+  .port.over { background: var(--bad); }
+  .seg { display: inline-flex; border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; background: var(--ground); }
+  .seg button { border: 0; background: transparent; padding: 6px 12px; color: var(--ink-2); }
+  .seg button + button { border-left: 1px solid var(--rule); }
+  .seg button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+  .seg button kbd { font: inherit; font-size: 11px; opacity: .6; margin-left: 6px; }
+  .seg button[data-tool="source"][aria-pressed="true"] { background: var(--src); }
+  .seg button[data-tool="detector"][aria-pressed="true"] { background: var(--det); }
+
+  /* ---------- body ---------- */
+  main { display: grid; grid-template-columns: 1fr 360px; min-height: 0; }
+  #stage { position: relative; min-width: 0; min-height: 0; }
+  #stage svg, #stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  #stage [hidden] { display: none; }
+  #stage .hint { position: absolute; left: 20px; bottom: 16px; color: var(--ink-3); font-size: 12.5px; max-width: 46ch; }
+  #view { position: absolute; right: 20px; top: 16px; }
+  #legend { position: absolute; left: 20px; top: 16px; font-size: 12px; color: var(--ink-2); display: flex; gap: 14px; align-items: center; }
+  #legend .bar { width: 120px; height: 8px; border-radius: 4px; background: linear-gradient(90deg, #1C9A8A, #4C7C9B, #D98A1F); }
+
+  aside {
+    background: var(--panel); border-left: 1px solid var(--rule); overflow-y: auto; padding: 18px 22px 40px;
+    display: flex; flex-direction: column; gap: 22px;
+  }
+  section h2 { font-size: 13px; font-weight: 600; margin: 0 0 8px; color: var(--ink-2); }
+  section h2 span { font-weight: 400; color: var(--ink-3); margin-left: 6px; }
+  .rule { display: flex; gap: 10px; align-items: center; color: var(--ink-2); }
+  .rule input { width: 64px; padding: 5px 8px; border: 1px solid var(--rule); border-radius: 5px; background: #fff; text-align: right; }
+  .chips { display: flex; flex-wrap: wrap; gap: 5px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 4px; padding: 2px 4px 2px 8px; border-radius: 4px; font-size: 12.5px;
+    color: #fff; font-weight: 500; cursor: default;
+  }
+  .chip.s { background: var(--src); } .chip.d { background: var(--det); }
+  .chip.hot { box-shadow: 0 0 0 2px var(--ink); }
+  .chip.idle { opacity: .55; }
+  .chip small { font-weight: 400; opacity: .8; }
+  .chip button { border: 0; background: transparent; color: #fff; padding: 0 4px; line-height: 1; font-size: 14px; opacity: .75; }
+  .chip button:hover { opacity: 1; }
+  .linkbtn { border: 0; background: none; color: var(--det); padding: 0; text-decoration: underline; text-underline-offset: 2px; font-size: 12.5px; }
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  th { text-align: left; font-weight: 500; color: var(--ink-3); padding: 2px 10px 6px 0; border-bottom: 1px solid var(--rule-soft); }
+  td { padding: 3px 10px 3px 0; border-bottom: 1px solid var(--rule-soft); white-space: nowrap; }
+  td.num, th.num { text-align: right; }
+  td:last-child, th:last-child { padding-right: 0; }
+  tr.hot td { background: #fff; }
+  tr.forced td:first-child::after { content: "•"; color: var(--warn); margin-left: 3px; }
+  tr.off td { color: var(--ink-3); text-decoration: line-through; }
+  td .sw { display: inline-block; width: 10px; height: 10px; border-radius: 2px; vertical-align: -1px; margin-right: 6px; }
+  td button { border: 0; background: none; color: var(--ink-3); padding: 0 2px; }
+  td button:hover { color: var(--bad); }
+  #warnings { display: flex; flex-direction: column; gap: 6px; }
+  .note { font-size: 12.5px; padding: 8px 10px; border-radius: 5px; background: #fff; border: 1px solid var(--rule-soft); color: var(--ink-2); }
+  .note.warn { border-color: #EBCB98; background: #FCF5E8; }
+  .note.bad { border-color: #E5B3AF; background: #FBECEB; }
+  .note.ok { border-color: #A9DBD3; background: #E8F6F3; }
+  .actions { display: flex; flex-direction: column; gap: 8px; }
+  .btn { padding: 8px 12px; border: 1px solid var(--rule); border-radius: 6px; background: #fff; text-align: left; }
+  .btn:hover { border-color: var(--ink-3); }
+  .btn.primary { background: var(--ink); color: #fff; border-color: var(--ink); font-weight: 500; }
+  .btn.primary:hover { background: #000; }
+  .btn:disabled { opacity: .5; cursor: default; }
+  .row { display: flex; gap: 8px; align-items: center; }
+  .row .btn { flex: 0 0 auto; }
+  .row select { flex: 1; min-width: 0; padding: 7px 8px; border: 1px solid var(--rule); border-radius: 6px; background: #fff; }
+  label.check { display: flex; gap: 8px; align-items: center; font-size: 12.5px; color: var(--ink-2); }
+  pre { font: 12px/1.4 ui-monospace, Menlo, Consolas, monospace; background: #fff; border: 1px solid var(--rule-soft); border-radius: 5px; padding: 8px 10px; white-space: pre-wrap; word-break: break-all; margin: 0; }
+  #result img { width: 100%; border-radius: 5px; border: 1px solid var(--rule-soft); margin-top: 8px; }
+
+  /* ---------- svg ---------- */
+  .site { cursor: pointer; }
+  .site text { font-size: 0.034px; fill: var(--ink-3); text-anchor: middle; dominant-baseline: central; pointer-events: none; font-weight: 500; }
+  .site circle { fill: transparent; }
+  .site:hover circle { fill: rgba(23,33,43,.08); }
+  .site.taken text { fill: #fff; font-weight: 600; font-size: 0.036px; }
+  .site.minor text { font-size: 0.027px; fill: #A5AEB8; }
+  .site.s circle { fill: var(--src); } .site.d circle { fill: var(--det); }
+  .site.s:hover circle { fill: #A92A23; } .site.d:hover circle { fill: #194B8A; }
+  .site.hot circle { stroke: var(--ink); stroke-width: 0.012px; }
+  .site.taken text.idx { font-size: 0.030px; }
+  .ch { stroke-linecap: round; cursor: pointer; }
+  .ch.off { stroke: var(--ink-3); stroke-dasharray: 0.012 0.02; stroke-width: 0.012px; }
+  .ch.hot { stroke-width: 0.045px; }
+  .cand { stroke: var(--ink-3); stroke-width: 0.01px; stroke-dasharray: 0.02 0.02; cursor: pointer; }
+  .cand:hover { stroke: var(--ink); stroke-width: 0.02px; stroke-dasharray: none; }
+  .cand-hit { stroke: transparent; stroke-width: 0.05px; cursor: pointer; }
+  .num text { font-size: 0.028px; fill: var(--ink); text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+  .num rect { fill: #fff; opacity: .85; }
+  .head { fill: none; stroke: var(--rule); stroke-width: 0.008px; }
+
+  @media (max-width: 900px) {
+    body { overflow: auto; }
+    header { grid-template-columns: 1fr; gap: 12px; }
+    main { grid-template-columns: 1fr; grid-template-rows: 70vh auto; }
+    aside { border-left: 0; border-top: 1px solid var(--rule); }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .port, .chip, .ch { transition: box-shadow .12s, stroke-width .12s; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <input id="name" value="PianoNoise" aria-label="Montage name" spellcheck="false">
+  <div class="ports" id="ports" aria-label="NIRSport2 ports"></div>
+  <div class="seg" role="group" aria-label="Tool">
+    <button data-tool="source" aria-pressed="true">Source<kbd>S</kbd></button>
+    <button data-tool="detector" aria-pressed="false">Detector<kbd>D</kbd></button>
+    <button data-tool="erase" aria-pressed="false">Erase<kbd>E</kbd></button>
+  </div>
+  <button class="btn primary" id="build">Build montage</button>
+</header>
+
+<main>
+  <div id="stage">
+    <svg id="top" viewBox="-1.18 -1.18 2.36 2.36" role="img" aria-label="Top view of the head"></svg>
+    <canvas id="three" hidden></canvas>
+    <div id="legend"><span>short</span><div class="bar"></div><span>long</span></div>
+    <div class="seg" id="view" role="group" aria-label="View">
+      <button data-view="top" aria-pressed="true">Top</button>
+      <button data-view="three" aria-pressed="false">3-D</button>
+    </div>
+    <div class="hint" id="hint"></div>
+  </div>
+
+  <aside>
+    <section>
+      <h2>Channel rule</h2>
+      <div class="rule">
+        every source-detector pair from
+        <input id="min" type="number" step="1" value="20" aria-label="minimum mm"> to
+        <input id="max" type="number" step="1" value="42" aria-label="maximum mm"> mm
+      </div>
+    </section>
+
+    <section>
+      <h2>Sources<span id="nS"></span></h2>
+      <div class="chips" id="srcChips"></div>
+    </section>
+    <section>
+      <h2>Detectors<span id="nD"></span></h2>
+      <div class="chips" id="detChips"></div>
+      <p style="margin:10px 0 0"><button class="linkbtn" id="renumber">Renumber front to back, left to right</button></p>
+    </section>
+
+    <section id="warnings"></section>
+
+    <section>
+      <h2>Channels<span id="nC"></span></h2>
+      <table>
+        <thead><tr><th class="num">ch</th><th>pair</th><th>sites</th><th class="num">mm</th><th></th></tr></thead>
+        <tbody id="chanRows"></tbody>
+      </table>
+    </section>
+
+    <section class="actions">
+      <h2>Montage files</h2>
+      <div class="row">
+        <select id="load" aria-label="Load a montage"></select>
+        <button class="btn" id="loadBtn">Load</button>
+      </div>
+      <label class="check"><input type="checkbox" id="accel" checked> accelerometer on in the .ncfg</label>
+      <label class="check"><input type="checkbox" id="bio"> WINGS biosignals on in the .ncfg</label>
+      <button class="btn" id="save">Save spec as JSON</button>
+      <pre id="cli"></pre>
+      <div id="result"></div>
+    </section>
+  </aside>
+</main>
+
+<script>
+// ------------------------------------------------------------------ state
+const S = { name: "PianoNoise", sources: [], detectors: [], min_mm: 20, max_mm: 42, exclude: [], include: [] };
+let POS = {}, tool = "source", hot = null, hotSite = null, chans = [], view = "top";
+const $ = s => document.querySelector(s);
+const key = (s, d) => s + "-" + d;
+const dist = (a, b) => 10 * Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
+
+// distance -> colour, teal (short) via slate (nominal) to amber (long); fixed 25-45 mm to match montage.png
+function colour(mm) {
+  const stops = [[25, [28, 154, 138]], [35, [76, 124, 155]], [45, [217, 138, 31]]];
+  const t = Math.min(Math.max(mm, 25), 45);
+  let [m0, c0] = stops[0], [m1, c1] = stops[1];
+  if (t > 35) { [m0, c0] = stops[1]; [m1, c1] = stops[2]; }
+  const f = (t - m0) / (m1 - m0);
+  return `rgb(${c0.map((v, i) => Math.round(v + (c1[i] - v) * f)).join(",")})`;
+}
+
+function compute() {
+  const ex = new Set(S.exclude), inc = new Set(S.include);
+  chans = [];
+  S.sources.forEach((sl, i) => S.detectors.forEach((dl, j) => {
+    const mm = dist(POS[sl].c3, POS[dl].c3), k = key(sl, dl);
+    const auto = mm >= S.min_mm && mm <= S.max_mm;
+    if ((auto && !ex.has(k)) || inc.has(k)) chans.push({ s: i + 1, d: j + 1, sl, dl, mm, k, forced: !auto, off: false });
+    else if (auto) chans.push({ s: i + 1, d: j + 1, sl, dl, mm, k, forced: false, off: true });   // excluded, shown dotted
+  }));
+  chans.sort((a, b) => a.s - b.s || a.d - b.d);
+  let n = 0; chans.forEach(c => { c.ch = c.off ? null : ++n; });
+  // drop include/exclude entries that no longer refer to placed optodes
+  const placed = new Set([...S.sources, ...S.detectors]);
+  const ok = k => k.split("-").every(l => placed.has(l));
+  S.exclude = S.exclude.filter(ok); S.include = S.include.filter(ok);
+}
+
+// ------------------------------------------------------------------ editing
+function roleOf(l) { return S.sources.includes(l) ? "s" : S.detectors.includes(l) ? "d" : null; }
+function remove(l) { S.sources = S.sources.filter(x => x !== l); S.detectors = S.detectors.filter(x => x !== l); }
+function clickSite(l) {
+  const r = roleOf(l);
+  if (tool === "erase") remove(l);
+  else if (tool === "source") { if (r === "s") remove(l); else { remove(l); S.sources.push(l); } }
+  else { if (r === "d") remove(l); else { remove(l); S.detectors.push(l); } }
+  render();
+}
+function toggleChannel(c) {
+  if (c.forced) S.include = S.include.filter(k => k !== c.k);
+  else if (c.off) S.exclude = S.exclude.filter(k => k !== c.k);
+  else S.exclude.push(c.k);
+  render();
+}
+function includePair(k) { S.include.push(k); render(); }
+function renumber() {
+  // front (large v) to back, left (small u) to right; row tolerance in 2-D layout units
+  const order = (a, b) => { const A = POS[a].c2, B = POS[b].c2; return Math.abs(B[1] - A[1]) > 0.06 ? B[1] - A[1] : A[0] - B[0]; };
+  S.sources.sort(order); S.detectors.sort(order); render();
+}
+
+// ------------------------------------------------------------------ top view (svg)
+const svg = $("#top"), NS = "http://www.w3.org/2000/svg";
+const el = (t, a = {}) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); return e; };
+function drawTop() {
+  svg.replaceChildren();
+  const g = el("g");
+  g.append(el("circle", { cx: 0, cy: 0, r: 1, class: "head" }),
+    el("path", { d: "M-0.08,-1 L0,-1.07 L0.08,-1", class: "head" }),
+    el("path", { d: "M-1,-0.08 L-1.07,0 L-1,0.08 M1,-0.08 L1.07,0 L1,0.08", class: "head" }));
+  // channels (svg y goes down; NIRSite v goes up)
+  const P = l => [POS[l].c2[0], -POS[l].c2[1]];
+  const gc = el("g"), gn = el("g", { class: "num" });
+  chans.forEach(c => {
+    const a = P(c.sl), b = P(c.dl);
+    const line = el("line", { x1: a[0], y1: a[1], x2: b[0], y2: b[1], class: "ch" + (c.off ? " off" : "") + (hot === c.k ? " hot" : "") });
+    if (!c.off) { line.style.stroke = colour(c.mm); line.style.strokeWidth = "0.028px"; }
+    line.addEventListener("click", () => toggleChannel(c));
+    line.addEventListener("mouseenter", () => setHot(c.k)); line.addEventListener("mouseleave", () => setHot(null));
+    line.append(el("title")); line.firstChild.textContent = `${c.sl}-${c.dl}  ${c.mm.toFixed(1)} mm  (click to ${c.off ? "restore" : c.forced ? "remove" : "exclude"})`;
+    gc.append(line);
+    if (!c.off) {
+      const m = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+      gn.append(el("rect", { x: m[0] - 0.024, y: m[1] - 0.018, width: 0.048, height: 0.036, rx: 0.008 }));
+      const t = el("text", { x: m[0], y: m[1] }); t.textContent = c.ch; gn.append(t);
+    }
+  });
+  // candidate pairs from the hovered optode
+  const gcand = el("g");
+  if (hotSite && roleOf(hotSite)) {
+    const others = roleOf(hotSite) === "s" ? S.detectors : S.sources;
+    others.forEach(o => {
+      const k = roleOf(hotSite) === "s" ? key(hotSite, o) : key(o, hotSite);
+      const mm = dist(POS[hotSite].c3, POS[o].c3);
+      if (chans.some(c => c.k === k) || mm > S.max_mm + 20) return;
+      const a = P(hotSite), b = P(o);
+      const hit = el("line", { x1: a[0], y1: a[1], x2: b[0], y2: b[1], class: "cand-hit" });
+      const vis = el("line", { x1: a[0], y1: a[1], x2: b[0], y2: b[1], class: "cand" });
+      vis.append(el("title")); vis.firstChild.textContent = `${k}  ${mm.toFixed(1)} mm  (click to add as a forced channel)`;
+      for (const e of [hit, vis]) e.addEventListener("click", () => includePair(k));
+      hit.addEventListener("mouseenter", () => vis.classList.add("hover"));
+      gcand.append(hit, vis);
+    });
+  }
+  // every 10-10 site
+  const gs = el("g");
+  for (const l in POS) {
+    const [x, y] = P(l), r = roleOf(l);
+    if (!r && Math.hypot(x, y) > 1.02) continue;
+    const site = el("g", { class: "site" + (r ? " taken " + r : l.endsWith("h") ? " minor" : "") + (hotSite === l ? " hot" : ""), tabindex: 0, role: "button" });
+    site.setAttribute("aria-label", l + (r ? " " + (r === "s" ? "source" : "detector") : ""));
+    site.append(el("circle", { cx: x, cy: y, r: r ? 0.052 : 0.03 }));
+    if (r) {
+      const i = (r === "s" ? S.sources : S.detectors).indexOf(l) + 1;
+      const t1 = el("text", { x, y: y - 0.017, class: "idx" }); t1.textContent = (r === "s" ? "S" : "D") + i;
+      const t2 = el("text", { x, y: y + 0.02 }); t2.textContent = l;
+      site.append(t1, t2);
+    } else { const t = el("text", { x, y }); t.textContent = l; site.append(t); }
+    site.addEventListener("click", () => clickSite(l));
+    site.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); clickSite(l); } });
+    site.addEventListener("mouseenter", () => setHotSite(l)); site.addEventListener("mouseleave", () => setHotSite(null));
+    gs.append(site);
+  }
+  g.append(gc, gcand, gn, gs);
+  svg.append(g);
+}
+
+// ------------------------------------------------------------------ 3-D view (canvas, orthographic)
+const cv = $("#three"); let rot = { az: 40, el: 30 }, drag = null, sphere = null;
+function fitSphere() {
+  const pts = Object.values(POS).map(p => p.c3); // least squares: 2c.x + k = |x|^2  (solve 4x4 normal equations)
+  const A = pts.map(p => [2 * p[0], 2 * p[1], 2 * p[2], 1]), b = pts.map(p => p[0] ** 2 + p[1] ** 2 + p[2] ** 2);
+  const M = Array.from({ length: 4 }, () => Array(5).fill(0));
+  A.forEach((r, n) => { for (let i = 0; i < 4; i++) { for (let j = 0; j < 4; j++) M[i][j] += r[i] * r[j]; M[i][4] += r[i] * b[n]; } });
+  for (let i = 0; i < 4; i++) { const p = M[i][i]; for (let j = i; j < 5; j++) M[i][j] /= p;
+    for (let r = 0; r < 4; r++) if (r !== i) { const f = M[r][i]; for (let j = i; j < 5; j++) M[r][j] -= f * M[i][j]; } }
+  const c = [M[0][4], M[1][4], M[2][4]];
+  sphere = { c, r: Math.sqrt(M[3][4] + c[0] ** 2 + c[1] ** 2 + c[2] ** 2) };
+}
+function project(p, W, H, scale) {
+  // camera sits in front of the head (+y) at azimuth az (turned around z) and elevation el; orthographic
+  const a = rot.az * Math.PI / 180, e = rot.el * Math.PI / 180;
+  const x1 = p[0] * Math.cos(a) - p[1] * Math.sin(a), y1 = p[0] * Math.sin(a) + p[1] * Math.cos(a);
+  const depth = y1 * Math.cos(e) + p[2] * Math.sin(e), up = -y1 * Math.sin(e) + p[2] * Math.cos(e);
+  return [W / 2 + x1 * scale, H / 2 - up * scale + 10, depth];
+}
+function drawThree() {
+  if (cv.hidden) return;
+  const dpr = devicePixelRatio || 1, W = cv.clientWidth, H = cv.clientHeight;
+  cv.width = W * dpr; cv.height = H * dpr;
+  const ctx = cv.getContext("2d"); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+  const scale = Math.min(W, H) / 26, pr = (p) => project(p, W, H, scale);
+  // head sphere wireframe
+  ctx.strokeStyle = "rgba(23,33,43,.10)"; ctx.lineWidth = 1;
+  const { c, r } = sphere;
+  for (let lat = -60; lat <= 80; lat += 20) { ctx.beginPath();
+    for (let a = 0; a <= 360; a += 6) { const t = a * Math.PI / 180, ph = lat * Math.PI / 180;
+      const p = pr([c[0] + r * Math.cos(ph) * Math.cos(t), c[1] + r * Math.cos(ph) * Math.sin(t), c[2] + r * Math.sin(ph)]);
+      a ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]); } ctx.stroke(); }
+  for (let lon = 0; lon < 180; lon += 30) { ctx.beginPath();
+    for (let a = -90; a <= 90; a += 6) { const ph = a * Math.PI / 180, t = lon * Math.PI / 180;
+      const p = pr([c[0] + r * Math.cos(ph) * Math.cos(t), c[1] + r * Math.cos(ph) * Math.sin(t), c[2] + r * Math.sin(ph)]);
+      a > -90 ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]); } ctx.stroke(); }
+  // sites (with depth shading), channels, optodes
+  const items = [];
+  for (const l in POS) { if (!roleOf(l)) items.push({ z: pr(POS[l].c3)[2], draw: () => { const p = pr(POS[l].c3);
+    ctx.fillStyle = "rgba(23,33,43,.35)"; ctx.beginPath(); ctx.arc(p[0], p[1], 2, 0, 7); ctx.fill(); } }); }
+  chans.forEach(ch => { if (ch.off) return; const a = pr(POS[ch.sl].c3), b = pr(POS[ch.dl].c3);
+    items.push({ z: (a[2] + b[2]) / 2, draw: () => { ctx.strokeStyle = colour(ch.mm); ctx.lineWidth = hot === ch.k ? 6 : 3.5; ctx.lineCap = "round";
+      ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke(); } }); });
+  const opt = (list, cls, tag) => list.forEach((l, i) => { const p = pr(POS[l].c3);
+    items.push({ z: p[2] + 0.01, draw: () => {
+      ctx.fillStyle = cls; ctx.beginPath(); ctx.arc(p[0], p[1], 9, 0, 7); ctx.fill();
+      if (hotSite === l) { ctx.strokeStyle = "#17212B"; ctx.lineWidth = 2; ctx.stroke(); }
+      ctx.fillStyle = "#fff"; ctx.font = "600 9px " + getComputedStyle(document.body).fontFamily; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      ctx.fillText(tag + (i + 1), p[0], p[1]);
+      ctx.fillStyle = "#17212B"; ctx.font = "500 10px " + getComputedStyle(document.body).fontFamily; ctx.fillText(l, p[0], p[1] - 15); } }); });
+  opt(S.sources, "#C4322A", "S"); opt(S.detectors, "#1F5BA6", "D");
+  const zs = items.map(i => i.z), z0 = Math.min(...zs), z1 = Math.max(...zs);
+  items.sort((a, b) => a.z - b.z).forEach(i => { ctx.globalAlpha = 0.25 + 0.75 * ((i.z - z0) / (z1 - z0 || 1)); i.draw(); });
+  ctx.globalAlpha = 1;
+}
+cv.addEventListener("pointerdown", e => { drag = [e.clientX, e.clientY]; cv.setPointerCapture(e.pointerId); });
+cv.addEventListener("pointermove", e => { if (!drag) return; rot.az -= (e.clientX - drag[0]) * 0.5; rot.el = Math.max(-89, Math.min(89, rot.el + (e.clientY - drag[1]) * 0.5)); drag = [e.clientX, e.clientY]; drawThree(); });
+cv.addEventListener("pointerup", () => drag = null);
+new ResizeObserver(drawThree).observe($("#stage"));
+
+// ------------------------------------------------------------------ panel
+function renderPorts() {
+  const box = $("#ports"); box.replaceChildren();
+  for (const [tag, list, cls] of [["S", S.sources, "s"], ["D", S.detectors, "d"]]) {
+    const rn = document.createElement("div"); rn.className = "row-name"; rn.textContent = tag; box.append(rn);
+    for (let i = 0; i < 16; i++) {
+      const p = document.createElement("div"); p.className = "port"; const l = list[i];
+      if (l) { p.classList.add(cls); if (hotSite === l) p.classList.add("hot"); p.textContent = l; p.title = `${tag}${i + 1} ${l}`;
+        p.addEventListener("mouseenter", () => setHotSite(l)); p.addEventListener("mouseleave", () => setHotSite(null)); }
+      box.append(p);
+    }
+    if (list.length > 16) { const o = document.createElement("div"); o.className = "port over"; o.textContent = "+" + (list.length - 16); box.append(o); }
+  }
+}
+function renderChips() {
+  for (const [id, list, cls, tag] of [["#srcChips", S.sources, "s", "S"], ["#detChips", S.detectors, "d", "D"]]) {
+    const box = $(id); box.replaceChildren();
+    list.forEach((l, i) => {
+      const used = chans.some(c => !c.off && (c.sl === l || c.dl === l));
+      const chip = document.createElement("span"); chip.className = "chip " + cls + (used ? "" : " idle") + (hotSite === l ? " hot" : "");
+      chip.innerHTML = `<small>${tag}${i + 1}</small>${l}`; chip.title = used ? `${tag}${i + 1} ${l}` : `${tag}${i + 1} ${l}: no channels`;
+      const b = document.createElement("button"); b.textContent = "×"; b.setAttribute("aria-label", "remove " + l);
+      b.addEventListener("click", () => { remove(l); render(); });
+      chip.append(b); chip.addEventListener("mouseenter", () => setHotSite(l)); chip.addEventListener("mouseleave", () => setHotSite(null));
+      box.append(chip);
+    });
+    if (!list.length) { const e = document.createElement("span"); e.style.color = "var(--ink-3)"; e.style.fontSize = "12.5px";
+      e.textContent = `Click a site on the head with the ${tag === "S" ? "Source" : "Detector"} tool.`; box.append(e); }
+  }
+  $("#nS").textContent = `${S.sources.length} of 16`; $("#nD").textContent = `${S.detectors.length} of 16`;
+}
+function renderTable() {
+  const tb = $("#chanRows"); tb.replaceChildren();
+  const live = chans.filter(c => !c.off);
+  $("#nC").textContent = live.length ? `${live.length}, ${Math.min(...live.map(c => c.mm)).toFixed(0)}–${Math.max(...live.map(c => c.mm)).toFixed(0)} mm` : "none yet";
+  chans.forEach(c => {
+    const tr = document.createElement("tr"); tr.className = (c.off ? "off" : "") + (c.forced ? " forced" : "") + (hot === c.k ? " hot" : "");
+    tr.innerHTML = `<td class="num">${c.off ? "–" : c.ch}</td><td>S${c.s}–D${c.d}</td><td><span class="sw" style="background:${c.off ? "transparent" : colour(c.mm)}"></span>${c.sl}–${c.dl}</td><td class="num">${c.mm.toFixed(1)}</td><td></td>`;
+    const b = document.createElement("button"); b.textContent = c.off ? "↺" : "×";
+    b.title = c.off ? "restore this channel" : c.forced ? "remove this forced channel" : "exclude this channel";
+    b.setAttribute("aria-label", b.title); b.addEventListener("click", () => toggleChannel(c));
+    tr.lastChild.append(b);
+    tr.addEventListener("mouseenter", () => setHot(c.k)); tr.addEventListener("mouseleave", () => setHot(null));
+    tb.append(tr);
+  });
+}
+function renderWarnings() {
+  const box = $("#warnings"); box.replaceChildren();
+  const add = (cls, text) => { const d = document.createElement("div"); d.className = "note " + cls; d.textContent = text; box.append(d); };
+  if (S.sources.length > 16 || S.detectors.length > 16) add("bad", "One NIRSport2 has 16 source and 16 detector ports. Remove optodes until both rows fit.");
+  const idle = [...S.sources, ...S.detectors].filter(l => !chans.some(c => !c.off && (c.sl === l || c.dl === l)));
+  if (idle.length) add("warn", `No channels for ${idle.join(", ")}. Move them or widen the rule.`);
+  const long = chans.filter(c => !c.off && c.mm > 42), short = chans.filter(c => !c.off && c.mm < 25);
+  if (long.length) add("warn", `${long.length} channel${long.length > 1 ? "s are" : " is"} over 42 mm; expect weak signal in adults.`);
+  if (short.length) add("", `${short.length} channel${short.length > 1 ? "s are" : " is"} under 25 mm and will read mostly scalp.`);
+  if (S.include.length) add("", `${S.include.length} forced channel${S.include.length > 1 ? "s" : ""} outside the rule (marked • in the table).`);
+  if (!box.children.length && chans.length) add("ok", "Every optode has a channel and all lengths are inside the rule.");
+}
+function renderCli() {
+  const q = a => a.length ? a.join(",") : "";
+  let s = `python make_montage.py --name ${S.name} --sources ${q(S.sources)} --detectors ${q(S.detectors)} --min-mm ${S.min_mm} --max-mm ${S.max_mm}`;
+  if (S.exclude.length) s += ` --exclude ${q(S.exclude)}`; if (S.include.length) s += ` --include ${q(S.include)}`;
+  if ($("#accel") && !$("#accel").checked) s += " --no-accelerometer"; if ($("#bio").checked) s += " --biosignals";
+  $("#cli").textContent = s;
+}
+function render() {
+  compute();
+  renderPorts(); renderChips(); renderTable(); renderWarnings(); renderCli();
+  view === "top" ? drawTop() : drawThree();
+  $("#hint").textContent = view === "three" ? "Drag to rotate. Edit the montage in the top view."
+    : tool === "erase" ? "Click an optode to remove it."
+    : `Click a site to place a ${tool}; click it again to remove it. Click a channel to exclude it. Hover an optode to see pairs outside the rule you can force.`;
+  try { localStorage.setItem("montage-editor", JSON.stringify(S)); } catch (e) {}
+}
+function setHot(k) { hot = k; render(); }
+function setHotSite(l) { hotSite = l; render(); }
+
+// ------------------------------------------------------------------ wiring
+document.querySelectorAll("[data-tool]").forEach(b => b.addEventListener("click", () => setTool(b.dataset.tool)));
+function setTool(t) { tool = t; document.querySelectorAll("[data-tool]").forEach(b => b.setAttribute("aria-pressed", b.dataset.tool === t)); render(); }
+document.querySelectorAll("[data-view]").forEach(b => b.addEventListener("click", () => {
+  view = b.dataset.view; document.querySelectorAll("[data-view]").forEach(x => x.setAttribute("aria-pressed", x.dataset.view === view));
+  svg.toggleAttribute("hidden", view !== "top"); cv.toggleAttribute("hidden", view !== "three"); render();
+}));
+document.addEventListener("keydown", e => {
+  if (e.target.matches("input, select, textarea")) return;
+  if (e.key === "s") setTool("source"); if (e.key === "d") setTool("detector"); if (e.key === "e") setTool("erase");
+});
+$("#name").addEventListener("input", e => { S.name = e.target.value; renderCli(); });
+$("#min").addEventListener("change", e => { S.min_mm = +e.target.value; render(); });
+$("#max").addEventListener("change", e => { S.max_mm = +e.target.value; render(); });
+$("#accel").addEventListener("change", renderCli); $("#bio").addEventListener("change", renderCli);
+$("#renumber").addEventListener("click", renumber);
+
+function spec() { return { name: S.name, sources: S.sources, detectors: S.detectors, min_mm: S.min_mm, max_mm: S.max_mm, exclude: S.exclude, include: S.include }; }
+function loadSpec(sp) {
+  Object.assign(S, { name: sp.name, sources: [...sp.sources], detectors: [...sp.detectors], min_mm: sp.min_mm ?? 20, max_mm: sp.max_mm ?? 42,
+    exclude: [...(sp.exclude || [])], include: [...(sp.include || [])] });
+  $("#name").value = S.name; $("#min").value = S.min_mm; $("#max").value = S.max_mm; render();
+}
+$("#save").addEventListener("click", () => {
+  const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([JSON.stringify(spec(), null, 2)], { type: "application/json" }));
+  a.download = S.name + ".json"; a.click();
+});
+let MONTAGES = [];
+function fillMontages() {
+  const sel = $("#load"); sel.replaceChildren();
+  MONTAGES.forEach((m, i) => { const o = document.createElement("option"); o.value = i; o.textContent = m.name + (m.builtin ? " (make_montage.py default)" : " (out/)"); sel.append(o); });
+}
+$("#loadBtn").addEventListener("click", () => { const m = MONTAGES[$("#load").value]; if (m) loadSpec(m); });
+$("#build").addEventListener("click", async () => {
+  const btn = $("#build"), res = $("#result"); btn.disabled = true; btn.textContent = "Building…"; res.replaceChildren();
+  try {
+    const r = await fetch("/api/build", { method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...spec(), accelerometer: $("#accel").checked, biosignals: $("#bio").checked }) });
+    const j = await r.json();
+    const d = document.createElement("div"); d.className = "note " + (r.ok ? "ok" : "bad");
+    d.textContent = r.ok ? `Built ${j.name}: ${j.channels.length} channels. Files in ${j.written.dir}/ and ${j.written.ncfg}. Copy them to Documents\\NIRx\\Configurations on the acquisition PC.` : "Build failed: " + j.error;
+    res.append(d);
+    if (r.ok) { const img = document.createElement("img"); img.src = j.written.png + "?" + Date.now(); img.alt = "montage.png as written by make_montage.py"; res.append(img); refreshMontages(); }
+  } catch (e) { const d = document.createElement("div"); d.className = "note bad"; d.textContent = "Build failed: " + e; res.append(d); }
+  btn.disabled = false; btn.textContent = "Build montage";
+});
+
+const BOOT = /*BOOT*/null;   // editor.py fills this in with {positions, montages} when it serves the page
+async function refreshMontages() {
+  MONTAGES = await (await fetch("/api/montages")).json(); fillMontages();
+}
+(async () => {
+  if (BOOT) { POS = BOOT.positions; MONTAGES = BOOT.montages; fillMontages(); }
+  else {
+    try { POS = await (await fetch("/api/positions")).json(); await refreshMontages(); }
+    catch (e) { $("#hint").textContent = "Start the editor with `python editor.py` so the page can read the 10-10 positions."; return; }
+  }
+  fitSphere();
+  let saved = null; try { saved = JSON.parse(localStorage.getItem("montage-editor")); } catch (e) {}
+  loadSpec(saved && saved.sources && saved.sources.length ? saved : MONTAGES[0]);
+  if (location.hash === "#three") $('[data-view="three"]').click();
+})();
+</script>
+</body>
+</html>

@@ -9,6 +9,8 @@ natural and in an acoustically adjusted room.
 plan.md                      task description
 test_protocol_Lydia.pdf      the protocol
 montage/make_montage.py      builds the Aurora montage from 10-10 labels (no NIRSite needed)
+montage/editor.py            browser editor for the same montages: click optodes onto the head, build from the page
+montage/editor.html          the page editor.py serves (no build step, no dependencies)
 montage/positions_icbm152.csv  10-10/10-5 scalp positions on NIRSite's ICBM152 head
 montage/aurora_template.ncfg   Aurora config template (device settings) the .ncfg is derived from
 montage/out/PianoNoise/      generated montage folder  -> Documents\NIRx\Configurations\Montages\PianoNoise\
@@ -62,6 +64,23 @@ python montage/view_montage.py a.mat b.mat --save compare.png                   
 `view_montage.py` opens any `Standard_probeInfo.mat` (ours or NIRSite's):
 NIRSite-style top view on the left, rotatable 3-D scalp view on the right,
 channel colour = source-detector distance.
+
+### Browser editor
+
+```sh
+python montage/editor.py            # opens http://127.0.0.1:8765
+```
+
+Same rules and same writers as `make_montage.py`, but interactive: pick the
+Source / Detector / Erase tool (keys S, D, E) and click 10-10 sites on the head.
+Channels, lengths, the two rows of 16 NIRSport2 ports and the warnings
+(optodes without channels, channels over 42 mm) update as you click. Click a
+channel to exclude it; hover an optode to see pairs outside the length rule and
+click one to force it. The 3-D tab is a rotatable scalp view.
+"Build montage" writes `out/<name>/` + `out/<name>.ncfg` exactly like the CLI
+(and `out/<name>/spec.json`, which `make_montage.py --spec` and the editor's
+Load menu both read). "Save spec as JSON" downloads the same spec; the CLI
+command shown under it is the equivalent `make_montage.py` call.
 
 Edit `PIANO_NOISE` in `make_montage.py` to move optodes; channels are all
 source-detector pairs within `min_mm..max_mm` (plus `include`/`exclude`).

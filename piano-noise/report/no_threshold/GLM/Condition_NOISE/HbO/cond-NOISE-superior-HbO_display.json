@@ -1,0 +1,13 @@
+{
+  "display": {
+    "caption": "Cortex: GLM t, HbO, condition 2 (NOISE), subject GLM · threshold: none (descriptive) · Edges: Connectivity, off · Probe: Hidden · Head: Cortex opaque, scalp hidden · Camera: Superior, 800 × 800 export",
+    "layers": {
+      "camera": "Superior, 800 × 800 export",
+      "cortex": "GLM t, HbO, condition 2 (NOISE), subject GLM · threshold: none (descriptive)",
+      "edges": "Connectivity, off",
+      "head": "Cortex opaque, scalp hidden",
+      "probe": "Hidden"
+    }
+  },
+  "generator": "NIRWizard 0.1.7"
+}

@@ -17,6 +17,7 @@ Usage:
     python make_montage.py                  # build the default PianoNoise montage
     python make_montage.py --name X --sources Fz,Cz --detectors FCz,F1  # ad hoc
     python make_montage.py --list-labels
+    python make_montage.py --spec my_montage.json          # spec saved from the browser editor (editor.py)
 
 Install on the acquisition PC: copy out/<name>/ to
     C:\\Users\\<user>\\Documents\\NIRx\\Configurations\\Montages\\<name>\\
@@ -218,6 +219,13 @@ def write_figure(m, path):
     view_montage.save_png(view_montage.from_build(m), path)
 
 
+def write_spec(spec, path):
+    """The montage as the editor / --spec understand it (round-trips through editor.py)."""
+    keys = ("name", "sources", "detectors", "min_mm", "max_mm", "exclude", "include")
+    with open(path, "w") as f:
+        json.dump({k: spec[k] for k in keys if k in spec}, f, indent=2)
+
+
 def print_summary(m):
     print(f"{m['name']}: {len(m['sources'])} sources, {len(m['detectors'])} detectors, {len(m['index_c'])} channels")
     for k, (i, j) in enumerate(m["index_c"].astype(int)):
@@ -231,6 +239,7 @@ def print_summary(m):
 def main():
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--name", default=None)
+    p.add_argument("--spec", default=None, help="JSON file with name/sources/detectors/min_mm/max_mm/include/exclude")
     p.add_argument("--sources", default=None, help="comma-separated 10-10 labels (default: PianoNoise montage)")
     p.add_argument("--detectors", default=None)
     p.add_argument("--min-mm", type=float, default=None)
@@ -248,6 +257,9 @@ def main():
         print(" ".join(sorted(pos)))
         return
     spec = dict(PIANO_NOISE)
+    if a.spec:
+        with open(a.spec) as f:
+            spec.update(json.load(f))
     if a.sources or a.detectors:
         if not (a.sources and a.detectors):
             sys.exit("give both --sources and --detectors")
@@ -266,6 +278,7 @@ def main():
     write_nirsite_txt(m, outdir)
     write_ncfg(m, os.path.join(a.out, m["name"] + ".ncfg"), accelerometer=not a.no_accelerometer, biosignals=a.biosignals)
     write_figure(m, os.path.join(outdir, "montage.png"))
+    write_spec(spec, os.path.join(outdir, "spec.json"))
     print_summary(m)
     print(f"\nwritten to {outdir}/ and {os.path.join(a.out, m['name'] + '.ncfg')}")
 

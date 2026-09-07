@@ -1,0 +1,22 @@
+{
+  "conditions": [
+    {
+      "id": "cond-3",
+      "name": "QUIET",
+      "color": "#e5c07b",
+      "durationS": null,
+      "eventNames": [
+        "20"
+      ]
+    },
+    {
+      "id": "596b655f-80d4-45ed-9a14-980243eb0292",
+      "name": "NOISE",
+      "color": "#56b6c2",
+      "durationS": null,
+      "eventNames": [
+        "21"
+      ]
+    }
+  ]
+}

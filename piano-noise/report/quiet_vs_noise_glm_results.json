@@ -1,0 +1,1245 @@
+{
+  "SchemaVersion": "1.0",
+  "GeneratedBy": [
+    {
+      "Name": "NIRWizard",
+      "Version": "0.1.7"
+    },
+    {
+      "Name": "cedalion",
+      "Version": "26.5.2.dev11+ga7eb62531",
+      "Description": "preprocessing worker"
+    }
+  ],
+  "Sources": [
+    {
+      "Path": "/home/adama/dev/lydia-adept/piano-noise/data/dur40/quiet_1.snirf",
+      "SHA256": "3450a7da53c06fca85a7eea728119ec2acdb0ab65c898234b4f9e6130cca2266"
+    },
+    {
+      "Path": "/home/adama/dev/lydia-adept/piano-noise/data/dur40/quiet_2.snirf",
+      "SHA256": "fffd8621e0f23f2f6b8d8a96399af57657bfe620a8d1436530fb36618354f444"
+    },
+    {
+      "Path": "/home/adama/dev/lydia-adept/piano-noise/data/dur40/noise_1.snirf",
+      "SHA256": "e02b5983b2f586ec1eec748e2d8d6c5240c7723ca7ba4dbb3f91196c2c8acb47"
+    },
+    {
+      "Path": "/home/adama/dev/lydia-adept/piano-noise/data/dur40/noise_2.snirf",
+      "SHA256": "c98402779496ac1aba0fb382d28822eb689572c5d291435b7733ef053f4fb302"
+    }
+  ],
+  "Parameters": {
+    "Pipeline": {
+      "backend": {
+        "name": "cedalion",
+        "version": "26.5.2.dev11+ga7eb62531"
+      },
+      "identity": {
+        "deviations": [
+          "lowpass_filter removed",
+          "motion_pca added (position 2)",
+          "motion_wavelet added (position 4)",
+          "bandpass_filter added (position 5)",
+          "resample added (position 7)"
+        ],
+        "label": "derived from cedalion-recommended@1, 5 deviations",
+        "preset": "cedalion-recommended@1",
+        "state": "derived"
+      },
+      "motion_correction": [
+        "motion_pca",
+        "tddr",
+        "motion_wavelet"
+      ],
+      "sanity_warnings": [
+        {
+          "id": "stacked_filters",
+          "message": "preprocessing bandpass_filter 0.01–0.5 Hz overlaps the GLM's DCT drift cutoff (128 s = 0.0078 Hz): both remove low frequencies — the record carries both filters",
+          "rule": 1,
+          "surfaces": [
+            "preprocessing",
+            "glm"
+          ],
+          "title": "Stacked filters"
+        }
+      ],
+      "source": {
+        "data_kind": "RawCW",
+        "sampling_rate_hz": 12.207031249999998
+      },
+      "status": "as-executed",
+      "steps": [
+        {
+          "id": "optical_density",
+          "library_function": "cedalion.nirs.cw.int2od",
+          "params": {
+            "baseline": {
+              "status": "as-executed",
+              "value": "temporal mean per channel and wavelength"
+            }
+          },
+          "status": "as-executed"
+        },
+        {
+          "id": "motion_pca",
+          "library_function": "cedalion.sigproc.motion.pca",
+          "motion_annotations": [
+            {
+              "duration": 2.4575999999999887,
+              "onset": 620.46208,
+              "source": "motion_pca"
+            },
+            {
+              "duration": 2.2937599999999385,
+              "onset": 648.3968000000001,
+              "source": "motion_pca"
+            },
+            {
+              "duration": 2.2937599999999385,
+              "onset": 1186.1196800000002,
+              "source": "motion_pca"
+            },
+            {
+              "duration": 2.04799999999992,
+              "onset": 1648.2304000000004,
+              "source": "motion_pca"
+            },
+            {
+              "duration": 2.2118399999998566,
+              "onset": 1850.3270400000004,
+              "source": "motion_pca"
+            },
+            {
+              "duration": 4.587520000000186,
+              "onset": 1865.6460800000002,
+              "source": "motion_pca"
+            },
+            {
+              "duration": 2.6214399999998115,
+              "onset": 1871.9539200000004,
+              "source": "motion_pca"
+            },
+            {
+              "duration": 2.3756800000000204,
+              "onset": 1916.4364800000003,
+              "source": "motion_pca"
+            },
+            {
+              "duration": 2.04799999999992,
+              "onset": 2042.6752000000004,
+              "source": "motion_pca"
+            }
+          ],
+          "params": {
+            "amp_thresh": {
+              "status": "as-executed",
+              "value": 5.0
+            },
+            "n_artifact_segments": {
+              "status": "as-executed",
+              "value": 9
+            },
+            "n_components_removed": {
+              "status": "as-executed",
+              "value": 15
+            },
+            "n_sv": {
+              "status": "as-executed",
+              "value": 0.97
+            },
+            "stdev_thresh": {
+              "status": "as-executed",
+              "value": 50.0
+            },
+            "t_mask": {
+              "status": "as-executed",
+              "value": 1.0
+            },
+            "t_motion": {
+              "status": "as-executed",
+              "value": 0.5
+            }
+          },
+          "status": "as-executed"
+        },
+        {
+          "id": "tddr",
+          "library_function": "cedalion.sigproc.motion.tddr",
+          "params": {
+            "method": {
+              "status": "as-executed",
+              "value": "temporal derivative distribution repair (Fishburn 2019)"
+            }
+          },
+          "status": "as-executed"
+        },
+        {
+          "id": "motion_wavelet",
+          "library_function": "cedalion.sigproc.motion.wavelet",
+          "params": {
+            "iqr": {
+              "status": "as-executed",
+              "value": 1.5
+            },
+            "level": {
+              "status": "as-executed",
+              "value": 4
+            },
+            "wavelet": {
+              "status": "as-executed",
+              "value": "db2"
+            }
+          },
+          "status": "as-executed"
+        },
+        {
+          "id": "bandpass_filter",
+          "library_function": "cedalion.sigproc.frequency.freq_filter",
+          "params": {
+            "effective_order": {
+              "status": "as-executed",
+              "value": 8
+            },
+            "fmax": {
+              "status": "as-executed",
+              "value": 0.5
+            },
+            "fmin": {
+              "status": "as-executed",
+              "value": 0.01
+            },
+            "method": {
+              "status": "as-executed",
+              "value": "iir butterworth"
+            },
+            "order": {
+              "status": "as-executed",
+              "value": 4
+            },
+            "phase": {
+              "status": "as-executed",
+              "value": "zero-phase"
+            },
+            "sfreq": {
+              "status": "as-executed",
+              "value": 12.207031249999998
+            }
+          },
+          "status": "as-executed"
+        },
+        {
+          "id": "beer_lambert_law",
+          "library_function": "cedalion.nirs.cw.od2conc",
+          "params": {
+            "cedalion_spectrum": {
+              "status": "as-executed",
+              "value": "prahl"
+            },
+            "distances_mm": {
+              "status": "as-executed",
+              "value": [
+                {
+                  "channel": "S1-D1",
+                  "mm": 30.365032175184666
+                },
+                {
+                  "channel": "S1-D2",
+                  "mm": 29.89252634020751
+                },
+                {
+                  "channel": "S1-D3",
+                  "mm": 39.94168002225244
+                },
+                {
+                  "channel": "S2-D1",
+                  "mm": 30.39864924630698
+                },
+                {
+                  "channel": "S2-D4",
+                  "mm": 35.95751234443229
+                },
+                {
+                  "channel": "S3-D1",
+                  "mm": 31.59301142657977
+                },
+                {
+                  "channel": "S3-D3",
+                  "mm": 39.104054559597785
+                },
+                {
+                  "channel": "S3-D4",
+                  "mm": 41.85212574051646
+                },
+                {
+                  "channel": "S4-D2",
+                  "mm": 31.42764886210866
+                },
+                {
+                  "channel": "S4-D3",
+                  "mm": 38.7272432403857
+                },
+                {
+                  "channel": "S4-D7",
+                  "mm": 41.19043200793116
+                },
+                {
+                  "channel": "S5-D2",
+                  "mm": 29.826400134779927
+                },
+                {
+                  "channel": "S5-D7",
+                  "mm": 35.54595303265901
+                },
+                {
+                  "channel": "S6-D3",
+                  "mm": 39.79523666219363
+                },
+                {
+                  "channel": "S6-D5",
+                  "mm": 30.4281495493893
+                },
+                {
+                  "channel": "S6-D6",
+                  "mm": 30.22042827294147
+                },
+                {
+                  "channel": "S6-D9",
+                  "mm": 39.854208033782335
+                },
+                {
+                  "channel": "S7-D4",
+                  "mm": 30.590449784205532
+                },
+                {
+                  "channel": "S7-D5",
+                  "mm": 30.479283029625222
+                },
+                {
+                  "channel": "S7-D8",
+                  "mm": 37.19910079558375
+                },
+                {
+                  "channel": "S8-D6",
+                  "mm": 30.27327767190068
+                },
+                {
+                  "channel": "S8-D7",
+                  "mm": 30.38017174079172
+                },
+                {
+                  "channel": "S8-D10",
+                  "mm": 36.752066567745544
+                },
+                {
+                  "channel": "S9-D4",
+                  "mm": 34.135067745648314
+                },
+                {
+                  "channel": "S9-D8",
+                  "mm": 37.039572324744796
+                },
+                {
+                  "channel": "S9-D11",
+                  "mm": 34.027343519587305
+                },
+                {
+                  "channel": "S9-D13",
+                  "mm": 37.47917668519413
+                },
+                {
+                  "channel": "S10-D5",
+                  "mm": 39.19949511154448
+                },
+                {
+                  "channel": "S10-D8",
+                  "mm": 37.17697119185477
+                },
+                {
+                  "channel": "S10-D9",
+                  "mm": 36.98717834601607
+                },
+                {
+                  "channel": "S11-D6",
+                  "mm": 38.93994012578859
+                },
+                {
+                  "channel": "S11-D9",
+                  "mm": 36.87228669339617
+                },
+                {
+                  "channel": "S11-D10",
+                  "mm": 36.96920711889829
+                },
+                {
+                  "channel": "S12-D7",
+                  "mm": 33.670150192715205
+                },
+                {
+                  "channel": "S12-D10",
+                  "mm": 36.96963345774475
+                },
+                {
+                  "channel": "S12-D12",
+                  "mm": 33.44405304385221
+                },
+                {
+                  "channel": "S12-D15",
+                  "mm": 37.292792681696554
+                },
+                {
+                  "channel": "S13-D8",
+                  "mm": 37.60151785500154
+                },
+                {
+                  "channel": "S13-D11",
+                  "mm": 40.68730792274171
+                },
+                {
+                  "channel": "S14-D10",
+                  "mm": 37.07283626862126
+                },
+                {
+                  "channel": "S14-D12",
+                  "mm": 40.6657533681598
+                },
+                {
+                  "channel": "S15-D11",
+                  "mm": 41.14616838783412
+                },
+                {
+                  "channel": "S15-D13",
+                  "mm": 30.584562527523584
+                },
+                {
+                  "channel": "S15-D14",
+                  "mm": 30.406440008656062
+                },
+                {
+                  "channel": "S16-D12",
+                  "mm": 41.141114824467266
+                },
+                {
+                  "channel": "S16-D15",
+                  "mm": 30.008792061660863
+                },
+                {
+                  "channel": "S16-D16",
+                  "mm": 31.03936996783278
+                }
+              ]
+            },
+            "dpf": {
+              "status": "as-executed",
+              "value": [
+                6.151632237463787,
+                5.0893595374637925
+              ]
+            },
+            "extinction_source": {
+              "status": "as-executed",
+              "value": "Prahl compilation (Gratzer/Kollias data; cedalion prahl_absorption_spectrum.tsv, linear interpolation)"
+            },
+            "mode": {
+              "status": "as-executed",
+              "value": "dpf_corrected"
+            },
+            "units": {
+              "status": "as-executed",
+              "value": "uM"
+            },
+            "wavelengths": {
+              "status": "as-executed",
+              "value": [
+                760.0,
+                850.0
+              ]
+            }
+          },
+          "status": "as-executed"
+        },
+        {
+          "id": "resample",
+          "library_function": "cedalion.math.resample.resample",
+          "params": {
+            "method": {
+              "status": "as-executed",
+              "value": "linear interpolation after order-8 zero-phase Butterworth anti-alias low-pass at sfreq/2"
+            },
+            "n_samples": {
+              "status": "as-executed",
+              "value": 21429
+            },
+            "sfreq": {
+              "status": "as-executed",
+              "value": 10.0
+            },
+            "sfreq_in": {
+              "status": "as-executed",
+              "value": 12.207031249999998
+            }
+          },
+          "status": "as-executed"
+        }
+      ]
+    },
+    "Conversion": {
+      "age": 25.0,
+      "age_source": "assumed-default",
+      "backend": "cedalion 26.5.2.dev11+ga7eb62531",
+      "distances": [
+        {
+          "channel": "S1-D1",
+          "mm": 30.365032175184666
+        },
+        {
+          "channel": "S1-D2",
+          "mm": 29.89252634020751
+        },
+        {
+          "channel": "S1-D3",
+          "mm": 39.94168002225244
+        },
+        {
+          "channel": "S2-D1",
+          "mm": 30.39864924630698
+        },
+        {
+          "channel": "S2-D4",
+          "mm": 35.95751234443229
+        },
+        {
+          "channel": "S3-D1",
+          "mm": 31.59301142657977
+        },
+        {
+          "channel": "S3-D3",
+          "mm": 39.104054559597785
+        },
+        {
+          "channel": "S3-D4",
+          "mm": 41.85212574051646
+        },
+        {
+          "channel": "S4-D2",
+          "mm": 31.42764886210866
+        },
+        {
+          "channel": "S4-D3",
+          "mm": 38.7272432403857
+        },
+        {
+          "channel": "S4-D7",
+          "mm": 41.19043200793116
+        },
+        {
+          "channel": "S5-D2",
+          "mm": 29.826400134779927
+        },
+        {
+          "channel": "S5-D7",
+          "mm": 35.54595303265901
+        },
+        {
+          "channel": "S6-D3",
+          "mm": 39.79523666219363
+        },
+        {
+          "channel": "S6-D5",
+          "mm": 30.4281495493893
+        },
+        {
+          "channel": "S6-D6",
+          "mm": 30.22042827294147
+        },
+        {
+          "channel": "S6-D9",
+          "mm": 39.854208033782335
+        },
+        {
+          "channel": "S7-D4",
+          "mm": 30.590449784205532
+        },
+        {
+          "channel": "S7-D5",
+          "mm": 30.479283029625222
+        },
+        {
+          "channel": "S7-D8",
+          "mm": 37.19910079558375
+        },
+        {
+          "channel": "S8-D6",
+          "mm": 30.27327767190068
+        },
+        {
+          "channel": "S8-D7",
+          "mm": 30.38017174079172
+        },
+        {
+          "channel": "S8-D10",
+          "mm": 36.752066567745544
+        },
+        {
+          "channel": "S9-D4",
+          "mm": 34.135067745648314
+        },
+        {
+          "channel": "S9-D8",
+          "mm": 37.039572324744796
+        },
+        {
+          "channel": "S9-D11",
+          "mm": 34.027343519587305
+        },
+        {
+          "channel": "S9-D13",
+          "mm": 37.47917668519413
+        },
+        {
+          "channel": "S10-D5",
+          "mm": 39.19949511154448
+        },
+        {
+          "channel": "S10-D8",
+          "mm": 37.17697119185477
+        },
+        {
+          "channel": "S10-D9",
+          "mm": 36.98717834601607
+        },
+        {
+          "channel": "S11-D6",
+          "mm": 38.93994012578859
+        },
+        {
+          "channel": "S11-D9",
+          "mm": 36.87228669339617
+        },
+        {
+          "channel": "S11-D10",
+          "mm": 36.96920711889829
+        },
+        {
+          "channel": "S12-D7",
+          "mm": 33.670150192715205
+        },
+        {
+          "channel": "S12-D10",
+          "mm": 36.96963345774475
+        },
+        {
+          "channel": "S12-D12",
+          "mm": 33.44405304385221
+        },
+        {
+          "channel": "S12-D15",
+          "mm": 37.292792681696554
+        },
+        {
+          "channel": "S13-D8",
+          "mm": 37.60151785500154
+        },
+        {
+          "channel": "S13-D11",
+          "mm": 40.68730792274171
+        },
+        {
+          "channel": "S14-D10",
+          "mm": 37.07283626862126
+        },
+        {
+          "channel": "S14-D12",
+          "mm": 40.6657533681598
+        },
+        {
+          "channel": "S15-D11",
+          "mm": 41.14616838783412
+        },
+        {
+          "channel": "S15-D13",
+          "mm": 30.584562527523584
+        },
+        {
+          "channel": "S15-D14",
+          "mm": 30.406440008656062
+        },
+        {
+          "channel": "S16-D12",
+          "mm": 41.141114824467266
+        },
+        {
+          "channel": "S16-D15",
+          "mm": 30.008792061660863
+        },
+        {
+          "channel": "S16-D16",
+          "mm": 31.03936996783278
+        }
+      ],
+      "extinction_source": "Prahl compilation (Gratzer/Kollias data; cedalion prahl_absorption_spectrum.tsv, linear interpolation)",
+      "mode": "dpf_corrected",
+      "model_citation": "Scholkmann & Wolf 2013, doi:10.1117/1.JBO.18.10.105004, fitted 690–832 nm, author-endorsed to 950 nm",
+      "units": "uM",
+      "wavelengths": [
+        {
+          "dpf": 6.151632237463787,
+          "extrapolated": false,
+          "lambda_nm": 760.0,
+          "source": "age-model"
+        },
+        {
+          "dpf": 5.0893595374637925,
+          "extrapolated": true,
+          "lambda_nm": 850.0,
+          "note": "extrapolated beyond fitted 690–832 nm range (author-endorsed to 950 nm)",
+          "source": "age-model"
+        }
+      ]
+    },
+    "Quality": {
+      "bad_channels": [],
+      "manual_marks": [],
+      "qc_applied": false,
+      "status": "no QC performed"
+    },
+    "Model": {
+      "analysis": "subject GLM",
+      "ar_order_selected": {
+        "S1-D1": {
+          "HbO": 25,
+          "HbR": 22
+        },
+        "S1-D2": {
+          "HbO": 27,
+          "HbR": 27
+        },
+        "S1-D3": {
+          "HbO": 32,
+          "HbR": 17
+        },
+        "S10-D5": {
+          "HbO": 21,
+          "HbR": 21
+        },
+        "S10-D8": {
+          "HbO": 21,
+          "HbR": 24
+        },
+        "S10-D9": {
+          "HbO": 21,
+          "HbR": 27
+        },
+        "S11-D10": {
+          "HbO": 24,
+          "HbR": 19
+        },
+        "S11-D6": {
+          "HbO": 26,
+          "HbR": 26
+        },
+        "S11-D9": {
+          "HbO": 24,
+          "HbR": 23
+        },
+        "S12-D10": {
+          "HbO": 25,
+          "HbR": 21
+        },
+        "S12-D12": {
+          "HbO": 21,
+          "HbR": 20
+        },
+        "S12-D15": {
+          "HbO": 27,
+          "HbR": 20
+        },
+        "S12-D7": {
+          "HbO": 24,
+          "HbR": 20
+        },
+        "S13-D11": {
+          "HbO": 19,
+          "HbR": 24
+        },
+        "S13-D8": {
+          "HbO": 21,
+          "HbR": 17
+        },
+        "S14-D10": {
+          "HbO": 17,
+          "HbR": 22
+        },
+        "S14-D12": {
+          "HbO": 23,
+          "HbR": 25
+        },
+        "S15-D11": {
+          "HbO": 20,
+          "HbR": 25
+        },
+        "S15-D13": {
+          "HbO": 20,
+          "HbR": 19
+        },
+        "S15-D14": {
+          "HbO": 17,
+          "HbR": 23
+        },
+        "S16-D12": {
+          "HbO": 24,
+          "HbR": 23
+        },
+        "S16-D15": {
+          "HbO": 25,
+          "HbR": 18
+        },
+        "S16-D16": {
+          "HbO": 23,
+          "HbR": 18
+        },
+        "S2-D1": {
+          "HbO": 25,
+          "HbR": 18
+        },
+        "S2-D4": {
+          "HbO": 33,
+          "HbR": 19
+        },
+        "S3-D1": {
+          "HbO": 25,
+          "HbR": 19
+        },
+        "S3-D3": {
+          "HbO": 24,
+          "HbR": 26
+        },
+        "S3-D4": {
+          "HbO": 19,
+          "HbR": 24
+        },
+        "S4-D2": {
+          "HbO": 13,
+          "HbR": 8
+        },
+        "S4-D3": {
+          "HbO": 23,
+          "HbR": 20
+        },
+        "S4-D7": {
+          "HbO": 23,
+          "HbR": 20
+        },
+        "S5-D2": {
+          "HbO": 14,
+          "HbR": 8
+        },
+        "S5-D7": {
+          "HbO": 18,
+          "HbR": 12
+        },
+        "S6-D3": {
+          "HbO": 25,
+          "HbR": 20
+        },
+        "S6-D5": {
+          "HbO": 25,
+          "HbR": 20
+        },
+        "S6-D6": {
+          "HbO": 23,
+          "HbR": 23
+        },
+        "S6-D9": {
+          "HbO": 25,
+          "HbR": 23
+        },
+        "S7-D4": {
+          "HbO": 32,
+          "HbR": 26
+        },
+        "S7-D5": {
+          "HbO": 23,
+          "HbR": 27
+        },
+        "S7-D8": {
+          "HbO": 22,
+          "HbR": 22
+        },
+        "S8-D10": {
+          "HbO": 24,
+          "HbR": 26
+        },
+        "S8-D6": {
+          "HbO": 26,
+          "HbR": 25
+        },
+        "S8-D7": {
+          "HbO": 23,
+          "HbR": 12
+        },
+        "S9-D11": {
+          "HbO": 21,
+          "HbR": 22
+        },
+        "S9-D13": {
+          "HbO": 23,
+          "HbR": 26
+        },
+        "S9-D4": {
+          "HbO": 22,
+          "HbR": 21
+        },
+        "S9-D8": {
+          "HbO": 22,
+          "HbR": 18
+        }
+      },
+      "basis": {
+        "derivatives_role": "nuisance (never tested)",
+        "dispersion_derivative": false,
+        "kernel_samples": 321,
+        "model": "canonical (spm_hrf)",
+        "normalization": "unit sum",
+        "params": {
+          "kernelLengthS": 32.0,
+          "responseDelayS": 6.0,
+          "responseDispersion": 1.0,
+          "responseUndershootRatio": 6.0,
+          "undershootDelayS": 16.0,
+          "undershootDispersion": 1.0
+        },
+        "parity_oracle": "spm_hrf",
+        "temporal_derivative": false
+      },
+      "conditions": [
+        "QUIET",
+        "NOISE"
+      ],
+      "conditions_fitted": [
+        {
+          "duration_s_as_used": {
+            "max": 40.0,
+            "mean": 40.0,
+            "min": 40.0
+          },
+          "n_onsets": 12,
+          "name": "QUIET",
+          "regressor": "boxcar of event duration ⊗ HRF"
+        },
+        {
+          "duration_s_as_used": {
+            "max": 40.0,
+            "mean": 40.0,
+            "min": 40.0
+          },
+          "n_onsets": 12,
+          "name": "NOISE",
+          "regressor": "boxcar of event duration ⊗ HRF"
+        }
+      ],
+      "contrasts": [],
+      "design_columns": [
+        {
+          "conditionIdx": 0,
+          "kind": "condition",
+          "name": "QUIET",
+          "role": "tested"
+        },
+        {
+          "conditionIdx": 1,
+          "kind": "condition",
+          "name": "NOISE",
+          "role": "tested"
+        },
+        {
+          "kind": "drift",
+          "name": "drift_r1_1",
+          "role": "nuisance"
+        },
+        {
+          "kind": "drift",
+          "name": "drift_r1_2",
+          "role": "nuisance"
+        },
+        {
+          "kind": "drift",
+          "name": "drift_r1_3",
+          "role": "nuisance"
+        },
+        {
+          "kind": "drift",
+          "name": "drift_r1_4",
+          "role": "nuisance"
+        },
+        {
+          "kind": "drift",
+          "name": "drift_r1_5",
+          "role": "nuisance"
+        },
+        {
+          "kind": "drift",
+          "name": "drift_r1_6",
+          "role": "nuisance"
+        },
+        {
+          "kind": "drift",
+          "name": "drift_r1_7",
+          "role": "nuisance"
+        },
+        {
+          "kind": "drift",
+          "name": "drift_r1_8",
+          "role": "nuisance"
+        },
+        {
+          "kind": "drift",
+          "name": "drift_r1_9",
+          "role": "nuisance"
+        },
+        {
+          "kind": "drift",
+          "name": "drift_r2_1",
+          "role": "nuisance"
+        },
+        {
+          "kind": "drift",
+          "name": "drift_r2_2",
+          "role": "nuisance"
+        },
+        {
+          "kind": "drift",
+          "name": "drift_r2_3",
+          "role": "nuisance"
+        },
+        {
+          "kind": "drift",
+          "name": "drift_r2_4",
+          "role": "nuisance"
+        },
+        {
+          "kind": "drift",
+          "name": "drift_r2_5",
+          "role": "nuisance"
+        },
+        {
+          "kind": "drift",
+          "name": "drift_r2_6",
+          "role": "nuisance"
+        },
+        {
+          "kind": "drift",
+          "name": "drift_r2_7",
+          "role": "nuisance"
+        },
+        {
+          "kind": "drift",
+          "name": "drift_r3_1",
+          "role": "nuisance"
+        },
+        {
+          "kind": "drift",
+          "name": "drift_r3_2",
+          "role": "nuisance"
+        },
+        {
+          "kind": "drift",
+          "name": "drift_r3_3",
+          "role": "nuisance"
+        },
+        {
+          "kind": "drift",
+          "name": "drift_r3_4",
+          "role": "nuisance"
+        },
+        {
+          "kind": "drift",
+          "name": "drift_r3_5",
+          "role": "nuisance"
+        },
+        {
+          "kind": "drift",
+          "name": "drift_r3_6",
+          "role": "nuisance"
+        },
+        {
+          "kind": "drift",
+          "name": "drift_r3_7",
+          "role": "nuisance"
+        },
+        {
+          "kind": "drift",
+          "name": "drift_r3_8",
+          "role": "nuisance"
+        },
+        {
+          "kind": "drift",
+          "name": "drift_r4_1",
+          "role": "nuisance"
+        },
+        {
+          "kind": "drift",
+          "name": "drift_r4_2",
+          "role": "nuisance"
+        },
+        {
+          "kind": "drift",
+          "name": "drift_r4_3",
+          "role": "nuisance"
+        },
+        {
+          "kind": "drift",
+          "name": "drift_r4_4",
+          "role": "nuisance"
+        },
+        {
+          "kind": "drift",
+          "name": "drift_r4_5",
+          "role": "nuisance"
+        },
+        {
+          "kind": "drift",
+          "name": "drift_r4_6",
+          "role": "nuisance"
+        },
+        {
+          "kind": "drift",
+          "name": "drift_r4_7",
+          "role": "nuisance"
+        },
+        {
+          "kind": "runIntercept",
+          "name": "run_2",
+          "role": "nuisance"
+        },
+        {
+          "kind": "runIntercept",
+          "name": "run_3",
+          "role": "nuisance"
+        },
+        {
+          "kind": "runIntercept",
+          "name": "run_4",
+          "role": "nuisance"
+        },
+        {
+          "kind": "intercept",
+          "name": "intercept",
+          "role": "nuisance"
+        }
+      ],
+      "drift": {
+        "basis": "DCT (spm_dctmtx)",
+        "cutoff_s": 128.0,
+        "n_terms": 31
+      },
+      "inference": {
+        "arPmaxSamples": 40,
+        "correction": "Benjamini-Hochberg FDR",
+        "families": "condition × chromophore, across channels",
+        "inferential": true,
+        "reason": "AR-IRLS solver (BIC-AR prewhitening + robust IRLS) with a single tested effect per condition × chromophore (canonical HRF β)",
+        "solver": "arIrls"
+      },
+      "intercept": true,
+      "n_timepoints": 21429,
+      "runs": {
+        "condition_runs": {
+          "NOISE": [
+            3,
+            4
+          ],
+          "QUIET": [
+            1,
+            2
+          ]
+        },
+        "drift": {
+          "detail": "one spm_dctmtx block per run span, sized by that span (SPM spm_filter / spm_fmri_concatenate multi-session convention)",
+          "policy": "per-run"
+        },
+        "intercepts": {
+          "columns": [
+            "run_2",
+            "run_3",
+            "run_4"
+          ],
+          "policy": "N−1 run indicator columns; run 1 is the intercept's reference"
+        },
+        "n_runs": 4,
+        "session_confounds": [],
+        "spans": [
+          {
+            "end_s": 621.8000000000001,
+            "first_sample": 0,
+            "n_samples": 6219,
+            "run": 1,
+            "start_s": 0.0
+          },
+          {
+            "end_s": 1120.1000000000001,
+            "first_sample": 6219,
+            "n_samples": 4983,
+            "run": 2,
+            "start_s": 621.9000000000001
+          },
+          {
+            "end_s": 1635.8000000000002,
+            "first_sample": 11202,
+            "n_samples": 5157,
+            "run": 3,
+            "start_s": 1120.2
+          },
+          {
+            "end_s": 2142.8,
+            "first_sample": 16359,
+            "n_samples": 5070,
+            "run": 4,
+            "start_s": 1635.9
+          }
+        ],
+        "whitening": {
+          "detail": "one pooled AR(P) over the whole residual, whitening restarted (zero initial conditions) at every run start — block-diagonal W with identical blocks, no rows dropped and no leak across a seam",
+          "policy": "pooled"
+        }
+      },
+      "sampling_rate_hz": 10.0,
+      "short_channel_regression": {
+        "columns": [],
+        "combination": "neither",
+        "glm": false,
+        "mode": "auto",
+        "n_short_channels": 0,
+        "preprocessing": false,
+        "reason": "auto: no short channel in the analysed block",
+        "regressor": "mean of the short channels' series, one column per chromophore (HbO fit ← short HbO, HbR fit ← short HbR); nuisance, never tested",
+        "short_channels_in_channel_list": true,
+        "short_threshold_mm": 15.0
+      },
+      "solver": "AR-IRLS",
+      "solver_settings": {
+        "ar_estimator": "Yule-Walker (Levinson-Durbin), order by BIC over 0..Pmax",
+        "convergence_tolerance": 0.01,
+        "covariance": "σ²·E[ψ²]/E[ψ′]²·(XᵀX)⁻¹ on the whitened design (Street–Carroll–Ruppert)",
+        "dfe": "n − p (not adjusted)",
+        "max_outer_iterations": 10,
+        "name": "AR-IRLS",
+        "pmax_s": 4.0,
+        "pmax_samples": 40,
+        "reference": "Barker, Aarabi & Huppert 2013 (doi:10.1364/BOE.4.001366); AnalyzIR nirs.math.ar_irls",
+        "robust_weight": "Tukey bisquare",
+        "tune": 4.685
+      }
+    }
+  },
+  "Exclusions": [],
+  "Statistics": {
+    "solver": "AR-IRLS",
+    "inferential": true,
+    "status_reason": "AR-IRLS solver (BIC-AR prewhitening + robust IRLS) with a single tested effect per condition × chromophore (canonical HRF β)",
+    "correction": "Benjamini-Hochberg FDR",
+    "families": "condition × chromophore, across channels",
+    "df_convention": "residual dfe = n − p from the whitened robust fit",
+    "run_policies": "concatenated session of 4 runs: 3 run-intercept columns (run 1 is the reference), per-run drift, pooled AR whitening"
+  }
+}

@@ -1,0 +1,1908 @@
+{
+  "SchemaVersion": "1.0",
+  "GeneratedBy": [
+    {
+      "Name": "NIRWizard",
+      "Version": "0.1.7"
+    },
+    {
+      "Name": "cedalion",
+      "Version": "26.5.2.dev11+ga7eb62531",
+      "Description": "QC metrics engine (SCI/PSP/SNR/mean amplitude/SD distance/GVTD), cedalion.sigproc.quality via the NIRWizard Python worker"
+    },
+    {
+      "Name": "cedalion",
+      "Version": "26.5.2.dev11+ga7eb62531",
+      "Description": "preprocessing worker"
+    }
+  ],
+  "Sources": [
+    {
+      "Path": "/home/adama/dev/lydia-adept/piano-noise/data/dur40/quiet_1.snirf",
+      "SHA256": "3450a7da53c06fca85a7eea728119ec2acdb0ab65c898234b4f9e6130cca2266"
+    },
+    {
+      "Path": "/home/adama/dev/lydia-adept/piano-noise/data/dur40/quiet_2.snirf",
+      "SHA256": "fffd8621e0f23f2f6b8d8a96399af57657bfe620a8d1436530fb36618354f444"
+    },
+    {
+      "Path": "/home/adama/dev/lydia-adept/piano-noise/data/dur40/noise_1.snirf",
+      "SHA256": "e02b5983b2f586ec1eec748e2d8d6c5240c7723ca7ba4dbb3f91196c2c8acb47"
+    },
+    {
+      "Path": "/home/adama/dev/lydia-adept/piano-noise/data/dur40/noise_2.snirf",
+      "SHA256": "c98402779496ac1aba0fb382d28822eb689572c5d291435b7733ef053f4fb302"
+    }
+  ],
+  "Parameters": {
+    "Pipeline": {
+      "backend": {
+        "name": "cedalion",
+        "version": "26.5.2.dev11+ga7eb62531"
+      },
+      "identity": {
+        "deviations": [
+          "lowpass_filter removed",
+          "motion_pca added (position 2)",
+          "motion_wavelet added (position 4)",
+          "bandpass_filter added (position 5)",
+          "resample added (position 7)"
+        ],
+        "label": "derived from cedalion-recommended@1, 5 deviations",
+        "preset": "cedalion-recommended@1",
+        "state": "derived"
+      },
+      "motion_correction": [
+        "motion_pca",
+        "tddr",
+        "motion_wavelet"
+      ],
+      "sanity_warnings": [
+        {
+          "id": "stacked_filters",
+          "message": "preprocessing bandpass_filter 0.01–0.5 Hz overlaps the GLM's DCT drift cutoff (128 s = 0.0078 Hz): both remove low frequencies — the record carries both filters",
+          "rule": 1,
+          "surfaces": [
+            "preprocessing",
+            "glm"
+          ],
+          "title": "Stacked filters"
+        },
+        {
+          "id": "stacked_filters",
+          "message": "preprocessing bandpass_filter 0.01–0.5 Hz overlaps the connectivity band 0.01–0.1 Hz: the effective band is no longer the panel's — the record carries both filters",
+          "rule": 1,
+          "surfaces": [
+            "preprocessing",
+            "connectivity"
+          ],
+          "title": "Stacked filters"
+        }
+      ],
+      "source": {
+        "data_kind": "RawCW",
+        "sampling_rate_hz": 12.207031249999998
+      },
+      "status": "as-executed",
+      "steps": [
+        {
+          "id": "optical_density",
+          "library_function": "cedalion.nirs.cw.int2od",
+          "params": {
+            "baseline": {
+              "status": "as-executed",
+              "value": "temporal mean per channel and wavelength"
+            }
+          },
+          "status": "as-executed"
+        },
+        {
+          "id": "motion_pca",
+          "library_function": "cedalion.sigproc.motion.pca",
+          "motion_annotations": [
+            {
+              "duration": 2.4575999999999887,
+              "onset": 620.46208,
+              "source": "motion_pca"
+            },
+            {
+              "duration": 2.2937599999999385,
+              "onset": 648.3968000000001,
+              "source": "motion_pca"
+            },
+            {
+              "duration": 2.2937599999999385,
+              "onset": 1186.1196800000002,
+              "source": "motion_pca"
+            },
+            {
+              "duration": 2.04799999999992,
+              "onset": 1648.2304000000004,
+              "source": "motion_pca"
+            },
+            {
+              "duration": 2.2118399999998566,
+              "onset": 1850.3270400000004,
+              "source": "motion_pca"
+            },
+            {
+              "duration": 4.587520000000186,
+              "onset": 1865.6460800000002,
+              "source": "motion_pca"
+            },
+            {
+              "duration": 2.6214399999998115,
+              "onset": 1871.9539200000004,
+              "source": "motion_pca"
+            },
+            {
+              "duration": 2.3756800000000204,
+              "onset": 1916.4364800000003,
+              "source": "motion_pca"
+            },
+            {
+              "duration": 2.04799999999992,
+              "onset": 2042.6752000000004,
+              "source": "motion_pca"
+            }
+          ],
+          "params": {
+            "amp_thresh": {
+              "status": "as-executed",
+              "value": 5.0
+            },
+            "n_artifact_segments": {
+              "status": "as-executed",
+              "value": 9
+            },
+            "n_components_removed": {
+              "status": "as-executed",
+              "value": 15
+            },
+            "n_sv": {
+              "status": "as-executed",
+              "value": 0.97
+            },
+            "stdev_thresh": {
+              "status": "as-executed",
+              "value": 50.0
+            },
+            "t_mask": {
+              "status": "as-executed",
+              "value": 1.0
+            },
+            "t_motion": {
+              "status": "as-executed",
+              "value": 0.5
+            }
+          },
+          "status": "as-executed"
+        },
+        {
+          "id": "tddr",
+          "library_function": "cedalion.sigproc.motion.tddr",
+          "params": {
+            "method": {
+              "status": "as-executed",
+              "value": "temporal derivative distribution repair (Fishburn 2019)"
+            }
+          },
+          "status": "as-executed"
+        },
+        {
+          "id": "motion_wavelet",
+          "library_function": "cedalion.sigproc.motion.wavelet",
+          "params": {
+            "iqr": {
+              "status": "as-executed",
+              "value": 1.5
+            },
+            "level": {
+              "status": "as-executed",
+              "value": 4
+            },
+            "wavelet": {
+              "status": "as-executed",
+              "value": "db2"
+            }
+          },
+          "status": "as-executed"
+        },
+        {
+          "id": "bandpass_filter",
+          "library_function": "cedalion.sigproc.frequency.freq_filter",
+          "params": {
+            "effective_order": {
+              "status": "as-executed",
+              "value": 8
+            },
+            "fmax": {
+              "status": "as-executed",
+              "value": 0.5
+            },
+            "fmin": {
+              "status": "as-executed",
+              "value": 0.01
+            },
+            "method": {
+              "status": "as-executed",
+              "value": "iir butterworth"
+            },
+            "order": {
+              "status": "as-executed",
+              "value": 4
+            },
+            "phase": {
+              "status": "as-executed",
+              "value": "zero-phase"
+            },
+            "sfreq": {
+              "status": "as-executed",
+              "value": 12.207031249999998
+            }
+          },
+          "status": "as-executed"
+        },
+        {
+          "id": "beer_lambert_law",
+          "library_function": "cedalion.nirs.cw.od2conc",
+          "params": {
+            "cedalion_spectrum": {
+              "status": "as-executed",
+              "value": "prahl"
+            },
+            "distances_mm": {
+              "status": "as-executed",
+              "value": [
+                {
+                  "channel": "S1-D1",
+                  "mm": 30.365032175184666
+                },
+                {
+                  "channel": "S1-D2",
+                  "mm": 29.89252634020751
+                },
+                {
+                  "channel": "S1-D3",
+                  "mm": 39.94168002225244
+                },
+                {
+                  "channel": "S2-D1",
+                  "mm": 30.39864924630698
+                },
+                {
+                  "channel": "S2-D4",
+                  "mm": 35.95751234443229
+                },
+                {
+                  "channel": "S3-D1",
+                  "mm": 31.59301142657977
+                },
+                {
+                  "channel": "S3-D3",
+                  "mm": 39.104054559597785
+                },
+                {
+                  "channel": "S3-D4",
+                  "mm": 41.85212574051646
+                },
+                {
+                  "channel": "S4-D2",
+                  "mm": 31.42764886210866
+                },
+                {
+                  "channel": "S4-D3",
+                  "mm": 38.7272432403857
+                },
+                {
+                  "channel": "S4-D7",
+                  "mm": 41.19043200793116
+                },
+                {
+                  "channel": "S5-D2",
+                  "mm": 29.826400134779927
+                },
+                {
+                  "channel": "S5-D7",
+                  "mm": 35.54595303265901
+                },
+                {
+                  "channel": "S6-D3",
+                  "mm": 39.79523666219363
+                },
+                {
+                  "channel": "S6-D5",
+                  "mm": 30.4281495493893
+                },
+                {
+                  "channel": "S6-D6",
+                  "mm": 30.22042827294147
+                },
+                {
+                  "channel": "S6-D9",
+                  "mm": 39.854208033782335
+                },
+                {
+                  "channel": "S7-D4",
+                  "mm": 30.590449784205532
+                },
+                {
+                  "channel": "S7-D5",
+                  "mm": 30.479283029625222
+                },
+                {
+                  "channel": "S7-D8",
+                  "mm": 37.19910079558375
+                },
+                {
+                  "channel": "S8-D6",
+                  "mm": 30.27327767190068
+                },
+                {
+                  "channel": "S8-D7",
+                  "mm": 30.38017174079172
+                },
+                {
+                  "channel": "S8-D10",
+                  "mm": 36.752066567745544
+                },
+                {
+                  "channel": "S9-D4",
+                  "mm": 34.135067745648314
+                },
+                {
+                  "channel": "S9-D8",
+                  "mm": 37.039572324744796
+                },
+                {
+                  "channel": "S9-D11",
+                  "mm": 34.027343519587305
+                },
+                {
+                  "channel": "S9-D13",
+                  "mm": 37.47917668519413
+                },
+                {
+                  "channel": "S10-D5",
+                  "mm": 39.19949511154448
+                },
+                {
+                  "channel": "S10-D8",
+                  "mm": 37.17697119185477
+                },
+                {
+                  "channel": "S10-D9",
+                  "mm": 36.98717834601607
+                },
+                {
+                  "channel": "S11-D6",
+                  "mm": 38.93994012578859
+                },
+                {
+                  "channel": "S11-D9",
+                  "mm": 36.87228669339617
+                },
+                {
+                  "channel": "S11-D10",
+                  "mm": 36.96920711889829
+                },
+                {
+                  "channel": "S12-D7",
+                  "mm": 33.670150192715205
+                },
+                {
+                  "channel": "S12-D10",
+                  "mm": 36.96963345774475
+                },
+                {
+                  "channel": "S12-D12",
+                  "mm": 33.44405304385221
+                },
+                {
+                  "channel": "S12-D15",
+                  "mm": 37.292792681696554
+                },
+                {
+                  "channel": "S13-D8",
+                  "mm": 37.60151785500154
+                },
+                {
+                  "channel": "S13-D11",
+                  "mm": 40.68730792274171
+                },
+                {
+                  "channel": "S14-D10",
+                  "mm": 37.07283626862126
+                },
+                {
+                  "channel": "S14-D12",
+                  "mm": 40.6657533681598
+                },
+                {
+                  "channel": "S15-D11",
+                  "mm": 41.14616838783412
+                },
+                {
+                  "channel": "S15-D13",
+                  "mm": 30.584562527523584
+                },
+                {
+                  "channel": "S15-D14",
+                  "mm": 30.406440008656062
+                },
+                {
+                  "channel": "S16-D12",
+                  "mm": 41.141114824467266
+                },
+                {
+                  "channel": "S16-D15",
+                  "mm": 30.008792061660863
+                },
+                {
+                  "channel": "S16-D16",
+                  "mm": 31.03936996783278
+                }
+              ]
+            },
+            "dpf": {
+              "status": "as-executed",
+              "value": [
+                6.151632237463787,
+                5.0893595374637925
+              ]
+            },
+            "extinction_source": {
+              "status": "as-executed",
+              "value": "Prahl compilation (Gratzer/Kollias data; cedalion prahl_absorption_spectrum.tsv, linear interpolation)"
+            },
+            "mode": {
+              "status": "as-executed",
+              "value": "dpf_corrected"
+            },
+            "units": {
+              "status": "as-executed",
+              "value": "uM"
+            },
+            "wavelengths": {
+              "status": "as-executed",
+              "value": [
+                760.0,
+                850.0
+              ]
+            }
+          },
+          "status": "as-executed"
+        },
+        {
+          "id": "resample",
+          "library_function": "cedalion.math.resample.resample",
+          "params": {
+            "method": {
+              "status": "as-executed",
+              "value": "linear interpolation after order-8 zero-phase Butterworth anti-alias low-pass at sfreq/2"
+            },
+            "n_samples": {
+              "status": "as-executed",
+              "value": 21429
+            },
+            "sfreq": {
+              "status": "as-executed",
+              "value": 10.0
+            },
+            "sfreq_in": {
+              "status": "as-executed",
+              "value": 12.207031249999998
+            }
+          },
+          "status": "as-executed"
+        }
+      ]
+    },
+    "Conversion": {
+      "age": 25.0,
+      "age_source": "assumed-default",
+      "backend": "cedalion 26.5.2.dev11+ga7eb62531",
+      "distances": [
+        {
+          "channel": "S1-D1",
+          "mm": 30.365032175184666
+        },
+        {
+          "channel": "S1-D2",
+          "mm": 29.89252634020751
+        },
+        {
+          "channel": "S1-D3",
+          "mm": 39.94168002225244
+        },
+        {
+          "channel": "S2-D1",
+          "mm": 30.39864924630698
+        },
+        {
+          "channel": "S2-D4",
+          "mm": 35.95751234443229
+        },
+        {
+          "channel": "S3-D1",
+          "mm": 31.59301142657977
+        },
+        {
+          "channel": "S3-D3",
+          "mm": 39.104054559597785
+        },
+        {
+          "channel": "S3-D4",
+          "mm": 41.85212574051646
+        },
+        {
+          "channel": "S4-D2",
+          "mm": 31.42764886210866
+        },
+        {
+          "channel": "S4-D3",
+          "mm": 38.7272432403857
+        },
+        {
+          "channel": "S4-D7",
+          "mm": 41.19043200793116
+        },
+        {
+          "channel": "S5-D2",
+          "mm": 29.826400134779927
+        },
+        {
+          "channel": "S5-D7",
+          "mm": 35.54595303265901
+        },
+        {
+          "channel": "S6-D3",
+          "mm": 39.79523666219363
+        },
+        {
+          "channel": "S6-D5",
+          "mm": 30.4281495493893
+        },
+        {
+          "channel": "S6-D6",
+          "mm": 30.22042827294147
+        },
+        {
+          "channel": "S6-D9",
+          "mm": 39.854208033782335
+        },
+        {
+          "channel": "S7-D4",
+          "mm": 30.590449784205532
+        },
+        {
+          "channel": "S7-D5",
+          "mm": 30.479283029625222
+        },
+        {
+          "channel": "S7-D8",
+          "mm": 37.19910079558375
+        },
+        {
+          "channel": "S8-D6",
+          "mm": 30.27327767190068
+        },
+        {
+          "channel": "S8-D7",
+          "mm": 30.38017174079172
+        },
+        {
+          "channel": "S8-D10",
+          "mm": 36.752066567745544
+        },
+        {
+          "channel": "S9-D4",
+          "mm": 34.135067745648314
+        },
+        {
+          "channel": "S9-D8",
+          "mm": 37.039572324744796
+        },
+        {
+          "channel": "S9-D11",
+          "mm": 34.027343519587305
+        },
+        {
+          "channel": "S9-D13",
+          "mm": 37.47917668519413
+        },
+        {
+          "channel": "S10-D5",
+          "mm": 39.19949511154448
+        },
+        {
+          "channel": "S10-D8",
+          "mm": 37.17697119185477
+        },
+        {
+          "channel": "S10-D9",
+          "mm": 36.98717834601607
+        },
+        {
+          "channel": "S11-D6",
+          "mm": 38.93994012578859
+        },
+        {
+          "channel": "S11-D9",
+          "mm": 36.87228669339617
+        },
+        {
+          "channel": "S11-D10",
+          "mm": 36.96920711889829
+        },
+        {
+          "channel": "S12-D7",
+          "mm": 33.670150192715205
+        },
+        {
+          "channel": "S12-D10",
+          "mm": 36.96963345774475
+        },
+        {
+          "channel": "S12-D12",
+          "mm": 33.44405304385221
+        },
+        {
+          "channel": "S12-D15",
+          "mm": 37.292792681696554
+        },
+        {
+          "channel": "S13-D8",
+          "mm": 37.60151785500154
+        },
+        {
+          "channel": "S13-D11",
+          "mm": 40.68730792274171
+        },
+        {
+          "channel": "S14-D10",
+          "mm": 37.07283626862126
+        },
+        {
+          "channel": "S14-D12",
+          "mm": 40.6657533681598
+        },
+        {
+          "channel": "S15-D11",
+          "mm": 41.14616838783412
+        },
+        {
+          "channel": "S15-D13",
+          "mm": 30.584562527523584
+        },
+        {
+          "channel": "S15-D14",
+          "mm": 30.406440008656062
+        },
+        {
+          "channel": "S16-D12",
+          "mm": 41.141114824467266
+        },
+        {
+          "channel": "S16-D15",
+          "mm": 30.008792061660863
+        },
+        {
+          "channel": "S16-D16",
+          "mm": 31.03936996783278
+        }
+      ],
+      "extinction_source": "Prahl compilation (Gratzer/Kollias data; cedalion prahl_absorption_spectrum.tsv, linear interpolation)",
+      "mode": "dpf_corrected",
+      "model_citation": "Scholkmann & Wolf 2013, doi:10.1117/1.JBO.18.10.105004, fitted 690–832 nm, author-endorsed to 950 nm",
+      "units": "uM",
+      "wavelengths": [
+        {
+          "dpf": 6.151632237463787,
+          "extrapolated": false,
+          "lambda_nm": 760.0,
+          "source": "age-model"
+        },
+        {
+          "dpf": 5.0893595374637925,
+          "extrapolated": true,
+          "lambda_nm": 850.0,
+          "note": "extrapolated beyond fitted 690–832 nm range (author-endorsed to 950 nm)",
+          "source": "age-model"
+        }
+      ]
+    },
+    "Quality": {
+      "cardiac_band_hz": [
+        0.5,
+        2.5
+      ],
+      "channels": [
+        {
+          "channel": "S1-D1",
+          "failing": [
+            "windows",
+            "psp"
+          ],
+          "good_fraction": 0.665083135391924,
+          "mean_amplitude_per_wavelength": [
+            428.9970408259782,
+            329.9636146831775
+          ],
+          "psp_median": 0.13818169393652208,
+          "qc_status": "bad",
+          "sci_median": 0.9948149382230957,
+          "separation_mm": 30.365032175184666,
+          "snr_min": 13.135218460172208,
+          "snr_per_wavelength": [
+            15.180173178370858,
+            13.135218460172208
+          ],
+          "status": "bad",
+          "verdict_source": "qc",
+          "windows_good": 280,
+          "windows_total": 421
+        },
+        {
+          "channel": "S1-D2",
+          "failing": [
+            "windows",
+            "psp"
+          ],
+          "good_fraction": 0.6009501187648456,
+          "mean_amplitude_per_wavelength": [
+            184.67903951916762,
+            185.08974457647156
+          ],
+          "psp_median": 0.12999524526797762,
+          "qc_status": "bad",
+          "sci_median": 0.9920127513363904,
+          "separation_mm": 29.89252634020751,
+          "snr_min": 16.802350633848658,
+          "snr_per_wavelength": [
+            17.98722302781889,
+            16.802350633848658
+          ],
+          "status": "bad",
+          "verdict_source": "qc",
+          "windows_good": 253,
+          "windows_total": 421
+        },
+        {
+          "channel": "S1-D3",
+          "failing": [],
+          "good_fraction": 0.833729216152019,
+          "mean_amplitude_per_wavelength": [
+            21.912570351732345,
+            28.15817637465415
+          ],
+          "psp_median": 0.1668059924491865,
+          "qc_status": "good",
+          "sci_median": 0.9889926664509411,
+          "separation_mm": 39.94168002225244,
+          "snr_min": 12.40717862682023,
+          "snr_per_wavelength": [
+            14.346236249163553,
+            12.40717862682023
+          ],
+          "status": "good",
+          "verdict_source": "qc",
+          "windows_good": 351,
+          "windows_total": 421
+        },
+        {
+          "channel": "S2-D1",
+          "failing": [],
+          "good_fraction": 0.8717339667458432,
+          "mean_amplitude_per_wavelength": [
+            522.5743664971682,
+            498.229131920694
+          ],
+          "psp_median": 0.17378861025428397,
+          "qc_status": "good",
+          "sci_median": 0.9967318962322408,
+          "separation_mm": 30.39864924630698,
+          "snr_min": 17.838186371613673,
+          "snr_per_wavelength": [
+            23.88696409830031,
+            17.838186371613673
+          ],
+          "status": "good",
+          "verdict_source": "qc",
+          "windows_good": 367,
+          "windows_total": 421
+        },
+        {
+          "channel": "S2-D4",
+          "failing": [],
+          "good_fraction": 0.8978622327790974,
+          "mean_amplitude_per_wavelength": [
+            33.12945980239763,
+            46.76458073903302
+          ],
+          "psp_median": 0.1720367160784524,
+          "qc_status": "good",
+          "sci_median": 0.9926846067338959,
+          "separation_mm": 35.95751234443229,
+          "snr_min": 29.144631729671023,
+          "snr_per_wavelength": [
+            36.34967769316741,
+            29.144631729671023
+          ],
+          "status": "good",
+          "verdict_source": "qc",
+          "windows_good": 378,
+          "windows_total": 421
+        },
+        {
+          "channel": "S3-D1",
+          "failing": [],
+          "good_fraction": 0.828978622327791,
+          "mean_amplitude_per_wavelength": [
+            140.81501342642613,
+            182.1810743775527
+          ],
+          "psp_median": 0.1712361357796351,
+          "qc_status": "good",
+          "sci_median": 0.9960298998652773,
+          "separation_mm": 31.59301142657977,
+          "snr_min": 30.260449095814973,
+          "snr_per_wavelength": [
+            38.57802203474498,
+            30.260449095814973
+          ],
+          "status": "good",
+          "verdict_source": "qc",
+          "windows_good": 349,
+          "windows_total": 421
+        },
+        {
+          "channel": "S3-D3",
+          "failing": [],
+          "good_fraction": 0.9667458432304038,
+          "mean_amplitude_per_wavelength": [
+            10.672157043867701,
+            20.036974131207995
+          ],
+          "psp_median": 0.18308050169981885,
+          "qc_status": "good",
+          "sci_median": 0.9768220194644363,
+          "separation_mm": 39.104054559597785,
+          "snr_min": 32.04379249903193,
+          "snr_per_wavelength": [
+            47.77657744578483,
+            32.04379249903193
+          ],
+          "status": "good",
+          "verdict_source": "qc",
+          "windows_good": 407,
+          "windows_total": 421
+        },
+        {
+          "channel": "S3-D4",
+          "failing": [
+            "windows",
+            "sci",
+            "psp"
+          ],
+          "good_fraction": 0.019002375296912115,
+          "mean_amplitude_per_wavelength": [
+            2.9434099512580665,
+            5.866285182452913
+          ],
+          "psp_median": 0.07957576402457851,
+          "qc_status": "bad",
+          "sci_median": 0.6219025510903462,
+          "separation_mm": 41.85212574051646,
+          "snr_min": 46.03242110063948,
+          "snr_per_wavelength": [
+            46.03242110063948,
+            52.338327640406355
+          ],
+          "status": "bad",
+          "verdict_source": "qc",
+          "windows_good": 8,
+          "windows_total": 421
+        },
+        {
+          "channel": "S4-D2",
+          "failing": [],
+          "good_fraction": 0.7505938242280285,
+          "mean_amplitude_per_wavelength": [
+            181.00595796864758,
+            231.95404959952592
+          ],
+          "psp_median": 0.16639540194307936,
+          "qc_status": "good",
+          "sci_median": 0.9961160481885439,
+          "separation_mm": 31.42764886210866,
+          "snr_min": 26.319044954098672,
+          "snr_per_wavelength": [
+            37.46266607681118,
+            26.319044954098672
+          ],
+          "status": "good",
+          "verdict_source": "qc",
+          "windows_good": 316,
+          "windows_total": 421
+        },
+        {
+          "channel": "S4-D3",
+          "failing": [],
+          "good_fraction": 0.9287410926365796,
+          "mean_amplitude_per_wavelength": [
+            13.177252297457546,
+            23.280984013963927
+          ],
+          "psp_median": 0.1756559986875503,
+          "qc_status": "good",
+          "sci_median": 0.9727646118082617,
+          "separation_mm": 38.7272432403857,
+          "snr_min": 36.96353195367622,
+          "snr_per_wavelength": [
+            56.86107720345732,
+            36.96353195367622
+          ],
+          "status": "good",
+          "verdict_source": "qc",
+          "windows_good": 391,
+          "windows_total": 421
+        },
+        {
+          "channel": "S4-D7",
+          "failing": [],
+          "good_fraction": 0.9334916864608076,
+          "mean_amplitude_per_wavelength": [
+            8.326749260966958,
+            17.52146077723616
+          ],
+          "psp_median": 0.16897398856970233,
+          "qc_status": "good",
+          "sci_median": 0.9321027788812,
+          "separation_mm": 41.19043200793116,
+          "snr_min": 43.868543188970044,
+          "snr_per_wavelength": [
+            56.27615218726609,
+            43.868543188970044
+          ],
+          "status": "good",
+          "verdict_source": "qc",
+          "windows_good": 393,
+          "windows_total": 421
+        },
+        {
+          "channel": "S5-D2",
+          "failing": [],
+          "good_fraction": 0.7933491686460807,
+          "mean_amplitude_per_wavelength": [
+            488.63411389276723,
+            437.2625610472927
+          ],
+          "psp_median": 0.17195311701725385,
+          "qc_status": "good",
+          "sci_median": 0.9949349503729324,
+          "separation_mm": 29.826400134779927,
+          "snr_min": 24.674322974644664,
+          "snr_per_wavelength": [
+            37.37066026710007,
+            24.674322974644664
+          ],
+          "status": "good",
+          "verdict_source": "qc",
+          "windows_good": 334,
+          "windows_total": 421
+        },
+        {
+          "channel": "S5-D7",
+          "failing": [],
+          "good_fraction": 0.9501187648456056,
+          "mean_amplitude_per_wavelength": [
+            142.3907255183768,
+            150.52798884995403
+          ],
+          "psp_median": 0.1851651930540315,
+          "qc_status": "good",
+          "sci_median": 0.9989456560194419,
+          "separation_mm": 35.54595303265901,
+          "snr_min": 31.02161358011451,
+          "snr_per_wavelength": [
+            38.91979699460907,
+            31.02161358011451
+          ],
+          "status": "good",
+          "verdict_source": "qc",
+          "windows_good": 400,
+          "windows_total": 421
+        },
+        {
+          "channel": "S6-D3",
+          "failing": [],
+          "good_fraction": 0.9809976247030879,
+          "mean_amplitude_per_wavelength": [
+            10.725638063496229,
+            21.257052028718196
+          ],
+          "psp_median": 0.17839316289988275,
+          "qc_status": "good",
+          "sci_median": 0.9563886136130201,
+          "separation_mm": 39.79523666219363,
+          "snr_min": 33.960760199884916,
+          "snr_per_wavelength": [
+            52.55794814794409,
+            33.960760199884916
+          ],
+          "status": "good",
+          "verdict_source": "qc",
+          "windows_good": 413,
+          "windows_total": 421
+        },
+        {
+          "channel": "S6-D5",
+          "failing": [
+            "windows",
+            "psp"
+          ],
+          "good_fraction": 0.0332541567695962,
+          "mean_amplitude_per_wavelength": [
+            600.6040363562104,
+            595.245632348835
+          ],
+          "psp_median": 0.03434862210188158,
+          "qc_status": "bad",
+          "sci_median": 0.9918608535781223,
+          "separation_mm": 30.4281495493893,
+          "snr_min": 23.872679293511094,
+          "snr_per_wavelength": [
+            23.872679293511094,
+            31.174499011202332
+          ],
+          "status": "bad",
+          "verdict_source": "qc",
+          "windows_good": 14,
+          "windows_total": 421
+        },
+        {
+          "channel": "S6-D6",
+          "failing": [
+            "windows",
+            "psp"
+          ],
+          "good_fraction": 0.028503562945368172,
+          "mean_amplitude_per_wavelength": [
+            41.02365981293631,
+            85.16624746278508
+          ],
+          "psp_median": 0.0333265496937184,
+          "qc_status": "bad",
+          "sci_median": 0.9907947265521131,
+          "separation_mm": 30.22042827294147,
+          "snr_min": 25.461773852011337,
+          "snr_per_wavelength": [
+            25.461773852011337,
+            25.754676444441472
+          ],
+          "status": "bad",
+          "verdict_source": "qc",
+          "windows_good": 12,
+          "windows_total": 421
+        },
+        {
+          "channel": "S6-D9",
+          "failing": [
+            "windows",
+            "psp"
+          ],
+          "good_fraction": 0.0166270783847981,
+          "mean_amplitude_per_wavelength": [
+            24.329144605453767,
+            43.75493953497552
+          ],
+          "psp_median": 0.03320906008709494,
+          "qc_status": "bad",
+          "sci_median": 0.9871315458658189,
+          "separation_mm": 39.854208033782335,
+          "snr_min": 23.01806360760944,
+          "snr_per_wavelength": [
+            24.653510222976294,
+            23.01806360760944
+          ],
+          "status": "bad",
+          "verdict_source": "qc",
+          "windows_good": 7,
+          "windows_total": 421
+        },
+        {
+          "channel": "S7-D4",
+          "failing": [],
+          "good_fraction": 0.9619952494061758,
+          "mean_amplitude_per_wavelength": [
+            25.068086300882655,
+            52.23108285733102
+          ],
+          "psp_median": 0.18290217687381782,
+          "qc_status": "good",
+          "sci_median": 0.9718441679592199,
+          "separation_mm": 30.590449784205532,
+          "snr_min": 64.53515664169838,
+          "snr_per_wavelength": [
+            85.80081658634413,
+            64.53515664169838
+          ],
+          "status": "good",
+          "verdict_source": "qc",
+          "windows_good": 405,
+          "windows_total": 421
+        },
+        {
+          "channel": "S7-D5",
+          "failing": [
+            "windows",
+            "psp"
+          ],
+          "good_fraction": 0.0332541567695962,
+          "mean_amplitude_per_wavelength": [
+            343.40694950072475,
+            639.5135171466205
+          ],
+          "psp_median": 0.03414846184208592,
+          "qc_status": "bad",
+          "sci_median": 0.9958670434168393,
+          "separation_mm": 30.479283029625222,
+          "snr_min": 59.337194154680574,
+          "snr_per_wavelength": [
+            61.85322318070996,
+            59.337194154680574
+          ],
+          "status": "bad",
+          "verdict_source": "qc",
+          "windows_good": 14,
+          "windows_total": 421
+        },
+        {
+          "channel": "S7-D8",
+          "failing": [
+            "windows",
+            "sci",
+            "psp"
+          ],
+          "good_fraction": 0.0,
+          "mean_amplitude_per_wavelength": [
+            2.1382953036490564,
+            3.179670407060993
+          ],
+          "psp_median": 0.014218755770452425,
+          "qc_status": "bad",
+          "sci_median": 0.23765729772986807,
+          "separation_mm": 37.19910079558375,
+          "snr_min": 46.16970882003665,
+          "snr_per_wavelength": [
+            57.03687467947606,
+            46.16970882003665
+          ],
+          "status": "bad",
+          "verdict_source": "qc",
+          "windows_good": 0,
+          "windows_total": 421
+        },
+        {
+          "channel": "S8-D6",
+          "failing": [
+            "windows",
+            "psp"
+          ],
+          "good_fraction": 0.040380047505938245,
+          "mean_amplitude_per_wavelength": [
+            261.6702795797656,
+            450.60667921617664
+          ],
+          "psp_median": 0.03006701562777496,
+          "qc_status": "bad",
+          "sci_median": 0.9937489379445794,
+          "separation_mm": 30.27327767190068,
+          "snr_min": 29.89732537186844,
+          "snr_per_wavelength": [
+            32.5177209738446,
+            29.89732537186844
+          ],
+          "status": "bad",
+          "verdict_source": "qc",
+          "windows_good": 17,
+          "windows_total": 421
+        },
+        {
+          "channel": "S8-D7",
+          "failing": [],
+          "good_fraction": 0.9334916864608076,
+          "mean_amplitude_per_wavelength": [
+            20.944799305756746,
+            37.64927254643656
+          ],
+          "psp_median": 0.17556197503601176,
+          "qc_status": "good",
+          "sci_median": 0.9804944457110233,
+          "separation_mm": 30.38017174079172,
+          "snr_min": 50.508970772098415,
+          "snr_per_wavelength": [
+            66.61066304859189,
+            50.508970772098415
+          ],
+          "status": "good",
+          "verdict_source": "qc",
+          "windows_good": 393,
+          "windows_total": 421
+        },
+        {
+          "channel": "S8-D10",
+          "failing": [
+            "windows",
+            "sci",
+            "psp"
+          ],
+          "good_fraction": 0.0,
+          "mean_amplitude_per_wavelength": [
+            2.393352837570809,
+            3.938154778026605
+          ],
+          "psp_median": 0.01815304019737717,
+          "qc_status": "bad",
+          "sci_median": 0.30926374579989707,
+          "separation_mm": 36.752066567745544,
+          "snr_min": 45.16097272965596,
+          "snr_per_wavelength": [
+            56.899371569357726,
+            45.16097272965596
+          ],
+          "status": "bad",
+          "verdict_source": "qc",
+          "windows_good": 0,
+          "windows_total": 421
+        },
+        {
+          "channel": "S9-D4",
+          "failing": [],
+          "good_fraction": 0.8788598574821853,
+          "mean_amplitude_per_wavelength": [
+            7.609283898037139,
+            14.921209491503076
+          ],
+          "psp_median": 0.15349126790597442,
+          "qc_status": "good",
+          "sci_median": 0.9371499319546264,
+          "separation_mm": 34.135067745648314,
+          "snr_min": 44.08814020190725,
+          "snr_per_wavelength": [
+            45.420624822009835,
+            44.08814020190725
+          ],
+          "status": "good",
+          "verdict_source": "qc",
+          "windows_good": 370,
+          "windows_total": 421
+        },
+        {
+          "channel": "S9-D8",
+          "failing": [
+            "windows",
+            "sci",
+            "psp"
+          ],
+          "good_fraction": 0.0,
+          "mean_amplitude_per_wavelength": [
+            3.1099416045316683,
+            4.871881587406162
+          ],
+          "psp_median": 0.013831739442855913,
+          "qc_status": "bad",
+          "sci_median": 0.2977497778207864,
+          "separation_mm": 37.039572324744796,
+          "snr_min": 44.26835216224674,
+          "snr_per_wavelength": [
+            56.51279051251996,
+            44.26835216224674
+          ],
+          "status": "bad",
+          "verdict_source": "qc",
+          "windows_good": 0,
+          "windows_total": 421
+        },
+        {
+          "channel": "S9-D11",
+          "failing": [
+            "windows"
+          ],
+          "good_fraction": 0.7244655581947743,
+          "mean_amplitude_per_wavelength": [
+            4.532752845474913,
+            6.542899868265054
+          ],
+          "psp_median": 0.13782294257786204,
+          "qc_status": "bad",
+          "sci_median": 0.8564330792183059,
+          "separation_mm": 34.027343519587305,
+          "snr_min": 37.97859536244084,
+          "snr_per_wavelength": [
+            41.00029308732789,
+            37.97859536244084
+          ],
+          "status": "bad",
+          "verdict_source": "qc",
+          "windows_good": 305,
+          "windows_total": 421
+        },
+        {
+          "channel": "S9-D13",
+          "failing": [
+            "windows",
+            "sci",
+            "psp"
+          ],
+          "good_fraction": 0.12826603325415678,
+          "mean_amplitude_per_wavelength": [
+            4.967930243709662,
+            7.472877150573051
+          ],
+          "psp_median": 0.07890771300862237,
+          "qc_status": "bad",
+          "sci_median": 0.7683216110882526,
+          "separation_mm": 37.47917668519413,
+          "snr_min": 33.79619273694377,
+          "snr_per_wavelength": [
+            33.79619273694377,
+            34.488061950100246
+          ],
+          "status": "bad",
+          "verdict_source": "qc",
+          "windows_good": 54,
+          "windows_total": 421
+        },
+        {
+          "channel": "S10-D5",
+          "failing": [
+            "windows",
+            "psp"
+          ],
+          "good_fraction": 0.04275534441805225,
+          "mean_amplitude_per_wavelength": [
+            17.557852412066882,
+            22.38729268475828
+          ],
+          "psp_median": 0.0369977386550147,
+          "qc_status": "bad",
+          "sci_median": 0.9387223057954451,
+          "separation_mm": 39.19949511154448,
+          "snr_min": 30.467187910775568,
+          "snr_per_wavelength": [
+            30.467187910775568,
+            33.10747911891423
+          ],
+          "status": "bad",
+          "verdict_source": "qc",
+          "windows_good": 18,
+          "windows_total": 421
+        },
+        {
+          "channel": "S10-D8",
+          "failing": [
+            "windows",
+            "psp"
+          ],
+          "good_fraction": 0.023752969121140142,
+          "mean_amplitude_per_wavelength": [
+            44.09751200764062,
+            55.73479685416925
+          ],
+          "psp_median": 0.03451854547692733,
+          "qc_status": "bad",
+          "sci_median": 0.9934965702400292,
+          "separation_mm": 37.17697119185477,
+          "snr_min": 22.590171202788078,
+          "snr_per_wavelength": [
+            22.590171202788078,
+            23.106649728923003
+          ],
+          "status": "bad",
+          "verdict_source": "qc",
+          "windows_good": 10,
+          "windows_total": 421
+        },
+        {
+          "channel": "S10-D9",
+          "failing": [
+            "windows",
+            "psp"
+          ],
+          "good_fraction": 0.028503562945368172,
+          "mean_amplitude_per_wavelength": [
+            24.815747966012378,
+            47.29793786984578
+          ],
+          "psp_median": 0.03294642804296859,
+          "qc_status": "bad",
+          "sci_median": 0.9858980534060336,
+          "separation_mm": 36.98717834601607,
+          "snr_min": 28.784151032059235,
+          "snr_per_wavelength": [
+            28.784151032059235,
+            29.146693857573258
+          ],
+          "status": "bad",
+          "verdict_source": "qc",
+          "windows_good": 12,
+          "windows_total": 421
+        },
+        {
+          "channel": "S11-D6",
+          "failing": [
+            "windows",
+            "psp"
+          ],
+          "good_fraction": 0.019002375296912115,
+          "mean_amplitude_per_wavelength": [
+            81.19548606902876,
+            93.61866152022128
+          ],
+          "psp_median": 0.03161867557561158,
+          "qc_status": "bad",
+          "sci_median": 0.9573928998061776,
+          "separation_mm": 38.93994012578859,
+          "snr_min": 15.346126449530766,
+          "snr_per_wavelength": [
+            16.70857808608738,
+            15.346126449530766
+          ],
+          "status": "bad",
+          "verdict_source": "qc",
+          "windows_good": 8,
+          "windows_total": 421
+        },
+        {
+          "channel": "S11-D9",
+          "failing": [
+            "windows",
+            "psp"
+          ],
+          "good_fraction": 0.035629453681710214,
+          "mean_amplitude_per_wavelength": [
+            12.715453276248189,
+            18.198736694770126
+          ],
+          "psp_median": 0.03366886474648658,
+          "qc_status": "bad",
+          "sci_median": 0.9069335602540102,
+          "separation_mm": 36.87228669339617,
+          "snr_min": 30.52822321957424,
+          "snr_per_wavelength": [
+            30.52822321957424,
+            33.31546249415641
+          ],
+          "status": "bad",
+          "verdict_source": "qc",
+          "windows_good": 15,
+          "windows_total": 421
+        },
+        {
+          "channel": "S11-D10",
+          "failing": [
+            "windows",
+            "psp"
+          ],
+          "good_fraction": 0.026128266033254157,
+          "mean_amplitude_per_wavelength": [
+            18.503936773811127,
+            36.54070950862868
+          ],
+          "psp_median": 0.032680399539283964,
+          "qc_status": "bad",
+          "sci_median": 0.9896561123879025,
+          "separation_mm": 36.96920711889829,
+          "snr_min": 15.262613986770438,
+          "snr_per_wavelength": [
+            16.254521884256324,
+            15.262613986770438
+          ],
+          "status": "bad",
+          "verdict_source": "qc",
+          "windows_good": 11,
+          "windows_total": 421
+        },
+        {
+          "channel": "S12-D7",
+          "failing": [],
+          "good_fraction": 0.9406175771971497,
+          "mean_amplitude_per_wavelength": [
+            5.31606656303519,
+            6.871338521933872
+          ],
+          "psp_median": 0.16026593497196392,
+          "qc_status": "good",
+          "sci_median": 0.9307073213582283,
+          "separation_mm": 33.670150192715205,
+          "snr_min": 30.549542494924907,
+          "snr_per_wavelength": [
+            42.28647420484263,
+            30.549542494924907
+          ],
+          "status": "good",
+          "verdict_source": "qc",
+          "windows_good": 396,
+          "windows_total": 421
+        },
+        {
+          "channel": "S12-D10",
+          "failing": [
+            "windows",
+            "sci",
+            "psp"
+          ],
+          "good_fraction": 0.0,
+          "mean_amplitude_per_wavelength": [
+            3.535779741799505,
+            4.733014419707551
+          ],
+          "psp_median": 0.026756301410185736,
+          "qc_status": "bad",
+          "sci_median": 0.36325911253268295,
+          "separation_mm": 36.96963345774475,
+          "snr_min": 35.72450379369578,
+          "snr_per_wavelength": [
+            48.011088145308065,
+            35.72450379369578
+          ],
+          "status": "bad",
+          "verdict_source": "qc",
+          "windows_good": 0,
+          "windows_total": 421
+        },
+        {
+          "channel": "S12-D12",
+          "failing": [
+            "windows",
+            "sci",
+            "psp"
+          ],
+          "good_fraction": 0.0,
+          "mean_amplitude_per_wavelength": [
+            0.6678550638914512,
+            1.6955261085495925
+          ],
+          "psp_median": 0.01280931586642312,
+          "qc_status": "bad",
+          "sci_median": 0.12540083622507447,
+          "separation_mm": 33.44405304385221,
+          "snr_min": 20.76153961079893,
+          "snr_per_wavelength": [
+            20.76153961079893,
+            22.76496938791284
+          ],
+          "status": "bad",
+          "verdict_source": "qc",
+          "windows_good": 0,
+          "windows_total": 421
+        },
+        {
+          "channel": "S12-D15",
+          "failing": [
+            "windows",
+            "psp"
+          ],
+          "good_fraction": 0.6223277909738717,
+          "mean_amplitude_per_wavelength": [
+            25.337029152944403,
+            48.385619897246734
+          ],
+          "psp_median": 0.11842880815780307,
+          "qc_status": "bad",
+          "sci_median": 0.9712141011435217,
+          "separation_mm": 37.292792681696554,
+          "snr_min": 22.129090222785898,
+          "snr_per_wavelength": [
+            29.62442781535921,
+            22.129090222785898
+          ],
+          "status": "bad",
+          "verdict_source": "qc",
+          "windows_good": 262,
+          "windows_total": 421
+        },
+        {
+          "channel": "S13-D8",
+          "failing": [
+            "windows",
+            "sci",
+            "psp"
+          ],
+          "good_fraction": 0.014251781472684086,
+          "mean_amplitude_per_wavelength": [
+            4.985383923066783,
+            7.346409462521401
+          ],
+          "psp_median": 0.027221546740539528,
+          "qc_status": "bad",
+          "sci_median": 0.8994108724209681,
+          "separation_mm": 37.60151785500154,
+          "snr_min": 14.306585462728272,
+          "snr_per_wavelength": [
+            14.306585462728272,
+            17.907812870057786
+          ],
+          "status": "bad",
+          "verdict_source": "qc",
+          "windows_good": 6,
+          "windows_total": 421
+        },
+        {
+          "channel": "S13-D11",
+          "failing": [
+            "windows",
+            "sci"
+          ],
+          "good_fraction": 0.41330166270783847,
+          "mean_amplitude_per_wavelength": [
+            2.958586012383084,
+            4.464871572915298
+          ],
+          "psp_median": 0.12340992616408965,
+          "qc_status": "bad",
+          "sci_median": 0.7935254088815871,
+          "separation_mm": 40.68730792274171,
+          "snr_min": 36.66880105660607,
+          "snr_per_wavelength": [
+            43.07920750129784,
+            36.66880105660607
+          ],
+          "status": "bad",
+          "verdict_source": "qc",
+          "windows_good": 174,
+          "windows_total": 421
+        },
+        {
+          "channel": "S14-D10",
+          "failing": [
+            "windows",
+            "sci",
+            "psp"
+          ],
+          "good_fraction": 0.0023752969121140144,
+          "mean_amplitude_per_wavelength": [
+            1.0395108865762048,
+            1.8091638413911153
+          ],
+          "psp_median": 0.01342566462845663,
+          "qc_status": "bad",
+          "sci_median": 0.3021939082552671,
+          "separation_mm": 37.07283626862126,
+          "snr_min": 16.90583277955731,
+          "snr_per_wavelength": [
+            16.90583277955731,
+            18.920279117357996
+          ],
+          "status": "bad",
+          "verdict_source": "qc",
+          "windows_good": 1,
+          "windows_total": 421
+        },
+        {
+          "channel": "S14-D12",
+          "failing": [
+            "windows",
+            "sci",
+            "psp"
+          ],
+          "good_fraction": 0.0,
+          "mean_amplitude_per_wavelength": [
+            0.6946238466605203,
+            1.975912097220386
+          ],
+          "psp_median": 0.01845056526423168,
+          "qc_status": "bad",
+          "sci_median": 0.20030615788602185,
+          "separation_mm": 40.6657533681598,
+          "snr_min": 25.699499742631826,
+          "snr_per_wavelength": [
+            25.699499742631826,
+            34.09856400380671
+          ],
+          "status": "bad",
+          "verdict_source": "qc",
+          "windows_good": 0,
+          "windows_total": 421
+        },
+        {
+          "channel": "S15-D11",
+          "failing": [],
+          "good_fraction": 0.9596199524940617,
+          "mean_amplitude_per_wavelength": [
+            10.47243126465553,
+            13.316246697404805
+          ],
+          "psp_median": 0.17849924390525532,
+          "qc_status": "good",
+          "sci_median": 0.9788377851522778,
+          "separation_mm": 41.14616838783412,
+          "snr_min": 35.962587030893744,
+          "snr_per_wavelength": [
+            35.962587030893744,
+            40.78884514812837
+          ],
+          "status": "good",
+          "verdict_source": "qc",
+          "windows_good": 404,
+          "windows_total": 421
+        },
+        {
+          "channel": "S15-D13",
+          "failing": [
+            "windows",
+            "sci",
+            "psp"
+          ],
+          "good_fraction": 0.0,
+          "mean_amplitude_per_wavelength": [
+            2.6084456725069125,
+            3.7019630720590064
+          ],
+          "psp_median": 0.03439494542326838,
+          "qc_status": "bad",
+          "sci_median": 0.4545136097828364,
+          "separation_mm": 30.584562527523584,
+          "snr_min": 25.876762632254493,
+          "snr_per_wavelength": [
+            32.72929221998856,
+            25.876762632254493
+          ],
+          "status": "bad",
+          "verdict_source": "qc",
+          "windows_good": 0,
+          "windows_total": 421
+        },
+        {
+          "channel": "S15-D14",
+          "failing": [],
+          "good_fraction": 0.9596199524940617,
+          "mean_amplitude_per_wavelength": [
+            21.167324294559375,
+            23.41667259254367
+          ],
+          "psp_median": 0.19017915524391105,
+          "qc_status": "good",
+          "sci_median": 0.9943050292933475,
+          "separation_mm": 30.406440008656062,
+          "snr_min": 32.630013036660735,
+          "snr_per_wavelength": [
+            32.630013036660735,
+            33.166076784300095
+          ],
+          "status": "good",
+          "verdict_source": "qc",
+          "windows_good": 404,
+          "windows_total": 421
+        },
+        {
+          "channel": "S16-D12",
+          "failing": [],
+          "good_fraction": 0.9073634204275535,
+          "mean_amplitude_per_wavelength": [
+            4.322553932288245,
+            8.785012977209862
+          ],
+          "psp_median": 0.15025469644197656,
+          "qc_status": "good",
+          "sci_median": 0.9039703787515632,
+          "separation_mm": 41.141114824467266,
+          "snr_min": 22.03937880201774,
+          "snr_per_wavelength": [
+            22.03937880201774,
+            23.881224450711837
+          ],
+          "status": "good",
+          "verdict_source": "qc",
+          "windows_good": 382,
+          "windows_total": 421
+        },
+        {
+          "channel": "S16-D15",
+          "failing": [],
+          "good_fraction": 0.9619952494061758,
+          "mean_amplitude_per_wavelength": [
+            52.09322064945362,
+            68.18327759188513
+          ],
+          "psp_median": 0.19573570900201953,
+          "qc_status": "good",
+          "sci_median": 0.9974862953605425,
+          "separation_mm": 30.008792061660863,
+          "snr_min": 29.945227079220135,
+          "snr_per_wavelength": [
+            36.68302422056565,
+            29.945227079220135
+          ],
+          "status": "good",
+          "verdict_source": "qc",
+          "windows_good": 405,
+          "windows_total": 421
+        },
+        {
+          "channel": "S16-D16",
+          "failing": [],
+          "good_fraction": 0.9786223277909739,
+          "mean_amplitude_per_wavelength": [
+            31.922333983664874,
+            46.72619449479638
+          ],
+          "psp_median": 0.19379851900449518,
+          "qc_status": "good",
+          "sci_median": 0.9956354228926886,
+          "separation_mm": 31.03936996783278,
+          "snr_min": 26.6095341425671,
+          "snr_per_wavelength": [
+            31.680271723855334,
+            26.6095341425671
+          ],
+          "status": "good",
+          "verdict_source": "qc",
+          "windows_good": 412,
+          "windows_total": 421
+        }
+      ],
+      "engine": "cedalion",
+      "engine_functions": {
+        "gvtd": "cedalion.sigproc.quality.gvtd",
+        "mean_amplitude": "numpy mean over time",
+        "psp": "cedalion.sigproc.quality.psp",
+        "sci": "cedalion.sigproc.quality.sci",
+        "snr": "cedalion.sigproc.quality.snr (mean/std over time)"
+      },
+      "engine_notes": {
+        "cardiac_band_hz": [
+          0.5,
+          2.5
+        ],
+        "dropped_partial_windows": 1,
+        "timeseries_key": "amp",
+        "windowing": "non-overlapping windows of window_s (cedalion rolling(stride=n))"
+      },
+      "engine_version": "26.5.2.dev11+ga7eb62531",
+      "gvtd": {
+        "definition": "GVTD as computed by cedalion.sigproc.quality.gvtd (RMS over channels of the OD temporal derivative)",
+        "flags_channels": false,
+        "max": 0.15585298149774648,
+        "mean": 0.010925682307001047,
+        "median": 0.007886281244465092,
+        "n_measurements": 94
+      },
+      "motion_annotations": {
+        "annotations": [],
+        "note": "motion detection is worker-only; no worker step reported annotations for this signal",
+        "status": "none reported"
+      },
+      "n_windows": 421,
+      "qc_applied": false,
+      "sampling_rate_hz": 12.207031249999439,
+      "snr_convention": "SNR = mean(raw intensity) / std(raw intensity) per wavelength (population std), channel value = minimum over wavelengths; Homer3 convention, not dB",
+      "status": "QC computed, exclusions not applied",
+      "thresholds": {
+        "mean_amplitude_range": "not applied",
+        "psp": 0.1,
+        "q": 0.75,
+        "sci": 0.8,
+        "sd_range_mm": [
+          0.0,
+          45.0
+        ],
+        "snr": 2.0
+      },
+      "verdict_rule": "window good iff SCI >= sci and PSP >= psp; channel good iff good-window fraction >= q and SNR, mean-amplitude and SD-distance gates pass",
+      "window_overlap": "none",
+      "window_s": 5.0,
+      "window_samples": 61
+    }
+  },
+  "Exclusions": [],
+  "Statistics": {
+    "solver": "QC metrics (cedalion engine)",
+    "inferential": false,
+    "status_reason": "quality metrics and threshold verdicts; no inference",
+    "correction": "none",
+    "families": "n/a (no correction applied)"
+  }
+}

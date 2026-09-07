@@ -1,0 +1,13 @@
+{
+  "display": {
+    "caption": "Cortex: GLM t, HbR, condition 1 (QUIET), subject GLM · threshold: |t| > 10 (descriptive) · Edges: Connectivity, off · Probe: Hidden · Head: Cortex opaque, scalp hidden · Camera: Right lateral, 800 × 800 export",
+    "layers": {
+      "camera": "Right lateral, 800 × 800 export",
+      "cortex": "GLM t, HbR, condition 1 (QUIET), subject GLM · threshold: |t| > 10 (descriptive)",
+      "edges": "Connectivity, off",
+      "head": "Cortex opaque, scalp hidden",
+      "probe": "Hidden"
+    }
+  },
+  "generator": "NIRWizard 0.1.7"
+}

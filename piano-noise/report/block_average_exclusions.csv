@@ -1,0 +1,9 @@
+# NIRWizard 0.1.7 — exclusion ledger
+# source: /home/adama/dev/lydia-adept/piano-noise/data/dur40/quiet_1.snirf sha256=3450a7da53c06fca85a7eea728119ec2acdb0ab65c898234b4f9e6130cca2266
+# source: /home/adama/dev/lydia-adept/piano-noise/data/dur40/quiet_2.snirf sha256=fffd8621e0f23f2f6b8d8a96399af57657bfe620a8d1436530fb36618354f444
+# source: /home/adama/dev/lydia-adept/piano-noise/data/dur40/noise_1.snirf sha256=e02b5983b2f586ec1eec748e2d8d6c5240c7723ca7ba4dbb3f91196c2c8acb47
+# source: /home/adama/dev/lydia-adept/piano-noise/data/dur40/noise_2.snirf sha256=c98402779496ac1aba0fb382d28822eb689572c5d291435b7733ef053f4fb302
+# statistics: solver=epoch mean; descriptive (no p/q); correction=none; families=n/a (no correction applied)
+# provenance: block_average.json (authoritative sidecar, schema 1.0)
+level,id,criterion,threshold,stage,count_before,count_after,source,reason
+trial,40 #4 (t=2125.68s),epoch_out_of_bounds,,block_average,4,3,analysis,"epoch window [-5.0, +40.0] s does not fit inside the recording"
