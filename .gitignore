@@ -27,3 +27,4 @@ __pycache__/
 
 # Paper PDFs stay local (copyright); the repo is public
 literature/*.pdf
+!piano-noise/logs/*.log

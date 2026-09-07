@@ -1,0 +1,333 @@
+{
+  "subject": 1,
+  "session": 9,
+  "condition": "noise",
+  "room": "",
+  "started": "2026-09-07T14:00:29.905964",
+  "params": {
+    "subject": 1,
+    "session": 9,
+    "condition": "noise",
+    "room": null,
+    "runs": 3,
+    "blocks": 6,
+    "play": 40.0,
+    "play_jitter": 8.0,
+    "rest": 30.0,
+    "rest_jitter": 5.0,
+    "baseline": 60.0,
+    "run_rest": 120.0,
+    "seed": null,
+    "noise": null,
+    "noise_mode": "ambient",
+    "noise_test": null,
+    "midi": null,
+    "midi_lsl": false,
+    "list_midi": false,
+    "stream_name": "Trigger",
+    "stream_type": "Markers",
+    "source_id": "lydia-piano-noise",
+    "no_lsl": false,
+    "no_beep": false,
+    "speed": 1.0,
+    "comment": ""
+  },
+  "seed": 1788782429,
+  "stream": {
+    "name": "Trigger",
+    "type": "Markers",
+    "source_id": "lydia-piano-noise"
+  },
+  "triggers": {
+    "1": "SESSION_START",
+    "2": "SESSION_END",
+    "3": "ROOM_NATURAL",
+    "4": "ROOM_ADJUSTED",
+    "10": "BASELINE",
+    "11": "RUN_START",
+    "20": "PLAY_QUIET",
+    "21": "PLAY_NOISE",
+    "30": "REST",
+    "40": "RUN_REST",
+    "99": "ABORT"
+  },
+  "schedule": [
+    [
+      {
+        "cond": "N",
+        "play_s": 35.5,
+        "rest_s": 31.6
+      },
+      {
+        "cond": "N",
+        "play_s": 39.8,
+        "rest_s": 30.9
+      },
+      {
+        "cond": "N",
+        "play_s": 41.6,
+        "rest_s": 33.1
+      },
+      {
+        "cond": "N",
+        "play_s": 35.2,
+        "rest_s": 31.1
+      },
+      {
+        "cond": "N",
+        "play_s": 32.8,
+        "rest_s": 26.6
+      },
+      {
+        "cond": "N",
+        "play_s": 43.4,
+        "rest_s": 29.8
+      }
+    ],
+    [
+      {
+        "cond": "N",
+        "play_s": 45.7,
+        "rest_s": 29.3
+      },
+      {
+        "cond": "N",
+        "play_s": 43.7,
+        "rest_s": 33.2
+      },
+      {
+        "cond": "N",
+        "play_s": 40.0,
+        "rest_s": 33.0
+      },
+      {
+        "cond": "N",
+        "play_s": 43.3,
+        "rest_s": 29.8
+      },
+      {
+        "cond": "N",
+        "play_s": 45.3,
+        "rest_s": 26.4
+      },
+      {
+        "cond": "N",
+        "play_s": 47.5,
+        "rest_s": 33.0
+      }
+    ],
+    [
+      {
+        "cond": "N",
+        "play_s": 44.5,
+        "rest_s": 29.6
+      },
+      {
+        "cond": "N",
+        "play_s": 45.1,
+        "rest_s": 32.1
+      },
+      {
+        "cond": "N",
+        "play_s": 44.0,
+        "rest_s": 32.8
+      },
+      {
+        "cond": "N",
+        "play_s": 35.4,
+        "rest_s": 34.8
+      },
+      {
+        "cond": "N",
+        "play_s": 34.2,
+        "rest_s": 33.7
+      },
+      {
+        "cond": "N",
+        "play_s": 47.1,
+        "rest_s": 29.1
+      }
+    ]
+  ],
+  "planned_duration_s": 1604.0,
+  "markers": [
+    {
+      "code": 1,
+      "name": "SESSION_START",
+      "t_wall": 1788782430.7389245,
+      "t_lsl": 5267.4835225
+    },
+    {
+      "code": 10,
+      "name": "BASELINE",
+      "t_wall": 1788782431.7420125,
+      "t_lsl": 5268.4858137
+    },
+    {
+      "code": 11,
+      "name": "RUN_START",
+      "t_wall": 1788782491.7441683,
+      "t_lsl": 5328.4881042
+    },
+    {
+      "code": 21,
+      "name": "PLAY_NOISE",
+      "t_wall": 1788782494.7484915,
+      "t_lsl": 5331.4923769
+    },
+    {
+      "code": 30,
+      "name": "REST",
+      "t_wall": 1788782530.2511897,
+      "t_lsl": 5366.9958037
+    },
+    {
+      "code": 21,
+      "name": "PLAY_NOISE",
+      "t_wall": 1788782561.8583863,
+      "t_lsl": 5398.6023417
+    },
+    {
+      "code": 30,
+      "name": "REST",
+      "t_wall": 1788782601.66027,
+      "t_lsl": 5438.4046251
+    },
+    {
+      "code": 21,
+      "name": "PLAY_NOISE",
+      "t_wall": 1788782632.566245,
+      "t_lsl": 5469.3107619
+    },
+    {
+      "code": 30,
+      "name": "REST",
+      "t_wall": 1788782674.1694474,
+      "t_lsl": 5510.913254
+    },
+    {
+      "code": 21,
+      "name": "PLAY_NOISE",
+      "t_wall": 1788782707.273473,
+      "t_lsl": 5544.0178828
+    },
+    {
+      "code": 30,
+      "name": "REST",
+      "t_wall": 1788782742.4773333,
+      "t_lsl": 5579.2213838
+    },
+    {
+      "code": 21,
+      "name": "PLAY_NOISE",
+      "t_wall": 1788782773.585168,
+      "t_lsl": 5610.3296002
+    },
+    {
+      "code": 30,
+      "name": "REST",
+      "t_wall": 1788782806.3884673,
+      "t_lsl": 5643.1329322
+    },
+    {
+      "code": 21,
+      "name": "PLAY_NOISE",
+      "t_wall": 1788782832.995416,
+      "t_lsl": 5669.7400012
+    },
+    {
+      "code": 30,
+      "name": "REST",
+      "t_wall": 1788782876.40005,
+      "t_lsl": 5713.1443688
+    },
+    {
+      "code": 40,
+      "name": "RUN_REST",
+      "t_wall": 1788782906.2054505,
+      "t_lsl": 5742.9493062
+    },
+    {
+      "code": 99,
+      "name": "ABORT",
+      "t_wall": 1788782928.7402956,
+      "t_lsl": 5765.4840167
+    }
+  ],
+  "blocks": [
+    {
+      "run": 1,
+      "block": 1,
+      "cond": "N",
+      "planned_play_s": 35.5,
+      "planned_rest_s": 31.6,
+      "t_play": 5331.4923769,
+      "t_rest": 5366.9958037,
+      "play_s": 35.503,
+      "t_rest_end": 5398.6001872,
+      "rest_s": 31.604
+    },
+    {
+      "run": 1,
+      "block": 2,
+      "cond": "N",
+      "planned_play_s": 39.8,
+      "planned_rest_s": 30.9,
+      "t_play": 5398.6023417,
+      "t_rest": 5438.4046251,
+      "play_s": 39.802,
+      "t_rest_end": 5469.30816,
+      "rest_s": 30.904
+    },
+    {
+      "run": 1,
+      "block": 3,
+      "cond": "N",
+      "planned_play_s": 41.6,
+      "planned_rest_s": 33.1,
+      "t_play": 5469.3107619,
+      "t_rest": 5510.913254,
+      "play_s": 41.602,
+      "t_rest_end": 5544.0153511,
+      "rest_s": 33.102
+    },
+    {
+      "run": 1,
+      "block": 4,
+      "cond": "N",
+      "planned_play_s": 35.2,
+      "planned_rest_s": 31.1,
+      "t_play": 5544.0178828,
+      "t_rest": 5579.2213838,
+      "play_s": 35.204,
+      "t_rest_end": 5610.3270956,
+      "rest_s": 31.106
+    },
+    {
+      "run": 1,
+      "block": 5,
+      "cond": "N",
+      "planned_play_s": 32.8,
+      "planned_rest_s": 26.6,
+      "t_play": 5610.3296002,
+      "t_rest": 5643.1329322,
+      "play_s": 32.803,
+      "t_rest_end": 5669.7357652,
+      "rest_s": 26.603
+    },
+    {
+      "run": 1,
+      "block": 6,
+      "cond": "N",
+      "planned_play_s": 43.4,
+      "planned_rest_s": 29.8,
+      "t_play": 5669.7400012,
+      "t_rest": 5713.1443688,
+      "play_s": 43.404,
+      "t_rest_end": 5742.946899,
+      "rest_s": 29.803
+    }
+  ],
+  "completed": false,
+  "ended": "2026-09-07T14:08:48.741298"
+}

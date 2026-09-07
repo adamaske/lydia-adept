@@ -1,0 +1,156 @@
+{
+  "subject": 99,
+  "session": 1,
+  "condition": "quiet",
+  "room": "",
+  "started": "2026-09-06T12:42:55.619773",
+  "params": {
+    "subject": 99,
+    "session": 1,
+    "condition": "quiet",
+    "room": null,
+    "runs": 3,
+    "blocks": 6,
+    "play": 40.0,
+    "play_jitter": 8.0,
+    "rest": 30.0,
+    "rest_jitter": 5.0,
+    "baseline": 60.0,
+    "run_rest": 120.0,
+    "seed": null,
+    "noise": null,
+    "noise_mode": "blocks",
+    "noise_test": null,
+    "midi": null,
+    "midi_lsl": false,
+    "list_midi": false,
+    "stream_name": "Trigger",
+    "stream_type": "Markers",
+    "source_id": "lydia-piano-noise",
+    "no_lsl": false,
+    "no_beep": false,
+    "speed": 1.0,
+    "comment": ""
+  },
+  "seed": 1788691375,
+  "stream": {
+    "name": "Trigger",
+    "type": "Markers",
+    "source_id": "lydia-piano-noise"
+  },
+  "triggers": {
+    "1": "SESSION_START",
+    "2": "SESSION_END",
+    "3": "ROOM_NATURAL",
+    "4": "ROOM_ADJUSTED",
+    "10": "BASELINE",
+    "11": "RUN_START",
+    "20": "PLAY_QUIET",
+    "21": "PLAY_NOISE",
+    "30": "REST",
+    "40": "RUN_REST",
+    "99": "ABORT"
+  },
+  "schedule": [
+    [
+      {
+        "cond": "Q",
+        "play_s": 34.0,
+        "rest_s": 26.4
+      },
+      {
+        "cond": "Q",
+        "play_s": 42.3,
+        "rest_s": 29.5
+      },
+      {
+        "cond": "Q",
+        "play_s": 47.9,
+        "rest_s": 26.1
+      },
+      {
+        "cond": "Q",
+        "play_s": 44.0,
+        "rest_s": 30.1
+      },
+      {
+        "cond": "Q",
+        "play_s": 35.4,
+        "rest_s": 33.3
+      },
+      {
+        "cond": "Q",
+        "play_s": 42.6,
+        "rest_s": 28.5
+      }
+    ],
+    [
+      {
+        "cond": "Q",
+        "play_s": 40.1,
+        "rest_s": 29.9
+      },
+      {
+        "cond": "Q",
+        "play_s": 45.9,
+        "rest_s": 31.8
+      },
+      {
+        "cond": "Q",
+        "play_s": 37.1,
+        "rest_s": 33.2
+      },
+      {
+        "cond": "Q",
+        "play_s": 43.3,
+        "rest_s": 30.0
+      },
+      {
+        "cond": "Q",
+        "play_s": 36.0,
+        "rest_s": 30.4
+      },
+      {
+        "cond": "Q",
+        "play_s": 33.8,
+        "rest_s": 27.9
+      }
+    ],
+    [
+      {
+        "cond": "Q",
+        "play_s": 40.0,
+        "rest_s": 35.0
+      },
+      {
+        "cond": "Q",
+        "play_s": 38.2,
+        "rest_s": 26.9
+      },
+      {
+        "cond": "Q",
+        "play_s": 45.2,
+        "rest_s": 31.3
+      },
+      {
+        "cond": "Q",
+        "play_s": 35.7,
+        "rest_s": 26.4
+      },
+      {
+        "cond": "Q",
+        "play_s": 35.5,
+        "rest_s": 26.7
+      },
+      {
+        "cond": "Q",
+        "play_s": 33.9,
+        "rest_s": 32.2
+      }
+    ]
+  ],
+  "planned_duration_s": 1546.5,
+  "markers": [],
+  "blocks": [],
+  "completed": false
+}

@@ -1,0 +1,333 @@
+{
+  "subject": 1,
+  "session": 5,
+  "condition": "quiet",
+  "room": "",
+  "started": "2026-09-07T12:47:32.593702",
+  "params": {
+    "subject": 1,
+    "session": 5,
+    "condition": "quiet",
+    "room": null,
+    "runs": 3,
+    "blocks": 6,
+    "play": 40.0,
+    "play_jitter": 8.0,
+    "rest": 30.0,
+    "rest_jitter": 5.0,
+    "baseline": 60.0,
+    "run_rest": 120.0,
+    "seed": null,
+    "noise": null,
+    "noise_mode": "ambient",
+    "noise_test": null,
+    "midi": null,
+    "midi_lsl": false,
+    "list_midi": false,
+    "stream_name": "Trigger",
+    "stream_type": "Markers",
+    "source_id": "lydia-piano-noise",
+    "no_lsl": true,
+    "no_beep": false,
+    "speed": 20.0,
+    "comment": ""
+  },
+  "seed": 1788778052,
+  "stream": {
+    "name": "Trigger",
+    "type": "Markers",
+    "source_id": "lydia-piano-noise"
+  },
+  "triggers": {
+    "1": "SESSION_START",
+    "2": "SESSION_END",
+    "3": "ROOM_NATURAL",
+    "4": "ROOM_ADJUSTED",
+    "10": "BASELINE",
+    "11": "RUN_START",
+    "20": "PLAY_QUIET",
+    "21": "PLAY_NOISE",
+    "30": "REST",
+    "40": "RUN_REST",
+    "99": "ABORT"
+  },
+  "schedule": [
+    [
+      {
+        "cond": "Q",
+        "play_s": 44.8,
+        "rest_s": 25.5
+      },
+      {
+        "cond": "Q",
+        "play_s": 45.8,
+        "rest_s": 32.5
+      },
+      {
+        "cond": "Q",
+        "play_s": 41.2,
+        "rest_s": 30.8
+      },
+      {
+        "cond": "Q",
+        "play_s": 39.8,
+        "rest_s": 34.5
+      },
+      {
+        "cond": "Q",
+        "play_s": 45.5,
+        "rest_s": 25.1
+      },
+      {
+        "cond": "Q",
+        "play_s": 42.7,
+        "rest_s": 33.4
+      }
+    ],
+    [
+      {
+        "cond": "Q",
+        "play_s": 42.3,
+        "rest_s": 31.8
+      },
+      {
+        "cond": "Q",
+        "play_s": 42.1,
+        "rest_s": 33.9
+      },
+      {
+        "cond": "Q",
+        "play_s": 37.4,
+        "rest_s": 29.8
+      },
+      {
+        "cond": "Q",
+        "play_s": 42.5,
+        "rest_s": 34.2
+      },
+      {
+        "cond": "Q",
+        "play_s": 33.5,
+        "rest_s": 30.2
+      },
+      {
+        "cond": "Q",
+        "play_s": 45.3,
+        "rest_s": 34.8
+      }
+    ],
+    [
+      {
+        "cond": "Q",
+        "play_s": 42.4,
+        "rest_s": 28.3
+      },
+      {
+        "cond": "Q",
+        "play_s": 37.3,
+        "rest_s": 34.9
+      },
+      {
+        "cond": "Q",
+        "play_s": 38.2,
+        "rest_s": 34.6
+      },
+      {
+        "cond": "Q",
+        "play_s": 42.8,
+        "rest_s": 34.5
+      },
+      {
+        "cond": "Q",
+        "play_s": 46.8,
+        "rest_s": 33.8
+      },
+      {
+        "cond": "Q",
+        "play_s": 47.1,
+        "rest_s": 33.5
+      }
+    ]
+  ],
+  "planned_duration_s": 1633.6,
+  "markers": [
+    {
+      "code": 1,
+      "name": "SESSION_START",
+      "t_wall": 1788778077.651024,
+      "t_lsl": 914.3957927
+    },
+    {
+      "code": 10,
+      "name": "BASELINE",
+      "t_wall": 1788778077.7039192,
+      "t_lsl": 914.4477006
+    },
+    {
+      "code": 11,
+      "name": "RUN_START",
+      "t_wall": 1788778080.7064521,
+      "t_lsl": 917.450403
+    },
+    {
+      "code": 20,
+      "name": "PLAY_QUIET",
+      "t_wall": 1788778080.8707244,
+      "t_lsl": 917.6146959
+    },
+    {
+      "code": 30,
+      "name": "REST",
+      "t_wall": 1788778083.1139817,
+      "t_lsl": 919.8582593
+    },
+    {
+      "code": 20,
+      "name": "PLAY_QUIET",
+      "t_wall": 1788778084.4043608,
+      "t_lsl": 921.1495846
+    },
+    {
+      "code": 30,
+      "name": "REST",
+      "t_wall": 1788778086.6986248,
+      "t_lsl": 923.442348
+    },
+    {
+      "code": 20,
+      "name": "PLAY_QUIET",
+      "t_wall": 1788778088.3277514,
+      "t_lsl": 925.0723384
+    },
+    {
+      "code": 30,
+      "name": "REST",
+      "t_wall": 1788778090.3907661,
+      "t_lsl": 927.1350399
+    },
+    {
+      "code": 20,
+      "name": "PLAY_QUIET",
+      "t_wall": 1788778091.935738,
+      "t_lsl": 928.6802226
+    },
+    {
+      "code": 30,
+      "name": "REST",
+      "t_wall": 1788778093.9286695,
+      "t_lsl": 930.6728877
+    },
+    {
+      "code": 20,
+      "name": "PLAY_QUIET",
+      "t_wall": 1788778095.6599233,
+      "t_lsl": 932.4036801
+    },
+    {
+      "code": 30,
+      "name": "REST",
+      "t_wall": 1788778097.9370778,
+      "t_lsl": 934.6808756
+    },
+    {
+      "code": 20,
+      "name": "PLAY_QUIET",
+      "t_wall": 1788778099.19771,
+      "t_lsl": 935.9416606
+    },
+    {
+      "code": 30,
+      "name": "REST",
+      "t_wall": 1788778101.3356235,
+      "t_lsl": 938.079502
+    },
+    {
+      "code": 40,
+      "name": "RUN_REST",
+      "t_wall": 1788778103.0100958,
+      "t_lsl": 939.7540268
+    },
+    {
+      "code": 99,
+      "name": "ABORT",
+      "t_wall": 1788778103.482724,
+      "t_lsl": 940.2269489
+    }
+  ],
+  "blocks": [
+    {
+      "run": 1,
+      "block": 1,
+      "cond": "Q",
+      "planned_play_s": 44.8,
+      "planned_rest_s": 25.5,
+      "t_play": 917.6146959,
+      "t_rest": 919.8582593,
+      "play_s": 2.244,
+      "t_rest_end": 921.1355414,
+      "rest_s": 1.277
+    },
+    {
+      "run": 1,
+      "block": 2,
+      "cond": "Q",
+      "planned_play_s": 45.8,
+      "planned_rest_s": 32.5,
+      "t_play": 921.1495846,
+      "t_rest": 923.442348,
+      "play_s": 2.293,
+      "t_rest_end": 925.069659,
+      "rest_s": 1.627
+    },
+    {
+      "run": 1,
+      "block": 3,
+      "cond": "Q",
+      "planned_play_s": 41.2,
+      "planned_rest_s": 30.8,
+      "t_play": 925.0723384,
+      "t_rest": 927.1350399,
+      "play_s": 2.063,
+      "t_rest_end": 928.6775927,
+      "rest_s": 1.543
+    },
+    {
+      "run": 1,
+      "block": 4,
+      "cond": "Q",
+      "planned_play_s": 39.8,
+      "planned_rest_s": 34.5,
+      "t_play": 928.6802226,
+      "t_rest": 930.6728877,
+      "play_s": 1.993,
+      "t_rest_end": 932.4012452,
+      "rest_s": 1.728
+    },
+    {
+      "run": 1,
+      "block": 5,
+      "cond": "Q",
+      "planned_play_s": 45.5,
+      "planned_rest_s": 25.1,
+      "t_play": 932.4036801,
+      "t_rest": 934.6808756,
+      "play_s": 2.277,
+      "t_rest_end": 935.9387803,
+      "rest_s": 1.258
+    },
+    {
+      "run": 1,
+      "block": 6,
+      "cond": "Q",
+      "planned_play_s": 42.7,
+      "planned_rest_s": 33.4,
+      "t_play": 935.9416606,
+      "t_rest": 938.079502,
+      "play_s": 2.138,
+      "t_rest_end": 939.7519953,
+      "rest_s": 1.672
+    }
+  ],
+  "completed": false,
+  "ended": "2026-09-07T12:48:23.484726"
+}

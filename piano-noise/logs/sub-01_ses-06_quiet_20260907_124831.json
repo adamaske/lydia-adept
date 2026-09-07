@@ -1,0 +1,213 @@
+{
+  "subject": 1,
+  "session": 6,
+  "condition": "quiet",
+  "room": "",
+  "started": "2026-09-07T12:48:31.564643",
+  "params": {
+    "subject": 1,
+    "session": 6,
+    "condition": "quiet",
+    "room": null,
+    "runs": 3,
+    "blocks": 6,
+    "play": 40.0,
+    "play_jitter": 8.0,
+    "rest": 30.0,
+    "rest_jitter": 5.0,
+    "baseline": 60.0,
+    "run_rest": 120.0,
+    "seed": null,
+    "noise": null,
+    "noise_mode": "ambient",
+    "noise_test": null,
+    "midi": null,
+    "midi_lsl": false,
+    "list_midi": false,
+    "stream_name": "Trigger",
+    "stream_type": "Markers",
+    "source_id": "lydia-piano-noise",
+    "no_lsl": true,
+    "no_beep": false,
+    "speed": 20.0,
+    "comment": ""
+  },
+  "seed": 1788778111,
+  "stream": {
+    "name": "Trigger",
+    "type": "Markers",
+    "source_id": "lydia-piano-noise"
+  },
+  "triggers": {
+    "1": "SESSION_START",
+    "2": "SESSION_END",
+    "3": "ROOM_NATURAL",
+    "4": "ROOM_ADJUSTED",
+    "10": "BASELINE",
+    "11": "RUN_START",
+    "20": "PLAY_QUIET",
+    "21": "PLAY_NOISE",
+    "30": "REST",
+    "40": "RUN_REST",
+    "99": "ABORT"
+  },
+  "schedule": [
+    [
+      {
+        "cond": "Q",
+        "play_s": 45.0,
+        "rest_s": 33.0
+      },
+      {
+        "cond": "Q",
+        "play_s": 47.9,
+        "rest_s": 32.8
+      },
+      {
+        "cond": "Q",
+        "play_s": 43.0,
+        "rest_s": 32.0
+      },
+      {
+        "cond": "Q",
+        "play_s": 32.0,
+        "rest_s": 29.4
+      },
+      {
+        "cond": "Q",
+        "play_s": 39.0,
+        "rest_s": 34.0
+      },
+      {
+        "cond": "Q",
+        "play_s": 33.3,
+        "rest_s": 32.3
+      }
+    ],
+    [
+      {
+        "cond": "Q",
+        "play_s": 44.9,
+        "rest_s": 33.5
+      },
+      {
+        "cond": "Q",
+        "play_s": 45.8,
+        "rest_s": 33.5
+      },
+      {
+        "cond": "Q",
+        "play_s": 37.6,
+        "rest_s": 33.9
+      },
+      {
+        "cond": "Q",
+        "play_s": 36.9,
+        "rest_s": 28.8
+      },
+      {
+        "cond": "Q",
+        "play_s": 39.1,
+        "rest_s": 26.9
+      },
+      {
+        "cond": "Q",
+        "play_s": 37.8,
+        "rest_s": 29.9
+      }
+    ],
+    [
+      {
+        "cond": "Q",
+        "play_s": 39.4,
+        "rest_s": 25.1
+      },
+      {
+        "cond": "Q",
+        "play_s": 33.1,
+        "rest_s": 25.2
+      },
+      {
+        "cond": "Q",
+        "play_s": 33.6,
+        "rest_s": 34.7
+      },
+      {
+        "cond": "Q",
+        "play_s": 35.5,
+        "rest_s": 26.2
+      },
+      {
+        "cond": "Q",
+        "play_s": 33.2,
+        "rest_s": 34.2
+      },
+      {
+        "cond": "Q",
+        "play_s": 46.9,
+        "rest_s": 26.0
+      }
+    ]
+  ],
+  "planned_duration_s": 1555.4,
+  "markers": [
+    {
+      "code": 1,
+      "name": "SESSION_START",
+      "t_wall": 1788778112.507406,
+      "t_lsl": 949.2521141
+    },
+    {
+      "code": 10,
+      "name": "BASELINE",
+      "t_wall": 1788778112.5603158,
+      "t_lsl": 949.3041013
+    },
+    {
+      "code": 11,
+      "name": "RUN_START",
+      "t_wall": 1788778115.5620272,
+      "t_lsl": 952.3059077
+    },
+    {
+      "code": 20,
+      "name": "PLAY_QUIET",
+      "t_wall": 1788778115.7156656,
+      "t_lsl": 952.4600072
+    },
+    {
+      "code": 30,
+      "name": "REST",
+      "t_wall": 1788778117.9686918,
+      "t_lsl": 954.7129958
+    },
+    {
+      "code": 20,
+      "name": "PLAY_QUIET",
+      "t_wall": 1788778119.624105,
+      "t_lsl": 956.3681541
+    },
+    {
+      "code": 99,
+      "name": "ABORT",
+      "t_wall": 1788778121.9279442,
+      "t_lsl": 958.6718312
+    }
+  ],
+  "blocks": [
+    {
+      "run": 1,
+      "block": 1,
+      "cond": "Q",
+      "planned_play_s": 45.0,
+      "planned_rest_s": 33.0,
+      "t_play": 952.4600072,
+      "t_rest": 954.7129958,
+      "play_s": 2.253,
+      "t_rest_end": 956.3659753,
+      "rest_s": 1.653
+    }
+  ],
+  "completed": false,
+  "ended": "2026-09-07T12:48:41.928949"
+}

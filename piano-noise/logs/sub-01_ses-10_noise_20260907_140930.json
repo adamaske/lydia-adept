@@ -1,0 +1,156 @@
+{
+  "subject": 1,
+  "session": 10,
+  "condition": "noise",
+  "room": "",
+  "started": "2026-09-07T14:09:30.854906",
+  "params": {
+    "subject": 1,
+    "session": 10,
+    "condition": "noise",
+    "room": null,
+    "runs": 3,
+    "blocks": 6,
+    "play": 40.0,
+    "play_jitter": 8.0,
+    "rest": 30.0,
+    "rest_jitter": 5.0,
+    "baseline": 60.0,
+    "run_rest": 120.0,
+    "seed": null,
+    "noise": null,
+    "noise_mode": "ambient",
+    "noise_test": null,
+    "midi": null,
+    "midi_lsl": false,
+    "list_midi": false,
+    "stream_name": "Trigger",
+    "stream_type": "Markers",
+    "source_id": "lydia-piano-noise",
+    "no_lsl": false,
+    "no_beep": false,
+    "speed": 1.0,
+    "comment": ""
+  },
+  "seed": 1788782970,
+  "stream": {
+    "name": "Trigger",
+    "type": "Markers",
+    "source_id": "lydia-piano-noise"
+  },
+  "triggers": {
+    "1": "SESSION_START",
+    "2": "SESSION_END",
+    "3": "ROOM_NATURAL",
+    "4": "ROOM_ADJUSTED",
+    "10": "BASELINE",
+    "11": "RUN_START",
+    "20": "PLAY_QUIET",
+    "21": "PLAY_NOISE",
+    "30": "REST",
+    "40": "RUN_REST",
+    "99": "ABORT"
+  },
+  "schedule": [
+    [
+      {
+        "cond": "N",
+        "play_s": 42.2,
+        "rest_s": 28.8
+      },
+      {
+        "cond": "N",
+        "play_s": 44.3,
+        "rest_s": 30.8
+      },
+      {
+        "cond": "N",
+        "play_s": 37.0,
+        "rest_s": 33.7
+      },
+      {
+        "cond": "N",
+        "play_s": 41.6,
+        "rest_s": 34.5
+      },
+      {
+        "cond": "N",
+        "play_s": 38.4,
+        "rest_s": 33.1
+      },
+      {
+        "cond": "N",
+        "play_s": 43.2,
+        "rest_s": 25.3
+      }
+    ],
+    [
+      {
+        "cond": "N",
+        "play_s": 42.0,
+        "rest_s": 34.7
+      },
+      {
+        "cond": "N",
+        "play_s": 44.9,
+        "rest_s": 30.6
+      },
+      {
+        "cond": "N",
+        "play_s": 40.4,
+        "rest_s": 26.0
+      },
+      {
+        "cond": "N",
+        "play_s": 32.1,
+        "rest_s": 26.0
+      },
+      {
+        "cond": "N",
+        "play_s": 45.8,
+        "rest_s": 28.7
+      },
+      {
+        "cond": "N",
+        "play_s": 36.4,
+        "rest_s": 34.8
+      }
+    ],
+    [
+      {
+        "cond": "N",
+        "play_s": 47.7,
+        "rest_s": 34.1
+      },
+      {
+        "cond": "N",
+        "play_s": 33.7,
+        "rest_s": 29.0
+      },
+      {
+        "cond": "N",
+        "play_s": 42.8,
+        "rest_s": 30.3
+      },
+      {
+        "cond": "N",
+        "play_s": 43.8,
+        "rest_s": 33.9
+      },
+      {
+        "cond": "N",
+        "play_s": 35.3,
+        "rest_s": 27.5
+      },
+      {
+        "cond": "N",
+        "play_s": 45.2,
+        "rest_s": 34.2
+      }
+    ]
+  ],
+  "planned_duration_s": 1592.8,
+  "markers": [],
+  "blocks": [],
+  "completed": false
+}
