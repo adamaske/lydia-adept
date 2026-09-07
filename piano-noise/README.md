@@ -18,9 +18,11 @@ scripts/triggers.py          marker code table (single source of truth)
 scripts/beep.py              1 kHz cue
 scripts/noise.py             looped babble playback
 scripts/midi_log.py          optional MIDI keyboard logger (LSL-clock timestamps)
+scripts/set_stim_durations.py  copies .snirf files with the play-block stim durations set (Aurora writes 10 s)
 logs/                        per-session json + log (commit these)
 data/blocks.csv              one row per block; data/sessions.csv one row per session
 data/midi/                   MIDI event CSVs
+data/dur40/                  copies of the .snirf files with markers 20/21 set to 40 s (for the GLM; not in git)
 ```
 
 ## Montage (`PianoNoise`, 16 sources x 16 detectors, 47 channels, 30-42 mm)
@@ -136,3 +138,20 @@ both the LSL time and the wall-clock time (`t_wall`), so a MIDI recording made
 on the keyboard or another computer can be aligned afterwards.
 
 After the session commit `logs/` and `data/` and push.
+
+## Stim durations for the GLM
+
+Aurora stores every LSL marker with a 10 s duration, so a GLM run on the raw
+`.snirf` models only the first 10 s of each play block. Make copies with the
+real block length before running NIRWizard:
+
+```sh
+python scripts/set_stim_durations.py data/*.snirf --out data/dur40 --set 20=40 --set 21=40   # planned 40 s
+python scripts/set_stim_durations.py data/*.snirf --out data/actual --actual 20,21 --until 30 # per block, onset to next REST
+```
+
+The executed play blocks of the 2026-09-07 sessions averaged 38.4 s (32-46 s,
+`data/blocks.csv`); `--actual` reads the exact length from the following REST
+marker in the file. Only the duration column of the chosen stim groups is
+changed. `quiet_1`/`quiet_2` are ses-08/ses-10 and `noise_1`/`noise_2` are
+ses-09/ses-11 (verified from the block onset gaps).
