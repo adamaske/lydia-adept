@@ -1,0 +1,46 @@
+{
+  "axes": [
+    {
+      "axis": "color",
+      "colormap": "jet",
+      "index": 0,
+      "name": "GLM t",
+      "range": [
+        -26,
+        26
+      ],
+      "ticks": [
+        -26,
+        0,
+        26
+      ],
+      "type": "value"
+    }
+  ],
+  "background": "transparent",
+  "display": {
+    "caption": "Cortex: GLM t, HbO, condition 1 (QUIET), subject GLM · threshold: none (descriptive) · Edges: Connectivity, off · Probe: Hidden · Coordinates: Hidden · Head: Cortex opaque, scalp hidden · Camera: Free orbit, 800 × 800 export",
+    "layers": {
+      "camera": "Free orbit, 800 × 800 export",
+      "coordinates": "Hidden",
+      "cortex": "GLM t, HbO, condition 1 (QUIET), subject GLM · threshold: none (descriptive)",
+      "edges": "Connectivity, off",
+      "head": "Cortex opaque, scalp hidden",
+      "probe": "Hidden"
+    }
+  },
+  "format": "png",
+  "generator": "NIRWizard 0.2.1",
+  "pixelSize": {
+    "height": 1068,
+    "scale": 4,
+    "width": 287
+  },
+  "provenance": null,
+  "session": null,
+  "theme": {
+    "id": "high-contrast",
+    "scheme": "dark"
+  },
+  "view": "Colorbar · GLM t"
+}

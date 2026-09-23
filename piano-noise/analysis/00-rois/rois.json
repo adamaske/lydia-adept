@@ -1,0 +1,131 @@
+{
+  "rois": [
+    {
+      "id": "eed6c8bf-7b87-4813-83ee-bcafaf4179c4",
+      "name": "Left VLPFC",
+      "color": "#e69f00",
+      "channelIds": [
+        50,
+        51,
+        54,
+        70
+      ]
+    },
+    {
+      "id": "afde37d0-9925-4dc6-99bd-9b60abb9963e",
+      "name": "Right VLPFC",
+      "color": "#56b4e9",
+      "channelIds": [
+        58,
+        59,
+        68,
+        80
+      ]
+    },
+    {
+      "id": "2e845637-32e4-48fe-80e0-4f9794fdbb01",
+      "name": "Left DLPFC",
+      "color": "#26a269",
+      "channelIds": [
+        47,
+        49,
+        52,
+        53,
+        60,
+        61,
+        64,
+        65
+      ]
+    },
+    {
+      "id": "dfaae8b8-434d-4e9f-810f-a587ac35787f",
+      "name": "Right DLPFC",
+      "color": "#f0e442",
+      "channelIds": [
+        48,
+        49,
+        55,
+        56,
+        57,
+        60,
+        62,
+        67
+      ]
+    },
+    {
+      "id": "96353418-73b4-4d91-839d-bdfec5303a68",
+      "name": "Left Temporal",
+      "color": "#deddda",
+      "channelIds": [
+        72,
+        73,
+        88,
+        89,
+        90
+      ]
+    },
+    {
+      "id": "cf9fc2d5-aa40-4081-b390-6fae6858d98a",
+      "name": "Right Temporal",
+      "color": "#2ec27e",
+      "channelIds": [
+        82,
+        83,
+        91,
+        92,
+        93
+      ]
+    },
+    {
+      "id": "27c799af-2d81-4755-859b-80eda825a826",
+      "name": "Left PMA",
+      "color": "#56b4e9",
+      "channelIds": [
+        66,
+        70,
+        71,
+        84,
+        85
+      ]
+    },
+    {
+      "id": "75f79b2a-b3d6-4763-8528-224ac7d9ba42",
+      "name": "Right PMA",
+      "color": "#dc8add",
+      "channelIds": [
+        69,
+        80,
+        81,
+        86,
+        87
+      ]
+    },
+    {
+      "id": "128cb7d7-5152-4b41-997c-4a210946e7dd",
+      "name": "Left SMA",
+      "color": "#e01b24",
+      "channelIds": [
+        61,
+        63,
+        65,
+        74,
+        75,
+        76
+      ]
+    },
+    {
+      "id": "d9539230-cd3f-4096-9360-4fd271a64dfc",
+      "name": "Right SMA",
+      "color": "#0072b2",
+      "channelIds": [
+        62,
+        63,
+        67,
+        77,
+        78,
+        79
+      ]
+    }
+  ],
+  "activeRoiId": "d9539230-cd3f-4096-9360-4fd271a64dfc"
+}

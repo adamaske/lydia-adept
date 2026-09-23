@@ -1,0 +1,47 @@
+{
+  "axes": [
+    {
+      "axis": "color",
+      "colormap": "jet",
+      "index": 0,
+      "name": "ΔHbO (μM)",
+      "range": [
+        -0.4,
+        0.4
+      ],
+      "ticks": [
+        -0.4,
+        0,
+        0.4
+      ],
+      "type": "value",
+      "unit": "μM"
+    }
+  ],
+  "background": "transparent",
+  "display": {
+    "caption": "Cortex: Group movie, HbO, NOISE · Edges: Connectivity, off · Probe: Hidden · Coordinates: Hidden · Head: Cortex opaque, scalp hidden · Camera: Free orbit, 800 × 800 export",
+    "layers": {
+      "camera": "Free orbit, 800 × 800 export",
+      "coordinates": "Hidden",
+      "cortex": "Group movie, HbO, NOISE",
+      "edges": "Connectivity, off",
+      "head": "Cortex opaque, scalp hidden",
+      "probe": "Hidden"
+    }
+  },
+  "format": "png",
+  "generator": "NIRWizard 0.2.1",
+  "pixelSize": {
+    "height": 1068,
+    "scale": 4,
+    "width": 357
+  },
+  "provenance": null,
+  "session": null,
+  "theme": {
+    "id": "graphite",
+    "scheme": "dark"
+  },
+  "view": "Colorbar · ΔHbO (μM)"
+}

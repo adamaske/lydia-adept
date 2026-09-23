@@ -1,0 +1,5911 @@
+{
+  "format": "nirw",
+  "version": 5,
+  "createdMs": 1789983112282,
+  "appVersion": "0.2.1",
+  "inputs": {
+    "snirf": {
+      "path": "/home/adam/dev/lydia-adept/piano-noise/data/processed/sub_01/quiet_1_preprocessed.snirf",
+      "filename": "quiet_1_preprocessed.snirf",
+      "sha256": "78462d60b8d52c1d151662b9448972dba0578a356fc95a2f23781afd59acb308",
+      "sizeBytes": 11983640
+    },
+    "anatomy": {
+      "kind": "atlas",
+      "id": "colin27",
+      "version": "2"
+    }
+  },
+  "configs": {
+    "preprocessing": {
+      "backend": "cedalion",
+      "enabled": true,
+      "steps": []
+    },
+    "glm": {
+      "conditions": [
+        "QUIET",
+        "NOISE"
+      ],
+      "solver": "arIrls",
+      "arPmaxS": 4.0,
+      "hrfModel": "canonical",
+      "hrfParams": {
+        "responseDelayS": 6.0,
+        "undershootDelayS": 16.0,
+        "responseDispersion": 1.0,
+        "undershootDispersion": 1.0,
+        "responseUndershootRatio": 6.0,
+        "kernelLengthS": 32.0
+      },
+      "temporalDerivative": true,
+      "dispersionDerivative": false,
+      "firBinWidthS": 1.0,
+      "firSpanS": 20.0,
+      "preStimS": 5.0,
+      "includeDrift": false,
+      "driftCutoffS": 128.0,
+      "shortChannelMode": "auto",
+      "contrasts": [
+        {
+          "id": "contrast-1789980734026",
+          "name": "QUIET>NOISE",
+          "weights": [
+            1.0,
+            -1.0
+          ],
+          "conditions": [
+            "QUIET",
+            "NOISE"
+          ]
+        },
+        {
+          "id": "contrast-1789980734550",
+          "name": "NOISE>QUIET",
+          "weights": [
+            -1.0,
+            1.0
+          ],
+          "conditions": [
+            "QUIET",
+            "NOISE"
+          ]
+        }
+      ]
+    },
+    "blockAverage": {
+      "conditions": [],
+      "preStimS": 5.0,
+      "postStimS": 20.0,
+      "baselineCorrect": true,
+      "reject": false,
+      "rejectRangeThreshold": null,
+      "band": "ci95"
+    },
+    "protocol": {
+      "conditions": [
+        {
+          "id": "cond-3",
+          "name": "QUIET",
+          "color": "#e5c07b",
+          "durationS": 40.0,
+          "eventNames": [
+            "20"
+          ]
+        },
+        {
+          "id": "cond-4",
+          "name": "NOISE",
+          "color": "#c678dd",
+          "durationS": 40.0,
+          "eventNames": [
+            "21"
+          ]
+        }
+      ]
+    },
+    "study": {
+      "version": 4,
+      "runPolicy": "perRun",
+      "subjects": [
+        {
+          "id": "s-ed85a8f539164a4cbd8d9f52c2bf1d45",
+          "label": "sub_01",
+          "enabled": true,
+          "runs": [
+            {
+              "id": "r-e5ed3c0e4f024322a2e1bd9200862778",
+              "path": "/home/adam/dev/lydia-adept/piano-noise/data/processed/sub_01/quiet_1_preprocessed.snirf",
+              "sha256": "78462d60b8d52c1d151662b9448972dba0578a356fc95a2f23781afd59acb308",
+              "label": "run 1",
+              "facts": {
+                "nChannels": 47,
+                "samplingRate": 12.207031250000497,
+                "conditions": [
+                  [
+                    "1",
+                    1
+                  ],
+                  [
+                    "10",
+                    1
+                  ],
+                  [
+                    "11",
+                    1
+                  ],
+                  [
+                    "20",
+                    6
+                  ],
+                  [
+                    "30",
+                    6
+                  ],
+                  [
+                    "40",
+                    1
+                  ]
+                ]
+              }
+            },
+            {
+              "id": "r-5faf1702e3924500ac560c0431cf21cd",
+              "path": "/home/adam/dev/lydia-adept/piano-noise/data/processed/sub_01/noise_1_preprocessed.snirf",
+              "sha256": "f46d1973c5b582e15e30373a3a8b7d7548c81910f6dcc7ee46757c35ae7ae71b",
+              "label": "run 2",
+              "facts": {
+                "nChannels": 47,
+                "samplingRate": 12.207031250000497,
+                "conditions": [
+                  [
+                    "11",
+                    1
+                  ],
+                  [
+                    "21",
+                    6
+                  ],
+                  [
+                    "30",
+                    6
+                  ],
+                  [
+                    "40",
+                    1
+                  ]
+                ]
+              }
+            },
+            {
+              "id": "r-45d48375e8af47b6801c989348a2063b",
+              "path": "/home/adam/dev/lydia-adept/piano-noise/data/processed/sub_01/quiet_2_preprocessed.snirf",
+              "sha256": "3bb2e157ffd84a08e76ddf359088f450afc8e090a06a4e194f22959fdf568af2",
+              "label": "run 3",
+              "facts": {
+                "nChannels": 47,
+                "samplingRate": 12.207031250000497,
+                "conditions": [
+                  [
+                    "1",
+                    1
+                  ],
+                  [
+                    "10",
+                    1
+                  ],
+                  [
+                    "11",
+                    1
+                  ],
+                  [
+                    "20",
+                    6
+                  ],
+                  [
+                    "30",
+                    6
+                  ],
+                  [
+                    "40",
+                    1
+                  ]
+                ]
+              }
+            },
+            {
+              "id": "r-f8e8b384073549f4acf092ed98b37041",
+              "path": "/home/adam/dev/lydia-adept/piano-noise/data/processed/sub_01/noise_2_preprocessed.snirf",
+              "sha256": "4389eb7eac0e3b695e6c2f9d5627e765bdf03668c5521131bed0a4ab440ccf82",
+              "label": "run 4",
+              "facts": {
+                "nChannels": 47,
+                "samplingRate": 12.207031250000497,
+                "conditions": [
+                  [
+                    "1",
+                    1
+                  ],
+                  [
+                    "10",
+                    1
+                  ],
+                  [
+                    "11",
+                    1
+                  ],
+                  [
+                    "21",
+                    6
+                  ],
+                  [
+                    "30",
+                    6
+                  ],
+                  [
+                    "40",
+                    1
+                  ]
+                ]
+              }
+            }
+          ],
+          "origin": {
+            "kind": "imported",
+            "rule": {
+              "kind": "subfolder"
+            },
+            "root": "/home/adam/dev/lydia-adept/piano-noise/data/processed"
+          }
+        }
+      ],
+      "glmConfig": {
+        "conditions": [
+          "QUIET",
+          "NOISE"
+        ],
+        "solver": "arIrls",
+        "arPmaxS": 4.0,
+        "hrfModel": "canonical",
+        "hrfParams": {
+          "responseDelayS": 6.0,
+          "undershootDelayS": 16.0,
+          "responseDispersion": 1.0,
+          "undershootDispersion": 1.0,
+          "responseUndershootRatio": 6.0,
+          "kernelLengthS": 32.0
+        },
+        "temporalDerivative": true,
+        "dispersionDerivative": false,
+        "firBinWidthS": 1.0,
+        "firSpanS": 20.0,
+        "preStimS": 5.0,
+        "includeDrift": false,
+        "driftCutoffS": 128.0,
+        "shortChannelMode": "auto",
+        "contrasts": [
+          {
+            "id": "contrast-1789980734026",
+            "name": "QUIET>NOISE",
+            "weights": [
+              1.0,
+              -1.0
+            ],
+            "conditions": [
+              "QUIET",
+              "NOISE"
+            ]
+          },
+          {
+            "id": "contrast-1789980734550",
+            "name": "NOISE>QUIET",
+            "weights": [
+              -1.0,
+              1.0
+            ],
+            "conditions": [
+              "QUIET",
+              "NOISE"
+            ]
+          }
+        ]
+      },
+      "blockAvgConfig": {
+        "conditions": [],
+        "preStimS": 5.0,
+        "postStimS": 20.0,
+        "baselineCorrect": true,
+        "reject": false,
+        "rejectRangeThreshold": null,
+        "band": "ci95"
+      },
+      "protocol": {
+        "conditions": [
+          {
+            "id": "cond-3",
+            "name": "QUIET",
+            "color": "#e5c07b",
+            "durationS": 40.0,
+            "eventNames": [
+              "20"
+            ]
+          },
+          {
+            "id": "cond-4",
+            "name": "NOISE",
+            "color": "#c678dd",
+            "durationS": 40.0,
+            "eventNames": [
+              "21"
+            ]
+          }
+        ]
+      },
+      "qcThresholds": {
+        "sci": 0.8,
+        "psp": 0.1,
+        "q": 0.75,
+        "snr": 2.0,
+        "sdMinMm": 0.0,
+        "sdMaxMm": 45.0,
+        "ampMin": null,
+        "ampMax": null
+      },
+      "qcParams": {
+        "windowS": 5.0,
+        "bandLoHz": 0.5,
+        "bandHiHz": 2.5
+      },
+      "lastImport": {
+        "rule": {
+          "kind": "subfolder"
+        },
+        "order": "startTime"
+      }
+    },
+    "selection": [
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        2,
+        4
+      ],
+      [
+        3,
+        1
+      ],
+      [
+        3,
+        3
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        4,
+        2
+      ],
+      [
+        4,
+        3
+      ],
+      [
+        4,
+        7
+      ],
+      [
+        5,
+        2
+      ],
+      [
+        5,
+        7
+      ],
+      [
+        6,
+        3
+      ],
+      [
+        6,
+        5
+      ],
+      [
+        6,
+        6
+      ],
+      [
+        6,
+        9
+      ],
+      [
+        7,
+        4
+      ],
+      [
+        7,
+        5
+      ],
+      [
+        7,
+        8
+      ],
+      [
+        8,
+        6
+      ],
+      [
+        8,
+        7
+      ],
+      [
+        8,
+        10
+      ],
+      [
+        9,
+        4
+      ],
+      [
+        9,
+        8
+      ],
+      [
+        9,
+        11
+      ],
+      [
+        9,
+        13
+      ],
+      [
+        10,
+        5
+      ],
+      [
+        10,
+        8
+      ],
+      [
+        10,
+        9
+      ],
+      [
+        11,
+        6
+      ],
+      [
+        11,
+        9
+      ],
+      [
+        11,
+        10
+      ],
+      [
+        12,
+        7
+      ],
+      [
+        12,
+        10
+      ],
+      [
+        12,
+        12
+      ],
+      [
+        12,
+        15
+      ],
+      [
+        13,
+        8
+      ],
+      [
+        13,
+        11
+      ],
+      [
+        14,
+        10
+      ],
+      [
+        14,
+        12
+      ],
+      [
+        15,
+        11
+      ],
+      [
+        15,
+        13
+      ],
+      [
+        15,
+        14
+      ],
+      [
+        16,
+        12
+      ],
+      [
+        16,
+        15
+      ],
+      [
+        16,
+        16
+      ]
+    ],
+    "activeBlock": 0,
+    "roi": {
+      "rois": [
+        {
+          "id": "eed6c8bf-7b87-4813-83ee-bcafaf4179c4",
+          "name": "Left VLPFC",
+          "color": "#e69f00",
+          "channelIds": []
+        },
+        {
+          "id": "afde37d0-9925-4dc6-99bd-9b60abb9963e",
+          "name": "Right VLPFC",
+          "color": "#56b4e9",
+          "channelIds": []
+        },
+        {
+          "id": "2e845637-32e4-48fe-80e0-4f9794fdbb01",
+          "name": "Left DLPFC",
+          "color": "#26a269",
+          "channelIds": []
+        },
+        {
+          "id": "dfaae8b8-434d-4e9f-810f-a587ac35787f",
+          "name": "Right DLPFC",
+          "color": "#f0e442",
+          "channelIds": []
+        },
+        {
+          "id": "96353418-73b4-4d91-839d-bdfec5303a68",
+          "name": "Left Temporal",
+          "color": "#deddda",
+          "channelIds": []
+        },
+        {
+          "id": "cf9fc2d5-aa40-4081-b390-6fae6858d98a",
+          "name": "Right Temporal",
+          "color": "#2ec27e",
+          "channelIds": []
+        },
+        {
+          "id": "27c799af-2d81-4755-859b-80eda825a826",
+          "name": "Left PMA",
+          "color": "#56b4e9",
+          "channelIds": []
+        },
+        {
+          "id": "75f79b2a-b3d6-4763-8528-224ac7d9ba42",
+          "name": "Right PMA",
+          "color": "#dc8add",
+          "channelIds": []
+        },
+        {
+          "id": "128cb7d7-5152-4b41-997c-4a210946e7dd",
+          "name": "Left SMA",
+          "color": "#e01b24",
+          "channelIds": []
+        },
+        {
+          "id": "d9539230-cd3f-4096-9360-4fd271a64dfc",
+          "name": "Right SMA",
+          "color": "#0072b2",
+          "channelIds": []
+        }
+      ],
+      "activeRoiId": "d9539230-cd3f-4096-9360-4fd271a64dfc"
+    },
+    "provenance": {},
+    "blocks": {
+      "blocks": [
+        {
+          "id": 0,
+          "name": "Hb #0",
+          "kind": "original",
+          "file": {
+            "entry": 0,
+            "index": 0
+          }
+        }
+      ]
+    },
+    "dpf": {
+      "age": 25.0,
+      "ageSource": "assumed-default",
+      "overrides": {}
+    },
+    "shortThresholdMm": 15.0,
+    "layout": {
+      "dockview": {
+        "activeGroup": "1",
+        "grid": {
+          "height": 1066,
+          "orientation": "VERTICAL",
+          "root": {
+            "data": [
+              {
+                "data": [
+                  {
+                    "data": [
+                      {
+                        "data": {
+                          "activeView": "pipeline",
+                          "id": "2",
+                          "views": [
+                            "info",
+                            "hdf5",
+                            "log",
+                            "pipeline"
+                          ]
+                        },
+                        "size": 374,
+                        "type": "leaf"
+                      },
+                      {
+                        "data": {
+                          "activeView": "channelMap",
+                          "id": "5",
+                          "views": [
+                            "channelMap"
+                          ]
+                        },
+                        "size": 692,
+                        "type": "leaf"
+                      }
+                    ],
+                    "size": 407,
+                    "type": "branch"
+                  },
+                  {
+                    "data": {
+                      "activeView": "study",
+                      "id": "1",
+                      "views": [
+                        "timeSeries",
+                        "spectrogram",
+                        "frequency",
+                        "study",
+                        "glm"
+                      ]
+                    },
+                    "size": 1032,
+                    "type": "leaf"
+                  },
+                  {
+                    "data": [
+                      {
+                        "data": {
+                          "activeView": "viewport",
+                          "id": "3",
+                          "views": [
+                            "viewport"
+                          ]
+                        },
+                        "size": 618,
+                        "type": "leaf"
+                      },
+                      {
+                        "data": {
+                          "activeView": "display",
+                          "id": "7",
+                          "views": [
+                            "display"
+                          ]
+                        },
+                        "size": 448,
+                        "type": "leaf"
+                      }
+                    ],
+                    "size": 447,
+                    "type": "branch"
+                  }
+                ],
+                "size": 1066,
+                "type": "branch"
+              }
+            ],
+            "size": 1886,
+            "type": "branch"
+          },
+          "width": 1886
+        },
+        "panels": {
+          "channelMap": {
+            "contentComponent": "channelMap",
+            "id": "channelMap",
+            "tabComponent": "nirwizard-tab",
+            "title": "Channel Map"
+          },
+          "display": {
+            "contentComponent": "display",
+            "id": "display",
+            "tabComponent": "nirwizard-tab",
+            "title": "Display"
+          },
+          "frequency": {
+            "contentComponent": "frequency",
+            "id": "frequency",
+            "tabComponent": "nirwizard-tab",
+            "title": "Frequency"
+          },
+          "glm": {
+            "contentComponent": "glm",
+            "id": "glm",
+            "tabComponent": "nirwizard-tab",
+            "title": "GLM"
+          },
+          "hdf5": {
+            "contentComponent": "hdf5",
+            "id": "hdf5",
+            "tabComponent": "nirwizard-tab",
+            "title": "HDF5"
+          },
+          "info": {
+            "contentComponent": "info",
+            "id": "info",
+            "tabComponent": "nirwizard-tab",
+            "title": "Info"
+          },
+          "log": {
+            "contentComponent": "log",
+            "id": "log",
+            "tabComponent": "nirwizard-tab",
+            "title": "Log"
+          },
+          "pipeline": {
+            "contentComponent": "pipeline",
+            "id": "pipeline",
+            "tabComponent": "nirwizard-tab",
+            "title": "Pipeline"
+          },
+          "spectrogram": {
+            "contentComponent": "spectrogram",
+            "id": "spectrogram",
+            "tabComponent": "nirwizard-tab",
+            "title": "Spectrogram"
+          },
+          "study": {
+            "contentComponent": "study",
+            "id": "study",
+            "tabComponent": "nirwizard-tab",
+            "title": "Study"
+          },
+          "timeSeries": {
+            "contentComponent": "timeSeries",
+            "id": "timeSeries",
+            "tabComponent": "nirwizard-tab",
+            "title": "Time Series"
+          },
+          "viewport": {
+            "contentComponent": "viewport",
+            "id": "viewport",
+            "renderer": "always",
+            "tabComponent": "nirwizard-tab",
+            "title": "3D Viewport"
+          }
+        }
+      },
+      "formatVersion": 1,
+      "slot": {
+        "pinned": [
+          "study"
+        ]
+      }
+    }
+  },
+  "results": {
+    "glm": {
+      "unit": "channel",
+      "channels": [
+        {
+          "channelName": "S1-D1",
+          "sourceIndex": 1,
+          "detectorIndex": 1,
+          "separationMm": 30.365032175184666,
+          "betasHbo": [
+            0.359799802617863,
+            null
+          ],
+          "tStatsHbo": [
+            17.07658653513448,
+            null
+          ],
+          "betasHbr": [
+            -0.0026157160310866876,
+            null
+          ],
+          "tStatsHbr": [
+            -0.7248622734896802,
+            null
+          ],
+          "seHbo": [
+            0.021069773041444053,
+            null
+          ],
+          "seHbr": [
+            0.0036085696921346632,
+            null
+          ],
+          "covHbo": [
+            0.00044393533601796265,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            0.00001302177522299286,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            3.4707221748644596e-64,
+            null
+          ],
+          "pHbr": [
+            0.4685588782350195,
+            null
+          ],
+          "qHbo": [
+            5.437464740620986e-63,
+            null
+          ],
+          "qHbr": [
+            0.5005060744783163,
+            null
+          ],
+          "arOrderHbo": 32,
+          "arOrderHbr": 20,
+          "nuisanceBetasHbo": [
+            -0.17324125549783803,
+            -0.2993314270621333
+          ],
+          "nuisanceBetasHbr": [
+            -0.07711846622581049,
+            -0.0020257869399731574
+          ],
+          "nuisanceSeHbo": [
+            0.06513028561249028,
+            0.0004031916750837863
+          ],
+          "nuisanceSeHbr": [
+            0.010347296673768156,
+            0.00012017251070934266
+          ]
+        },
+        {
+          "channelName": "S1-D2",
+          "sourceIndex": 1,
+          "detectorIndex": 2,
+          "separationMm": 29.89252634020751,
+          "betasHbo": [
+            0.23353826573055372,
+            null
+          ],
+          "tStatsHbo": [
+            8.632694532651541,
+            null
+          ],
+          "betasHbr": [
+            -0.012584161558856966,
+            null
+          ],
+          "tStatsHbr": [
+            -2.284291201090918,
+            null
+          ],
+          "seHbo": [
+            0.027052766068258204,
+            null
+          ],
+          "seHbr": [
+            0.005509000583133664,
+            null
+          ],
+          "covHbo": [
+            0.0007318521519439024,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            0.000030349087424967043,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            7.221955879946085e-18,
+            null
+          ],
+          "pHbr": [
+            0.022381911854128023,
+            null
+          ],
+          "qHbo": [
+            1.3055074090671769e-17,
+            null
+          ],
+          "qHbr": [
+            0.02843107722010857,
+            null
+          ],
+          "arOrderHbo": 30,
+          "arOrderHbr": 18,
+          "nuisanceBetasHbo": [
+            -0.19064228059339822,
+            -0.2151663432821055
+          ],
+          "nuisanceBetasHbr": [
+            -0.012764040305061628,
+            0.01946551222642992
+          ],
+          "nuisanceSeHbo": [
+            0.06500615349345391,
+            0.00033679028566145673
+          ],
+          "nuisanceSeHbr": [
+            0.014893380952335387,
+            0.00012231422832318574
+          ]
+        },
+        {
+          "channelName": "S1-D3",
+          "sourceIndex": 1,
+          "detectorIndex": 3,
+          "separationMm": 39.94168002225244,
+          "betasHbo": [
+            0.26606686903828614,
+            null
+          ],
+          "tStatsHbo": [
+            16.73985089168592,
+            null
+          ],
+          "betasHbr": [
+            -0.0018377191842716377,
+            null
+          ],
+          "tStatsHbr": [
+            -0.5722263079587523,
+            null
+          ],
+          "seHbo": [
+            0.01589421977291518,
+            null
+          ],
+          "seHbr": [
+            0.003211525158336666,
+            null
+          ],
+          "covHbo": [
+            0.00025262622218972787,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            0.000010313893842629349,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            8.542934205203533e-62,
+            null
+          ],
+          "pHbr": [
+            0.5671856188059543,
+            null
+          ],
+          "qHbo": [
+            1.0037947691114152e-60,
+            null
+          ],
+          "qHbr": [
+            0.5923938685306633,
+            null
+          ],
+          "arOrderHbo": 30,
+          "arOrderHbr": 20,
+          "nuisanceBetasHbo": [
+            -0.05166399685337182,
+            -0.1728569659269869
+          ],
+          "nuisanceBetasHbr": [
+            -0.06274691234985444,
+            0.008219381822672194
+          ],
+          "nuisanceSeHbo": [
+            0.04720527378897176,
+            0.00020749818240120365
+          ],
+          "nuisanceSeHbr": [
+            0.009050976519993256,
+            0.000104594529674085
+          ]
+        },
+        {
+          "channelName": "S2-D1",
+          "sourceIndex": 2,
+          "detectorIndex": 1,
+          "separationMm": 30.39864924630698,
+          "betasHbo": [
+            0.2558353142831629,
+            null
+          ],
+          "tStatsHbo": [
+            11.029235568357134,
+            null
+          ],
+          "betasHbr": [
+            0.018622767996903832,
+            null
+          ],
+          "tStatsHbr": [
+            5.028167530261626,
+            null
+          ],
+          "seHbo": [
+            0.02319610572260821,
+            null
+          ],
+          "seHbr": [
+            0.0037036888458517312,
+            null
+          ],
+          "covHbo": [
+            0.0005380593206944173,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            0.00001371731106688653,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            4.509830593350923e-28,
+            null
+          ],
+          "pHbr": [
+            5.065338259173534e-7,
+            null
+          ],
+          "qHbo": [
+            1.246835516985255e-27,
+            null
+          ],
+          "qHbr": [
+            1.133670943719791e-6,
+            null
+          ],
+          "arOrderHbo": 34,
+          "arOrderHbr": 32,
+          "nuisanceBetasHbo": [
+            0.028596319694587632,
+            -0.20073916510895584
+          ],
+          "nuisanceBetasHbr": [
+            -0.041158364472176176,
+            0.001778095597368363
+          ],
+          "nuisanceSeHbo": [
+            0.07373136975541816,
+            0.0005491902175402811
+          ],
+          "nuisanceSeHbr": [
+            0.008412251543688432,
+            0.000053197572152579566
+          ]
+        },
+        {
+          "channelName": "S2-D4",
+          "sourceIndex": 2,
+          "detectorIndex": 4,
+          "separationMm": 35.95751234443229,
+          "betasHbo": [
+            0.11260003642135807,
+            null
+          ],
+          "tStatsHbo": [
+            8.381466644425519,
+            null
+          ],
+          "betasHbr": [
+            0.03989147826178962,
+            null
+          ],
+          "tStatsHbr": [
+            14.511923459596655,
+            null
+          ],
+          "seHbo": [
+            0.01343440727002689,
+            null
+          ],
+          "seHbr": [
+            0.002748876010327191,
+            null
+          ],
+          "covHbo": [
+            0.00018048329869695137,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            7.556319320152334e-6,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            6.172173318290556e-17,
+            null
+          ],
+          "pHbr": [
+            4.333880133955764e-47,
+            null
+          ],
+          "qHbo": [
+            9.669738198655205e-17,
+            null
+          ],
+          "qHbr": [
+            6.789745543197363e-46,
+            null
+          ],
+          "arOrderHbo": 36,
+          "arOrderHbr": 21,
+          "nuisanceBetasHbo": [
+            0.12112696697493262,
+            -0.1014419296443542
+          ],
+          "nuisanceBetasHbr": [
+            0.01317972523721129,
+            -0.00658116445712956
+          ],
+          "nuisanceSeHbo": [
+            0.046456956134836566,
+            0.00038609051941368124
+          ],
+          "nuisanceSeHbr": [
+            0.007412647497995875,
+            0.0000959921498199611
+          ]
+        },
+        {
+          "channelName": "S3-D1",
+          "sourceIndex": 3,
+          "detectorIndex": 1,
+          "separationMm": 31.59301142657977,
+          "betasHbo": [
+            0.15840679306321134,
+            null
+          ],
+          "tStatsHbo": [
+            9.074297460303567,
+            null
+          ],
+          "betasHbr": [
+            -0.006605334951382241,
+            null
+          ],
+          "tStatsHbr": [
+            -2.9453812817427307,
+            null
+          ],
+          "seHbo": [
+            0.01745664540491183,
+            null
+          ],
+          "seHbr": [
+            0.00224260777113175,
+            null
+          ],
+          "covHbo": [
+            0.00030473446879282934,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            5.029289615140514e-6,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            1.4359121804937478e-19,
+            null
+          ],
+          "pHbr": [
+            0.0032353659256193702,
+            null
+          ],
+          "qHbo": [
+            2.699514899328246e-19,
+            null
+          ],
+          "qHbr": [
+            0.004607945409215467,
+            null
+          ],
+          "arOrderHbo": 35,
+          "arOrderHbr": 33,
+          "nuisanceBetasHbo": [
+            0.0050059980776376856,
+            -0.15682882266942055
+          ],
+          "nuisanceBetasHbr": [
+            -0.019748824777381616,
+            0.01839943505154243
+          ],
+          "nuisanceSeHbo": [
+            0.056379379683914335,
+            0.0004395727248545375
+          ],
+          "nuisanceSeHbr": [
+            0.005332225976855758,
+            0.0000398746166599642
+          ]
+        },
+        {
+          "channelName": "S3-D3",
+          "sourceIndex": 3,
+          "detectorIndex": 3,
+          "separationMm": 39.104054559597785,
+          "betasHbo": [
+            0.192569636388016,
+            null
+          ],
+          "tStatsHbo": [
+            14.664214921570293,
+            null
+          ],
+          "betasHbr": [
+            0.004018124059699629,
+            null
+          ],
+          "tStatsHbr": [
+            2.802269903579545,
+            null
+          ],
+          "seHbo": [
+            0.013131943129444736,
+            null
+          ],
+          "seHbr": [
+            0.0014338818878820289,
+            null
+          ],
+          "covHbo": [
+            0.0001724479303549708,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            2.0560172683961313e-6,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            4.9429410450555765e-48,
+            null
+          ],
+          "pHbr": [
+            0.005087304941189098,
+            null
+          ],
+          "qHbo": [
+            2.903977863970151e-47,
+            null
+          ],
+          "qHbr": [
+            0.007032450948114341,
+            null
+          ],
+          "arOrderHbo": 34,
+          "arOrderHbr": 23,
+          "nuisanceBetasHbo": [
+            0.1740934959980427,
+            -0.1551844731289368
+          ],
+          "nuisanceBetasHbr": [
+            -0.04336016458528756,
+            -0.005432205037402282
+          ],
+          "nuisanceSeHbo": [
+            0.044607952957507996,
+            0.0003134606995510353
+          ],
+          "nuisanceSeHbr": [
+            0.004884238298647935,
+            0.00008281863947968231
+          ]
+        },
+        {
+          "channelName": "S3-D4",
+          "sourceIndex": 3,
+          "detectorIndex": 4,
+          "separationMm": 41.85212574051646,
+          "betasHbo": [
+            0.08647673831197063,
+            null
+          ],
+          "tStatsHbo": [
+            8.498743969027172,
+            null
+          ],
+          "betasHbr": [
+            0.02607730265275928,
+            null
+          ],
+          "tStatsHbr": [
+            13.72067841633424,
+            null
+          ],
+          "seHbo": [
+            0.010175237497108573,
+            null
+          ],
+          "seHbr": [
+            0.0019005840572514756,
+            null
+          ],
+          "covHbo": [
+            0.00010353545812256433,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            3.61221975867848e-6,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            2.2842174129864535e-17,
+            null
+          ],
+          "pHbr": [
+            2.4376755878773358e-42,
+            null
+          ],
+          "qHbo": [
+            3.889915172603802e-17,
+            null
+          ],
+          "qHbr": [
+            2.86426881575587e-41,
+            null
+          ],
+          "arOrderHbo": 23,
+          "arOrderHbr": 25,
+          "nuisanceBetasHbo": [
+            0.1849255535305617,
+            -0.01655618603335053
+          ],
+          "nuisanceBetasHbr": [
+            0.023217295492813313,
+            -0.010742678970690034
+          ],
+          "nuisanceSeHbo": [
+            0.04060826322242659,
+            0.0005916545729955065
+          ],
+          "nuisanceSeHbr": [
+            0.008404780355854811,
+            0.00021395968783965985
+          ]
+        },
+        {
+          "channelName": "S4-D2",
+          "sourceIndex": 4,
+          "detectorIndex": 2,
+          "separationMm": 31.42764886210866,
+          "betasHbo": [
+            0.07841858140904483,
+            null
+          ],
+          "tStatsHbo": [
+            4.198756495761442,
+            null
+          ],
+          "betasHbr": [
+            -0.022625013559851005,
+            null
+          ],
+          "tStatsHbr": [
+            -7.097351811895514,
+            null
+          ],
+          "seHbo": [
+            0.018676620444221227,
+            null
+          ],
+          "seHbr": [
+            0.0031878106312738168,
+            null
+          ],
+          "covHbo": [
+            0.00034881615121750234,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            0.000010162136620862371,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            0.00002714514935168438,
+            null
+          ],
+          "pHbr": [
+            1.3866143212412614e-12,
+            null
+          ],
+          "qHbo": [
+            0.00003448167620349097,
+            null
+          ],
+          "qHbr": [
+            5.430906091528274e-12,
+            null
+          ],
+          "arOrderHbo": 31,
+          "arOrderHbr": 29,
+          "nuisanceBetasHbo": [
+            -0.1683560801014024,
+            -0.02503021828050323
+          ],
+          "nuisanceBetasHbr": [
+            0.009266471650352857,
+            0.017386490636933746
+          ],
+          "nuisanceSeHbo": [
+            0.05943369002231178,
+            0.0003495622567108211
+          ],
+          "nuisanceSeHbr": [
+            0.006593128850632105,
+            0.00003099316432002128
+          ]
+        },
+        {
+          "channelName": "S4-D3",
+          "sourceIndex": 4,
+          "detectorIndex": 3,
+          "separationMm": 38.7272432403857,
+          "betasHbo": [
+            0.11486532320725977,
+            null
+          ],
+          "tStatsHbo": [
+            10.164590517541944,
+            null
+          ],
+          "betasHbr": [
+            -0.025067006740310337,
+            null
+          ],
+          "tStatsHbr": [
+            -15.115507669772102,
+            null
+          ],
+          "seHbo": [
+            0.011300536210389036,
+            null
+          ],
+          "seHbr": [
+            0.0016583635355125505,
+            null
+          ],
+          "covHbo": [
+            0.0001277021186423138,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            2.750169615917686e-6,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            4.0702590196088876e-24,
+            null
+          ],
+          "pHbr": [
+            7.01219508307694e-51,
+            null
+          ],
+          "qHbo": [
+            8.695553360073532e-24,
+            null
+          ],
+          "qHbr": [
+            1.6478658445230809e-49,
+            null
+          ],
+          "arOrderHbo": 27,
+          "arOrderHbr": 24,
+          "nuisanceBetasHbo": [
+            0.2077171603150274,
+            -0.025268581446310816
+          ],
+          "nuisanceBetasHbr": [
+            -0.029751034395988214,
+            0.01014554898547762
+          ],
+          "nuisanceSeHbo": [
+            0.03615084922006607,
+            0.00009336737078431677
+          ],
+          "nuisanceSeHbr": [
+            0.006799942615040335,
+            0.00011640662750822696
+          ]
+        },
+        {
+          "channelName": "S4-D7",
+          "sourceIndex": 4,
+          "detectorIndex": 7,
+          "separationMm": 41.19043200793116,
+          "betasHbo": [
+            0.02238945086403776,
+            null
+          ],
+          "tStatsHbo": [
+            1.9106134100376455,
+            null
+          ],
+          "betasHbr": [
+            0.00800672978413222,
+            null
+          ],
+          "tStatsHbr": [
+            3.6203512377330007,
+            null
+          ],
+          "seHbo": [
+            0.011718462116099464,
+            null
+          ],
+          "seHbr": [
+            0.0022115892239079793,
+            null
+          ],
+          "covHbo": [
+            0.00013732235436645835,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            4.891126895305898e-6,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            0.05609192866230707,
+            null
+          ],
+          "pHbr": [
+            0.00029612082539221235,
+            null
+          ],
+          "qHbo": [
+            0.05991637834382801,
+            null
+          ],
+          "qHbr": [
+            0.00046392262644779936,
+            null
+          ],
+          "arOrderHbo": 28,
+          "arOrderHbr": 29,
+          "nuisanceBetasHbo": [
+            0.05441312988455273,
+            -0.027005506537942415
+          ],
+          "nuisanceBetasHbr": [
+            -0.03945203573251955,
+            -0.01812801767665565
+          ],
+          "nuisanceSeHbo": [
+            0.038265873029091194,
+            0.00012858894747656396
+          ],
+          "nuisanceSeHbr": [
+            0.007924724730712401,
+            0.00003820926209293235
+          ]
+        },
+        {
+          "channelName": "S5-D2",
+          "sourceIndex": 5,
+          "detectorIndex": 2,
+          "separationMm": 29.826400134779927,
+          "betasHbo": [
+            0.04098300526452946,
+            null
+          ],
+          "tStatsHbo": [
+            1.7379910311155775,
+            null
+          ],
+          "betasHbr": [
+            0.019586215538483956,
+            null
+          ],
+          "tStatsHbr": [
+            5.308129503900767,
+            null
+          ],
+          "seHbo": [
+            0.023580677075314586,
+            null
+          ],
+          "seHbr": [
+            0.003689852616461354,
+            null
+          ],
+          "covHbo": [
+            0.0005560483313302668,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            0.000013615012331206701,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            0.08225296135702931,
+            null
+          ],
+          "pHbr": [
+            1.1389176154438361e-7,
+            null
+          ],
+          "qHbo": [
+            0.08590864852845284,
+            null
+          ],
+          "qHbr": [
+            2.8173225224136996e-7,
+            null
+          ],
+          "arOrderHbo": 35,
+          "arOrderHbr": 34,
+          "nuisanceBetasHbo": [
+            -0.049927484095508845,
+            -0.03287223336229182
+          ],
+          "nuisanceBetasHbr": [
+            -0.003435447763237064,
+            -0.021753476247216873
+          ],
+          "nuisanceSeHbo": [
+            0.041017191864504414,
+            0.00006973782233011577
+          ],
+          "nuisanceSeHbr": [
+            0.007186785033170234,
+            0.00005296094032932738
+          ]
+        },
+        {
+          "channelName": "S5-D7",
+          "sourceIndex": 5,
+          "detectorIndex": 7,
+          "separationMm": 35.54595303265901,
+          "betasHbo": [
+            -0.039406824558589515,
+            null
+          ],
+          "tStatsHbo": [
+            -2.9197159226291727,
+            null
+          ],
+          "betasHbr": [
+            0.011751187040108588,
+            null
+          ],
+          "tStatsHbr": [
+            3.5415633963885615,
+            null
+          ],
+          "seHbo": [
+            0.013496800922708978,
+            null
+          ],
+          "seHbr": [
+            0.0033180789738485625,
+            null
+          ],
+          "covHbo": [
+            0.00018216363514723794,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            0.00001100964807669593,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            0.003513813323382405,
+            null
+          ],
+          "pHbr": [
+            0.0004001504243396383,
+            null
+          ],
+          "qHbo": [
+            0.00423459554356341,
+            null
+          ],
+          "qHbr": [
+            0.0006066796756117097,
+            null
+          ],
+          "arOrderHbo": 26,
+          "arOrderHbr": 36,
+          "nuisanceBetasHbo": [
+            0.20026803583154307,
+            0.052535345097229465
+          ],
+          "nuisanceBetasHbr": [
+            0.037686847176376215,
+            -0.026412746687928083
+          ],
+          "nuisanceSeHbo": [
+            0.040339120145058194,
+            0.0001154685339513607
+          ],
+          "nuisanceSeHbr": [
+            0.006932540037653367,
+            0.0000651369069361425
+          ]
+        },
+        {
+          "channelName": "S6-D3",
+          "sourceIndex": 6,
+          "detectorIndex": 3,
+          "separationMm": 39.79523666219363,
+          "betasHbo": [
+            0.14778344671478166,
+            null
+          ],
+          "tStatsHbo": [
+            14.24384101924309,
+            null
+          ],
+          "betasHbr": [
+            -0.020661756784609527,
+            null
+          ],
+          "tStatsHbr": [
+            -12.62594612713805,
+            null
+          ],
+          "seHbo": [
+            0.010375252469830978,
+            null
+          ],
+          "seHbr": [
+            0.0016364521578465638,
+            null
+          ],
+          "covHbo": [
+            0.00010764586381273382,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            2.677975664920675e-6,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            1.8804177099399593e-45,
+            null
+          ],
+          "pHbr": [
+            3.504954381712653e-36,
+            null
+          ],
+          "qHbo": [
+            8.837963236717809e-45,
+            null
+          ],
+          "qHbr": [
+            3.294657118809894e-35,
+            null
+          ],
+          "arOrderHbo": 33,
+          "arOrderHbr": 31,
+          "nuisanceBetasHbo": [
+            0.11581234175666495,
+            -0.0951788869419684
+          ],
+          "nuisanceBetasHbr": [
+            -0.043965452689829786,
+            0.0077339208689362155
+          ],
+          "nuisanceSeHbo": [
+            0.031883341899466636,
+            0.0002007925553580655
+          ],
+          "nuisanceSeHbr": [
+            0.004198277341856314,
+            0.000025862042735119426
+          ]
+        },
+        {
+          "channelName": "S6-D5",
+          "sourceIndex": 6,
+          "detectorIndex": 5,
+          "separationMm": 30.4281495493893,
+          "betasHbo": [
+            0.01661027849925653,
+            null
+          ],
+          "tStatsHbo": [
+            2.726141879243954,
+            null
+          ],
+          "betasHbr": [
+            -0.002847333882780763,
+            null
+          ],
+          "tStatsHbr": [
+            -1.4237988400289006,
+            null
+          ],
+          "seHbo": [
+            0.006092961861494565,
+            null
+          ],
+          "seHbr": [
+            0.001999814722930219,
+            null
+          ],
+          "covHbo": [
+            0.00003712418424562732,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            3.999258926048468e-6,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            0.006422655860866675,
+            null
+          ],
+          "pHbr": [
+            0.1545458292233869,
+            null
+          ],
+          "qHbo": [
+            0.007546620636518344,
+            null
+          ],
+          "qHbr": [
+            0.17716229203656547,
+            null
+          ],
+          "arOrderHbo": 30,
+          "arOrderHbr": 27,
+          "nuisanceBetasHbo": [
+            -0.012594516968496249,
+            -0.027729809735527203
+          ],
+          "nuisanceBetasHbr": [
+            -0.006141622789087356,
+            -0.0017563222416312216
+          ],
+          "nuisanceSeHbo": [
+            0.03305409933264364,
+            0.00020365700440034648
+          ],
+          "nuisanceSeHbr": [
+            0.010802505123345236,
+            0.00004484881353594551
+          ]
+        },
+        {
+          "channelName": "S6-D6",
+          "sourceIndex": 6,
+          "detectorIndex": 6,
+          "separationMm": 30.22042827294147,
+          "betasHbo": [
+            -0.01464719841838542,
+            null
+          ],
+          "tStatsHbo": [
+            -2.5536322336277797,
+            null
+          ],
+          "betasHbr": [
+            0.004339999762671234,
+            null
+          ],
+          "tStatsHbr": [
+            2.513148854748027,
+            null
+          ],
+          "seHbo": [
+            0.005735829233944582,
+            null
+          ],
+          "seHbr": [
+            0.0017269171121606208,
+            null
+          ],
+          "covHbo": [
+            0.00003289973700097329,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            2.982242712273178e-6,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            0.010679957593099546,
+            null
+          ],
+          "pHbr": [
+            0.01198643755408056,
+            null
+          ],
+          "qHbo": [
+            0.011673442020364619,
+            null
+          ],
+          "qHbr": [
+            0.015648960140049618,
+            null
+          ],
+          "arOrderHbo": 33,
+          "arOrderHbr": 32,
+          "nuisanceBetasHbo": [
+            0.09650963732242848,
+            0.008220985943147918
+          ],
+          "nuisanceBetasHbr": [
+            0.02139918495094319,
+            -0.010961460305136112
+          ],
+          "nuisanceSeHbo": [
+            0.03861620895506059,
+            0.00033209675014833243
+          ],
+          "nuisanceSeHbr": [
+            0.01128426795733009,
+            0.00008853570425589369
+          ]
+        },
+        {
+          "channelName": "S6-D9",
+          "sourceIndex": 6,
+          "detectorIndex": 9,
+          "separationMm": 39.854208033782335,
+          "betasHbo": [
+            0.08189159389209177,
+            null
+          ],
+          "tStatsHbo": [
+            8.497053631018801,
+            null
+          ],
+          "betasHbr": [
+            -0.006362717554147259,
+            null
+          ],
+          "tStatsHbr": [
+            -2.564112110514776,
+            null
+          ],
+          "seHbo": [
+            0.009637645876818236,
+            null
+          ],
+          "seHbr": [
+            0.0024814506074267817,
+            null
+          ],
+          "covHbo": [
+            0.00009288421804695155,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            6.1575971170987434e-6,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            2.317396273040563e-17,
+            null
+          ],
+          "pHbr": [
+            0.010363091158059305,
+            null
+          ],
+          "qHbo": [
+            3.889915172603802e-17,
+            null
+          ],
+          "qHbr": [
+            0.013916150983679638,
+            null
+          ],
+          "arOrderHbo": 28,
+          "arOrderHbr": 22,
+          "nuisanceBetasHbo": [
+            -0.058537637318386106,
+            -0.09077553681546767
+          ],
+          "nuisanceBetasHbr": [
+            0.008564355873829393,
+            -0.0008895241879992763
+          ],
+          "nuisanceSeHbo": [
+            0.05412469845418392,
+            0.00025318586634968574
+          ],
+          "nuisanceSeHbr": [
+            0.010975560285172744,
+            0.00001982316950362036
+          ]
+        },
+        {
+          "channelName": "S7-D4",
+          "sourceIndex": 7,
+          "detectorIndex": 4,
+          "separationMm": 30.590449784205532,
+          "betasHbo": [
+            0.1601043868518386,
+            null
+          ],
+          "tStatsHbo": [
+            19.730825133979636,
+            null
+          ],
+          "betasHbr": [
+            0.008616558443787049,
+            null
+          ],
+          "tStatsHbr": [
+            5.796667460855908,
+            null
+          ],
+          "seHbo": [
+            0.008114429364442202,
+            null
+          ],
+          "seHbr": [
+            0.0014864676129816784,
+            null
+          ],
+          "covHbo": [
+            0.00006584396391052188,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            2.2095859644434487e-6,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            1.5034566282737946e-84,
+            null
+          ],
+          "pHbr": [
+            7.035505330136228e-9,
+            null
+          ],
+          "qHbo": [
+            7.066246152886835e-83,
+            null
+          ],
+          "qHbr": [
+            2.066679690727517e-8,
+            null
+          ],
+          "arOrderHbo": 35,
+          "arOrderHbr": 31,
+          "nuisanceBetasHbo": [
+            0.08419798490702185,
+            -0.11239574408312408
+          ],
+          "nuisanceBetasHbr": [
+            0.002671274013632179,
+            -0.0016391355093737187
+          ],
+          "nuisanceSeHbo": [
+            0.028228740306016645,
+            0.00022136932509445717
+          ],
+          "nuisanceSeHbr": [
+            0.003483508200544682,
+            0.0000218854477707959
+          ]
+        },
+        {
+          "channelName": "S7-D5",
+          "sourceIndex": 7,
+          "detectorIndex": 5,
+          "separationMm": 30.479283029625222,
+          "betasHbo": [
+            0.04984435843197976,
+            null
+          ],
+          "tStatsHbo": [
+            11.067532407911973,
+            null
+          ],
+          "betasHbr": [
+            0.0010199630745752405,
+            null
+          ],
+          "tStatsHbr": [
+            0.7904114543032228,
+            null
+          ],
+          "seHbo": [
+            0.00450365597270327,
+            null
+          ],
+          "seHbr": [
+            0.0012904204120806626,
+            null
+          ],
+          "covHbo": [
+            0.00002028291712046584,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            1.6651848399144268e-6,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            2.9638332854350463e-28,
+            null
+          ],
+          "pHbr": [
+            0.429312216146308,
+            null
+          ],
+          "qHbo": [
+            8.706260275965448e-28,
+            null
+          ],
+          "qHbr": [
+            0.46924823625294126,
+            null
+          ],
+          "arOrderHbo": 36,
+          "arOrderHbr": 28,
+          "nuisanceBetasHbo": [
+            0.002639565025523636,
+            -0.013882025097741073
+          ],
+          "nuisanceBetasHbr": [
+            0.024023432846544165,
+            0.010705103451510134
+          ],
+          "nuisanceSeHbo": [
+            0.017727165998188577,
+            0.00003984234986864255
+          ],
+          "nuisanceSeHbr": [
+            0.006537751794509992,
+            0.00003110445440966146
+          ]
+        },
+        {
+          "channelName": "S7-D8",
+          "sourceIndex": 7,
+          "detectorIndex": 8,
+          "separationMm": 37.19910079558375,
+          "betasHbo": [
+            0.09722232403120876,
+            null
+          ],
+          "tStatsHbo": [
+            10.246705957019476,
+            null
+          ],
+          "betasHbr": [
+            -0.010815768747066478,
+            null
+          ],
+          "tStatsHbr": [
+            -2.9845698583339924,
+            null
+          ],
+          "seHbo": [
+            0.009488153992025787,
+            null
+          ],
+          "seHbr": [
+            0.003623895321754645,
+            null
+          ],
+          "covHbo": [
+            0.0000900250661763949,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            0.000013132617303035202,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            1.7668942557431535e-24,
+            null
+          ],
+          "pHbr": [
+            0.002848824499927309,
+            null
+          ],
+          "qHbo": [
+            3.9544776199965816e-24,
+            null
+          ],
+          "qHbr": [
+            0.004184210984268235,
+            null
+          ],
+          "arOrderHbo": 36,
+          "arOrderHbr": 34,
+          "nuisanceBetasHbo": [
+            0.0029906899862486482,
+            -0.034910619864577004
+          ],
+          "nuisanceBetasHbr": [
+            -0.008776367445484354,
+            0.00836854786315288
+          ],
+          "nuisanceSeHbo": [
+            0.03895783757758719,
+            0.0003921877104184214
+          ],
+          "nuisanceSeHbr": [
+            0.011258038358194397,
+            0.000023061884311461926
+          ]
+        },
+        {
+          "channelName": "S8-D6",
+          "sourceIndex": 8,
+          "detectorIndex": 6,
+          "separationMm": 30.27327767190068,
+          "betasHbo": [
+            -0.05699703738917089,
+            null
+          ],
+          "tStatsHbo": [
+            -10.334728591234175,
+            null
+          ],
+          "betasHbr": [
+            -0.004999662078331794,
+            null
+          ],
+          "tStatsHbr": [
+            -1.6292119115097936,
+            null
+          ],
+          "seHbo": [
+            0.005515097652154626,
+            null
+          ],
+          "seHbr": [
+            0.0030687610635614605,
+            null
+          ],
+          "covHbo": [
+            0.000030416302112801476,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            9.417294465230865e-6,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            7.171958238424021e-25,
+            null
+          ],
+          "pHbr": [
+            0.10330967608595187,
+            null
+          ],
+          "qHbo": [
+            1.6854101860296448e-24,
+            null
+          ],
+          "qHbr": [
+            0.12450140451383944,
+            null
+          ],
+          "arOrderHbo": 35,
+          "arOrderHbr": 31,
+          "nuisanceBetasHbo": [
+            -0.048696343678271636,
+            0.02750430936202464
+          ],
+          "nuisanceBetasHbr": [
+            0.016405688730075547,
+            0.01830120221325644
+          ],
+          "nuisanceSeHbo": [
+            0.021857444214706246,
+            0.00004340216758997615
+          ],
+          "nuisanceSeHbr": [
+            0.010353369716232472,
+            0.00006859771461900997
+          ]
+        },
+        {
+          "channelName": "S8-D7",
+          "sourceIndex": 8,
+          "detectorIndex": 7,
+          "separationMm": 30.38017174079172,
+          "betasHbo": [
+            0.09625741432674702,
+            null
+          ],
+          "tStatsHbo": [
+            6.499843899234709,
+            null
+          ],
+          "betasHbr": [
+            0.016897323348204894,
+            null
+          ],
+          "tStatsHbr": [
+            6.887786320620416,
+            null
+          ],
+          "seHbo": [
+            0.01480918862344992,
+            null
+          ],
+          "seHbr": [
+            0.0024532299002392502,
+            null
+          ],
+          "covHbo": [
+            0.0002193120676849185,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            6.018336943427882e-6,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            8.548953003667571e-11,
+            null
+          ],
+          "pHbr": [
+            6.119896526951978e-12,
+            null
+          ],
+          "qHbo": [
+            1.1817670328599288e-10,
+            null
+          ],
+          "qHbr": [
+            2.212577975128792e-11,
+            null
+          ],
+          "arOrderHbo": 30,
+          "arOrderHbr": 32,
+          "nuisanceBetasHbo": [
+            -0.12982622692157827,
+            -0.07833265015923808
+          ],
+          "nuisanceBetasHbr": [
+            -0.01410538379321534,
+            -0.022641449561229432
+          ],
+          "nuisanceSeHbo": [
+            0.04055105133876505,
+            0.000179726039172561
+          ],
+          "nuisanceSeHbr": [
+            0.006615306437437606,
+            0.000047330745622228296
+          ]
+        },
+        {
+          "channelName": "S8-D10",
+          "sourceIndex": 8,
+          "detectorIndex": 10,
+          "separationMm": 36.752066567745544,
+          "betasHbo": [
+            0.13396447206889275,
+            null
+          ],
+          "tStatsHbo": [
+            11.268911964850817,
+            null
+          ],
+          "betasHbr": [
+            -0.015726140829866127,
+            null
+          ],
+          "tStatsHbr": [
+            -4.024758224120291,
+            null
+          ],
+          "seHbo": [
+            0.011887968642114265,
+            null
+          ],
+          "seHbr": [
+            0.003907350442970635,
+            null
+          ],
+          "covHbo": [
+            0.00014132379843589208,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            0.00001526738748418282,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            3.1865183786488134e-29,
+            null
+          ],
+          "pHbr": [
+            0.00005758849454197534,
+            null
+          ],
+          "qHbo": [
+            9.984424253099615e-29,
+            null
+          ],
+          "qHbr": [
+            0.00010024663864714225,
+            null
+          ],
+          "arOrderHbo": 35,
+          "arOrderHbr": 21,
+          "nuisanceBetasHbo": [
+            -0.0016872602516969717,
+            -0.12767950775276724
+          ],
+          "nuisanceBetasHbr": [
+            -0.013716837941988257,
+            0.07802678847365008
+          ],
+          "nuisanceSeHbo": [
+            0.04102692941848695,
+            0.0003513587388038375
+          ],
+          "nuisanceSeHbr": [
+            0.015816716589429874,
+            0.00021598904983266502
+          ]
+        },
+        {
+          "channelName": "S9-D4",
+          "sourceIndex": 9,
+          "detectorIndex": 4,
+          "separationMm": 34.135067745648314,
+          "betasHbo": [
+            0.16584707174022617,
+            null
+          ],
+          "tStatsHbo": [
+            10.108119660565793,
+            null
+          ],
+          "betasHbr": [
+            0.04221222649251644,
+            null
+          ],
+          "tStatsHbr": [
+            12.025638109373746,
+            null
+          ],
+          "seHbo": [
+            0.01640731187495094,
+            null
+          ],
+          "seHbr": [
+            0.00351018599666764,
+            null
+          ],
+          "covHbo": [
+            0.00026919988296190614,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            0.000012321405731201596,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            7.198417949752082e-24,
+            null
+          ],
+          "pHbr": [
+            5.1940242126863606e-33,
+            null
+          ],
+          "qHbo": [
+            1.4096901818264494e-23,
+            null
+          ],
+          "qHbr": [
+            4.0686522999376493e-32,
+            null
+          ],
+          "arOrderHbo": 21,
+          "arOrderHbr": 31,
+          "nuisanceBetasHbo": [
+            0.306526021915694,
+            -0.21836137692841948
+          ],
+          "nuisanceBetasHbr": [
+            -0.025763855893167747,
+            -0.0017989113556981197
+          ],
+          "nuisanceSeHbo": [
+            0.06042596561327094,
+            0.000732155417937302
+          ],
+          "nuisanceSeHbr": [
+            0.009708014455850011,
+            0.000058510063533967144
+          ]
+        },
+        {
+          "channelName": "S9-D8",
+          "sourceIndex": 9,
+          "detectorIndex": 8,
+          "separationMm": 37.039572324744796,
+          "betasHbo": [
+            0.19209546459696164,
+            null
+          ],
+          "tStatsHbo": [
+            14.900329759726475,
+            null
+          ],
+          "betasHbr": [
+            0.03875039578791157,
+            null
+          ],
+          "tStatsHbr": [
+            10.305928107039339,
+            null
+          ],
+          "seHbo": [
+            0.012892027739961101,
+            null
+          ],
+          "seHbr": [
+            0.0037600102955738244,
+            null
+          ],
+          "covHbo": [
+            0.00016620437924792653,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            0.000014137677422821158,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            1.6364894164563603e-49,
+            null
+          ],
+          "pHbr": [
+            9.640729568331913e-25,
+            null
+          ],
+          "qHbo": [
+            1.0987857510492703e-48,
+            null
+          ],
+          "qHbr": [
+            5.034603219017777e-24,
+            null
+          ],
+          "arOrderHbo": 21,
+          "arOrderHbr": 10,
+          "nuisanceBetasHbo": [
+            0.221780592332656,
+            -0.2228530513642496
+          ],
+          "nuisanceBetasHbr": [
+            -0.02148348934916401,
+            -0.013833675642181641
+          ],
+          "nuisanceSeHbo": [
+            0.04929930437125136,
+            0.0006759728468787323
+          ],
+          "nuisanceSeHbr": [
+            0.016445464935412418,
+            0.0005095595758408402
+          ]
+        },
+        {
+          "channelName": "S9-D11",
+          "sourceIndex": 9,
+          "detectorIndex": 11,
+          "separationMm": 34.027343519587305,
+          "betasHbo": [
+            0.23801537913602194,
+            null
+          ],
+          "tStatsHbo": [
+            17.575311151100898,
+            null
+          ],
+          "betasHbr": [
+            -0.0004592092661848624,
+            null
+          ],
+          "tStatsHbr": [
+            -0.22184687944802178,
+            null
+          ],
+          "seHbo": [
+            0.013542598312469302,
+            null
+          ],
+          "seHbr": [
+            0.002069937910902434,
+            null
+          ],
+          "covHbo": [
+            0.00018340196905289639,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            4.284642954991134e-6,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            8.29139108505111e-68,
+            null
+          ],
+          "pHbr": [
+            0.8244390541239758,
+            null
+          ],
+          "qHbo": [
+            1.9484769049870108e-66,
+            null
+          ],
+          "qHbr": [
+            0.8244390541239759,
+            null
+          ],
+          "arOrderHbo": 22,
+          "arOrderHbr": 25,
+          "nuisanceBetasHbo": [
+            0.7366081785838554,
+            -0.07145675066613337
+          ],
+          "nuisanceBetasHbr": [
+            -0.1430192240152617,
+            -0.0020934610226949397
+          ],
+          "nuisanceSeHbo": [
+            0.05719620159316619,
+            0.0008141312722703386
+          ],
+          "nuisanceSeHbr": [
+            0.009499420331834395,
+            0.00024872976373335753
+          ]
+        },
+        {
+          "channelName": "S9-D13",
+          "sourceIndex": 9,
+          "detectorIndex": 13,
+          "separationMm": 37.47917668519413,
+          "betasHbo": [
+            0.1487563586100286,
+            null
+          ],
+          "tStatsHbo": [
+            10.563381654926529,
+            null
+          ],
+          "betasHbr": [
+            0.041242255240665514,
+            null
+          ],
+          "tStatsHbr": [
+            11.025083760510528,
+            null
+          ],
+          "seHbo": [
+            0.014082266784392089,
+            null
+          ],
+          "seHbr": [
+            0.0037407657063238263,
+            null
+          ],
+          "covHbo": [
+            0.0001983102377867927,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            0.000013993328069608394,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            6.660936906315405e-26,
+            null
+          ],
+          "pHbr": [
+            4.719414559464905e-28,
+            null
+          ],
+          "qHbo": [
+            1.6477054452464422e-25,
+            null
+          ],
+          "qHbr": [
+            2.772656053685632e-27,
+            null
+          ],
+          "arOrderHbo": 23,
+          "arOrderHbr": 13,
+          "nuisanceBetasHbo": [
+            0.22863949869941172,
+            -0.05233341535741661
+          ],
+          "nuisanceBetasHbr": [
+            0.0006977204482260032,
+            -0.018336441218134807
+          ],
+          "nuisanceSeHbo": [
+            0.054009502955079974,
+            0.0009398062664254951
+          ],
+          "nuisanceSeHbr": [
+            0.010933094340215808,
+            0.0004495155346281328
+          ]
+        },
+        {
+          "channelName": "S10-D5",
+          "sourceIndex": 10,
+          "detectorIndex": 5,
+          "separationMm": 39.19949511154448,
+          "betasHbo": [
+            0.13349457893081623,
+            null
+          ],
+          "tStatsHbo": [
+            15.544701799757194,
+            null
+          ],
+          "betasHbr": [
+            0.007569413970333302,
+            null
+          ],
+          "tStatsHbr": [
+            1.8059884392730827,
+            null
+          ],
+          "seHbo": [
+            0.008587786414333236,
+            null
+          ],
+          "seHbr": [
+            0.004191285949416166,
+            null
+          ],
+          "covHbo": [
+            0.0000737500754982065,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            0.00001756687790977337,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            1.1548843265848403e-53,
+            null
+          ],
+          "pHbr": [
+            0.07095975489004015,
+            null
+          ],
+          "qHbo": [
+            9.04659389158125e-53,
+            null
+          ],
+          "qHbr": [
+            0.08776601262715493,
+            null
+          ],
+          "arOrderHbo": 30,
+          "arOrderHbr": 38,
+          "nuisanceBetasHbo": [
+            -0.083438489398061,
+            -0.08207506803722027
+          ],
+          "nuisanceBetasHbr": [
+            -0.02363719070199621,
+            -0.0060340895932360005
+          ],
+          "nuisanceSeHbo": [
+            0.03607322853486596,
+            0.00017799279967508513
+          ],
+          "nuisanceSeHbr": [
+            0.014720650222361993,
+            0.000045543905549859085
+          ]
+        },
+        {
+          "channelName": "S10-D8",
+          "sourceIndex": 10,
+          "detectorIndex": 8,
+          "separationMm": 37.17697119185477,
+          "betasHbo": [
+            0.012291880402870155,
+            null
+          ],
+          "tStatsHbo": [
+            1.2697354057606776,
+            null
+          ],
+          "betasHbr": [
+            0.0011591734920683337,
+            null
+          ],
+          "tStatsHbr": [
+            0.37918283461914676,
+            null
+          ],
+          "seHbo": [
+            0.009680662874409092,
+            null
+          ],
+          "seHbr": [
+            0.003057030504117133,
+            null
+          ],
+          "covHbo": [
+            0.00009371523368796249,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            9.345435503102654e-6,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            0.20421783424161966,
+            null
+          ],
+          "pHbr": [
+            0.7045627074496739,
+            null
+          ],
+          "qHbo": [
+            0.20865735237730704,
+            null
+          ],
+          "qHbr": [
+            0.719879288046406,
+            null
+          ],
+          "arOrderHbo": 34,
+          "arOrderHbr": 38,
+          "nuisanceBetasHbo": [
+            -0.08098908518946739,
+            -0.011395111421061834
+          ],
+          "nuisanceBetasHbr": [
+            -0.04009041843057753,
+            -0.0028755986522798417
+          ],
+          "nuisanceSeHbo": [
+            0.02980673069081068,
+            0.00006126619206999716
+          ],
+          "nuisanceSeHbr": [
+            0.012356595554608095,
+            0.000040225118106111054
+          ]
+        },
+        {
+          "channelName": "S10-D9",
+          "sourceIndex": 10,
+          "detectorIndex": 9,
+          "separationMm": 36.98717834601607,
+          "betasHbo": [
+            0.10545760130395841,
+            null
+          ],
+          "tStatsHbo": [
+            13.18022601677954,
+            null
+          ],
+          "betasHbr": [
+            0.014909603227988634,
+            null
+          ],
+          "tStatsHbr": [
+            4.963549283257274,
+            null
+          ],
+          "seHbo": [
+            0.008001198247260857,
+            null
+          ],
+          "seHbr": [
+            0.003003818916089088,
+            null
+          ],
+          "covHbo": [
+            0.0000640191733919702,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            9.022928080654624e-6,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            3.0712708954432146e-39,
+            null
+          ],
+          "pHbr": [
+            7.07243141528579e-7,
+            null
+          ],
+          "qHbo": [
+            1.2029144340485923e-38,
+            null
+          ],
+          "qHbr": [
+            1.510928529629237e-6,
+            null
+          ],
+          "arOrderHbo": 28,
+          "arOrderHbr": 24,
+          "nuisanceBetasHbo": [
+            -0.10472609729743078,
+            -0.0931339910005174
+          ],
+          "nuisanceBetasHbr": [
+            -0.030627845779528796,
+            -0.018019257117629736
+          ],
+          "nuisanceSeHbo": [
+            0.04698323232044991,
+            0.0002190867792786497
+          ],
+          "nuisanceSeHbr": [
+            0.015335359401021823,
+            0.00004157056253346944
+          ]
+        },
+        {
+          "channelName": "S11-D6",
+          "sourceIndex": 11,
+          "detectorIndex": 6,
+          "separationMm": 38.93994012578859,
+          "betasHbo": [
+            -0.1153454054520629,
+            null
+          ],
+          "tStatsHbo": [
+            -4.893054062445821,
+            null
+          ],
+          "betasHbr": [
+            0.040266301344414945,
+            null
+          ],
+          "tStatsHbr": [
+            5.223102436370771,
+            null
+          ],
+          "seHbo": [
+            0.023573294711239475,
+            null
+          ],
+          "seHbr": [
+            0.007709268932583609,
+            null
+          ],
+          "covHbo": [
+            0.0005557002235429511,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            0.00005943282747489882,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            1.013289510666526e-6,
+            null
+          ],
+          "pHbr": [
+            1.806263556828888e-7,
+            null
+          ],
+          "qHbo": [
+            1.3229057500368533e-6,
+            null
+          ],
+          "qHbr": [
+            4.2447193585478867e-7,
+            null
+          ],
+          "arOrderHbo": 32,
+          "arOrderHbr": 25,
+          "nuisanceBetasHbo": [
+            0.0178442448146936,
+            0.026425579694814696
+          ],
+          "nuisanceBetasHbr": [
+            0.00680539350495236,
+            -0.0049734679202141615
+          ],
+          "nuisanceSeHbo": [
+            0.0690939650348162,
+            0.0001019864443126561
+          ],
+          "nuisanceSeHbr": [
+            0.022224945195007288,
+            0.00006809160876423634
+          ]
+        },
+        {
+          "channelName": "S11-D9",
+          "sourceIndex": 11,
+          "detectorIndex": 9,
+          "separationMm": 36.87228669339617,
+          "betasHbo": [
+            0.061855730542885776,
+            null
+          ],
+          "tStatsHbo": [
+            8.043435269135779,
+            null
+          ],
+          "betasHbr": [
+            -0.01521357973229454,
+            null
+          ],
+          "tStatsHbr": [
+            -5.473450208884664,
+            null
+          ],
+          "seHbo": [
+            0.007690213008891637,
+            null
+          ],
+          "seHbr": [
+            0.0027795228149877778,
+            null
+          ],
+          "covHbo": [
+            0.00005913937612212616,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            7.725747079037581e-6,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            1.0061631755437656e-15,
+            null
+          ],
+          "pHbr": [
+            4.554522969942979e-8,
+            null
+          ],
+          "qHbo": [
+            1.5254732016308703e-15,
+            null
+          ],
+          "qHbr": [
+            1.189236553262889e-7,
+            null
+          ],
+          "arOrderHbo": 36,
+          "arOrderHbr": 23,
+          "nuisanceBetasHbo": [
+            0.07941933069421403,
+            -0.028014542841588774
+          ],
+          "nuisanceBetasHbr": [
+            -0.01612761270434227,
+            0.00038740262769082766
+          ],
+          "nuisanceSeHbo": [
+            0.037512323747671605,
+            0.00036721475502485794
+          ],
+          "nuisanceSeHbr": [
+            0.012721830064921556,
+            0.00002828476980281108
+          ]
+        },
+        {
+          "channelName": "S11-D10",
+          "sourceIndex": 11,
+          "detectorIndex": 10,
+          "separationMm": 36.96920711889829,
+          "betasHbo": [
+            0.09344380800664795,
+            null
+          ],
+          "tStatsHbo": [
+            8.468767944445704,
+            null
+          ],
+          "betasHbr": [
+            -0.03820968900878252,
+            null
+          ],
+          "tStatsHbr": [
+            -11.105588786717203,
+            null
+          ],
+          "seHbo": [
+            0.011033931809164009,
+            null
+          ],
+          "seHbr": [
+            0.003440582011687942,
+            null
+          ],
+          "covHbo": [
+            0.00012174765116928134,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            0.000011837604579150645,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            2.948661703842783e-17,
+            null
+          ],
+          "pHbr": [
+            1.9502746128689937e-28,
+            null
+          ],
+          "qHbo": [
+            4.778865520021063e-17,
+            null
+          ],
+          "qHbr": [
+            1.3094700972120387e-27,
+            null
+          ],
+          "arOrderHbo": 28,
+          "arOrderHbr": 36,
+          "nuisanceBetasHbo": [
+            -0.08014944343979072,
+            -0.11471832099985602
+          ],
+          "nuisanceBetasHbr": [
+            -0.009120332298160599,
+            0.028070356655417114
+          ],
+          "nuisanceSeHbo": [
+            0.06698073852819257,
+            0.0003351982867172544
+          ],
+          "nuisanceSeHbr": [
+            0.013901693393380743,
+            0.00003498819257813877
+          ]
+        },
+        {
+          "channelName": "S12-D7",
+          "sourceIndex": 12,
+          "detectorIndex": 7,
+          "separationMm": 33.670150192715205,
+          "betasHbo": [
+            0.11237752452590881,
+            null
+          ],
+          "tStatsHbo": [
+            6.771227762970433,
+            null
+          ],
+          "betasHbr": [
+            0.020513983880504,
+            null
+          ],
+          "tStatsHbr": [
+            6.274516230926012,
+            null
+          ],
+          "seHbo": [
+            0.01659632912371722,
+            null
+          ],
+          "seHbr": [
+            0.003269412832083229,
+            null
+          ],
+          "covHbo": [
+            0.00027543814038274436,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            0.00001068906026659048,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            1.3722248052406995e-11,
+            null
+          ],
+          "pHbr": [
+            3.699793810887594e-10,
+            null
+          ],
+          "qHbo": [
+            2.0154551826972773e-11,
+            null
+          ],
+          "qHbr": [
+            1.2420736365122638e-9,
+            null
+          ],
+          "arOrderHbo": 29,
+          "arOrderHbr": 23,
+          "nuisanceBetasHbo": [
+            0.2851933221289799,
+            -0.1029208717392303
+          ],
+          "nuisanceBetasHbr": [
+            -0.04359628483289449,
+            -0.0019578739984143743
+          ],
+          "nuisanceSeHbo": [
+            0.052715790382223814,
+            0.00021580825406652143
+          ],
+          "nuisanceSeHbr": [
+            0.013495253801122067,
+            0.0002334724762401485
+          ]
+        },
+        {
+          "channelName": "S12-D10",
+          "sourceIndex": 12,
+          "detectorIndex": 10,
+          "separationMm": 36.96963345774475,
+          "betasHbo": [
+            0.04928312931592541,
+            null
+          ],
+          "tStatsHbo": [
+            5.112554606978029,
+            null
+          ],
+          "betasHbr": [
+            0.020477233525802354,
+            null
+          ],
+          "tStatsHbr": [
+            5.629766879724129,
+            null
+          ],
+          "seHbo": [
+            0.009639628933969684,
+            null
+          ],
+          "seHbr": [
+            0.0036373146461094285,
+            null
+          ],
+          "covHbo": [
+            0.00009292244598462551,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            0.000013230057834802157,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            3.2560081060346527e-7,
+            null
+          ],
+          "pHbr": [
+            1.8689261456833823e-8,
+            null
+          ],
+          "qHbo": [
+            4.3723537423893906e-7,
+            null
+          ],
+          "qHbr": [
+            5.167031108654057e-8,
+            null
+          ],
+          "arOrderHbo": 39,
+          "arOrderHbr": 24,
+          "nuisanceBetasHbo": [
+            0.28397208260707935,
+            -0.009439778399124504
+          ],
+          "nuisanceBetasHbr": [
+            -0.18952838202002245,
+            -0.017325394923813017
+          ],
+          "nuisanceSeHbo": [
+            0.04099522980478012,
+            0.0004701176611957909
+          ],
+          "nuisanceSeHbr": [
+            0.014052012365579592,
+            0.00029301097997594004
+          ]
+        },
+        {
+          "channelName": "S12-D12",
+          "sourceIndex": 12,
+          "detectorIndex": 12,
+          "separationMm": 33.44405304385221,
+          "betasHbo": [
+            0.13496622208402545,
+            null
+          ],
+          "tStatsHbo": [
+            10.128805012911416,
+            null
+          ],
+          "betasHbr": [
+            0.09788884272345327,
+            null
+          ],
+          "tStatsHbr": [
+            18.209685423887223,
+            null
+          ],
+          "seHbo": [
+            0.013324989661858529,
+            null
+          ],
+          "seHbr": [
+            0.005375647104537236,
+            null
+          ],
+          "covHbo": [
+            0.00017755534948863668,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            0.000028897581792519578,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            5.8437038438792244e-24,
+            null
+          ],
+          "pHbr": [
+            1.4930814862651612e-72,
+            null
+          ],
+          "qHbo": [
+            1.194148176792711e-23,
+            null
+          ],
+          "qHbr": [
+            7.017482985446257e-71,
+            null
+          ],
+          "arOrderHbo": 24,
+          "arOrderHbr": 11,
+          "nuisanceBetasHbo": [
+            0.7318293071888414,
+            -0.025767813511154994
+          ],
+          "nuisanceBetasHbr": [
+            0.02893753915920783,
+            -0.03469043529002241
+          ],
+          "nuisanceSeHbo": [
+            0.06222318038126543,
+            0.0011649675798570778
+          ],
+          "nuisanceSeHbr": [
+            0.03997235906573802,
+            0.0014591076304512293
+          ]
+        },
+        {
+          "channelName": "S12-D15",
+          "sourceIndex": 12,
+          "detectorIndex": 15,
+          "separationMm": 37.292792681696554,
+          "betasHbo": [
+            0.15408154772135177,
+            null
+          ],
+          "tStatsHbo": [
+            14.617185724586651,
+            null
+          ],
+          "betasHbr": [
+            0.009804844470704744,
+            null
+          ],
+          "tStatsHbr": [
+            4.550345302965868,
+            null
+          ],
+          "seHbo": [
+            0.010541122663727318,
+            null
+          ],
+          "seHbr": [
+            0.0021547473472648434,
+            null
+          ],
+          "covHbo": [
+            0.00011111526701174569,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            4.642936130544881e-6,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            9.685981183363765e-48,
+            null
+          ],
+          "pHbr": [
+            5.439121049537401e-6,
+            null
+          ],
+          "qHbo": [
+            5.058234617978855e-47,
+            null
+          ],
+          "qHbr": [
+            9.84609774097207e-6,
+            null
+          ],
+          "arOrderHbo": 21,
+          "arOrderHbr": 13,
+          "nuisanceBetasHbo": [
+            0.28741611440165105,
+            -0.2319593658180975
+          ],
+          "nuisanceBetasHbr": [
+            -0.01417672563118649,
+            -0.007939613820088353
+          ],
+          "nuisanceSeHbo": [
+            0.039370127360787266,
+            0.0005101710923384293
+          ],
+          "nuisanceSeHbr": [
+            0.005303881123091404,
+            0.00019232026728386225
+          ]
+        },
+        {
+          "channelName": "S13-D8",
+          "sourceIndex": 13,
+          "detectorIndex": 8,
+          "separationMm": 37.60151785500154,
+          "betasHbo": [
+            0.01197174683708443,
+            null
+          ],
+          "tStatsHbo": [
+            1.1782094948197914,
+            null
+          ],
+          "betasHbr": [
+            -0.031056606055129037,
+            null
+          ],
+          "tStatsHbr": [
+            -3.8668073520372666,
+            null
+          ],
+          "seHbo": [
+            0.010160966186166683,
+            null
+          ],
+          "seHbr": [
+            0.008031588653819682,
+            null
+          ],
+          "covHbo": [
+            0.00010324523383642272,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            0.00006450641630416506,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            0.23875004595350002,
+            null
+          ],
+          "pHbr": [
+            0.00011119065880470556,
+            null
+          ],
+          "qHbo": [
+            0.23875004595350002,
+            null
+          ],
+          "qHbr": [
+            0.00018664146299361288,
+            null
+          ],
+          "arOrderHbo": 29,
+          "arOrderHbr": 19,
+          "nuisanceBetasHbo": [
+            -0.30248889876931423,
+            -0.01251070279269868
+          ],
+          "nuisanceBetasHbr": [
+            -0.27790125216505374,
+            0.00438372662044963
+          ],
+          "nuisanceSeHbo": [
+            0.04927174276758973,
+            0.00024608633142161017
+          ],
+          "nuisanceSeHbr": [
+            0.034786576157022145,
+            0.0003635742040551835
+          ]
+        },
+        {
+          "channelName": "S13-D11",
+          "sourceIndex": 13,
+          "detectorIndex": 11,
+          "separationMm": 40.68730792274171,
+          "betasHbo": [
+            0.15971684641013487,
+            null
+          ],
+          "tStatsHbo": [
+            13.210086268085444,
+            null
+          ],
+          "betasHbr": [
+            -0.0030976060817136004,
+            null
+          ],
+          "tStatsHbr": [
+            -1.3912179033634386,
+            null
+          ],
+          "seHbo": [
+            0.012090522587728933,
+            null
+          ],
+          "seHbr": [
+            0.0022265427106887862,
+            null
+          ],
+          "covHbo": [
+            0.00014618073644438352,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            4.957492442521367e-6,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            2.084922961627359e-39,
+            null
+          ],
+          "pHbr": [
+            0.1642001474495992,
+            null
+          ],
+          "qHbo": [
+            8.908307199680534e-39,
+            null
+          ],
+          "qHbr": [
+            0.18374778405074196,
+            null
+          ],
+          "arOrderHbo": 22,
+          "arOrderHbr": 24,
+          "nuisanceBetasHbo": [
+            0.8456187051690764,
+            -0.03831970733811175
+          ],
+          "nuisanceBetasHbr": [
+            -0.11937262065461067,
+            -0.0026211752548712954
+          ],
+          "nuisanceSeHbo": [
+            0.04929509169150964,
+            0.0006584839576737922
+          ],
+          "nuisanceSeHbr": [
+            0.010531360191493156,
+            0.00023207472119602358
+          ]
+        },
+        {
+          "channelName": "S14-D10",
+          "sourceIndex": 14,
+          "detectorIndex": 10,
+          "separationMm": 37.07283626862126,
+          "betasHbo": [
+            -0.04279475521783314,
+            null
+          ],
+          "tStatsHbo": [
+            -4.039326780659344,
+            null
+          ],
+          "betasHbr": [
+            0.020815773166202083,
+            null
+          ],
+          "tStatsHbr": [
+            3.793575819009914,
+            null
+          ],
+          "seHbo": [
+            0.010594526648039032,
+            null
+          ],
+          "seHbr": [
+            0.005487111411321363,
+            null
+          ],
+          "covHbo": [
+            0.00011224399489600915,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            0.000030108391640253113,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            0.00005413332018312609,
+            null
+          ],
+          "pHbr": [
+            0.00014964727219906584,
+            null
+          ],
+          "qHbo": [
+            0.00006695436970018226,
+            null
+          ],
+          "qHbr": [
+            0.00024253178597779637,
+            null
+          ],
+          "arOrderHbo": 30,
+          "arOrderHbr": 13,
+          "nuisanceBetasHbo": [
+            0.307409553648798,
+            0.026487419570845487
+          ],
+          "nuisanceBetasHbr": [
+            -0.3134845091374985,
+            -0.034678095441455545
+          ],
+          "nuisanceSeHbo": [
+            0.06037375719729672,
+            0.0003319644747852336
+          ],
+          "nuisanceSeHbr": [
+            0.027250947915136985,
+            0.00010145579622486708
+          ]
+        },
+        {
+          "channelName": "S14-D12",
+          "sourceIndex": 14,
+          "detectorIndex": 12,
+          "separationMm": 40.6657533681598,
+          "betasHbo": [
+            0.13547510063194418,
+            null
+          ],
+          "tStatsHbo": [
+            11.401519095803234,
+            null
+          ],
+          "betasHbr": [
+            -0.026081511274113116,
+            null
+          ],
+          "tStatsHbr": [
+            -7.81206077373395,
+            null
+          ],
+          "seHbo": [
+            0.01188219740664303,
+            null
+          ],
+          "seHbr": [
+            0.003338621143579106,
+            null
+          ],
+          "covHbo": [
+            0.00014118661521043437,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            0.000011146391140353459,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            7.185638261152613e-30,
+            null
+          ],
+          "pHbr": [
+            6.38171564142861e-15,
+            null
+          ],
+          "qHbo": [
+            2.4123214162440913e-29,
+            null
+          ],
+          "qHbr": [
+            2.7267330467922244e-14,
+            null
+          ],
+          "arOrderHbo": 31,
+          "arOrderHbr": 21,
+          "nuisanceBetasHbo": [
+            0.38930836073700914,
+            -0.05624062159521959
+          ],
+          "nuisanceBetasHbr": [
+            -0.02629384597720072,
+            0.0075080646253595056
+          ],
+          "nuisanceSeHbo": [
+            0.0446662667136144,
+            0.0002849220448457725
+          ],
+          "nuisanceSeHbr": [
+            0.022399638959794514,
+            0.000424288169767029
+          ]
+        },
+        {
+          "channelName": "S15-D11",
+          "sourceIndex": 15,
+          "detectorIndex": 11,
+          "separationMm": 41.14616838783412,
+          "betasHbo": [
+            0.11369461367275202,
+            null
+          ],
+          "tStatsHbo": [
+            12.799894080833687,
+            null
+          ],
+          "betasHbr": [
+            0.01258945991726879,
+            null
+          ],
+          "tStatsHbr": [
+            6.258886309496562,
+            null
+          ],
+          "seHbo": [
+            0.00888246519500471,
+            null
+          ],
+          "seHbr": [
+            0.002011453682768913,
+            null
+          ],
+          "covHbo": [
+            0.00007889818794047006,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            4.045945917924622e-6,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            3.9680045993887175e-37,
+            null
+          ],
+          "pHbr": [
+            4.088134723768047e-10,
+            null
+          ],
+          "qHbo": [
+            1.4345862782405362e-36,
+            null
+          ],
+          "qHbr": [
+            1.280948880113988e-9,
+            null
+          ],
+          "arOrderHbo": 36,
+          "arOrderHbr": 10,
+          "nuisanceBetasHbo": [
+            0.380991818793633,
+            -0.03555734839609777
+          ],
+          "nuisanceBetasHbr": [
+            0.0019068545234133913,
+            -0.00792121684158604
+          ],
+          "nuisanceSeHbo": [
+            0.03508120841314904,
+            0.00034364533412066544
+          ],
+          "nuisanceSeHbr": [
+            0.006410289041105811,
+            0.00018883279012473379
+          ]
+        },
+        {
+          "channelName": "S15-D13",
+          "sourceIndex": 15,
+          "detectorIndex": 13,
+          "separationMm": 30.584562527523584,
+          "betasHbo": [
+            0.28075710783352187,
+            null
+          ],
+          "tStatsHbo": [
+            15.615055929754607,
+            null
+          ],
+          "betasHbr": [
+            0.009473112086412539,
+            null
+          ],
+          "tStatsHbr": [
+            1.5608176781033478,
+            null
+          ],
+          "seHbo": [
+            0.017979897676737557,
+            null
+          ],
+          "seHbr": [
+            0.006069326494253922,
+            null
+          ],
+          "covHbo": [
+            0.00032327672046595263,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            0.00003683672409385261,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            3.9753543912438263e-54,
+            null
+          ],
+          "pHbr": [
+            0.11860847784509365,
+            null
+          ],
+          "qHbo": [
+            3.736833127769197e-53,
+            null
+          ],
+          "qHbr": [
+            0.13936496146798505,
+            null
+          ],
+          "arOrderHbo": 23,
+          "arOrderHbr": 12,
+          "nuisanceBetasHbo": [
+            0.030892746761754797,
+            -0.5223620247147177
+          ],
+          "nuisanceBetasHbr": [
+            -0.022331716813709858,
+            -0.009751334889028834
+          ],
+          "nuisanceSeHbo": [
+            0.06220851420762904,
+            0.001064045786566853
+          ],
+          "nuisanceSeHbr": [
+            0.017509609979379274,
+            0.0007604863228974859
+          ]
+        },
+        {
+          "channelName": "S15-D14",
+          "sourceIndex": 15,
+          "detectorIndex": 14,
+          "separationMm": 30.406440008656062,
+          "betasHbo": [
+            0.08704583849117989,
+            null
+          ],
+          "tStatsHbo": [
+            6.751441083073803,
+            null
+          ],
+          "betasHbr": [
+            0.014779865462269915,
+            null
+          ],
+          "tStatsHbr": [
+            4.550048512969484,
+            null
+          ],
+          "seHbo": [
+            0.012892927216592043,
+            null
+          ],
+          "seHbr": [
+            0.0032482874457582817,
+            null
+          ],
+          "covHbo": [
+            0.00016622757221233984,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            0.000010551371330270861,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            1.5717813179429892e-11,
+            null
+          ],
+          "pHbr": [
+            5.44677747372923e-6,
+            null
+          ],
+          "qHbo": [
+            2.2385976346460754e-11,
+            null
+          ],
+          "qHbr": [
+            9.84609774097207e-6,
+            null
+          ],
+          "arOrderHbo": 37,
+          "arOrderHbr": 23,
+          "nuisanceBetasHbo": [
+            0.4971334710938075,
+            -0.022543005817122215
+          ],
+          "nuisanceBetasHbr": [
+            0.01020771069396262,
+            -0.004640792433339092
+          ],
+          "nuisanceSeHbo": [
+            0.04990826904415949,
+            0.0004996555306137912
+          ],
+          "nuisanceSeHbr": [
+            0.008638026348638443,
+            0.00017731346592303517
+          ]
+        },
+        {
+          "channelName": "S16-D12",
+          "sourceIndex": 16,
+          "detectorIndex": 12,
+          "separationMm": 41.141114824467266,
+          "betasHbo": [
+            0.09246888105859369,
+            null
+          ],
+          "tStatsHbo": [
+            10.800960132246244,
+            null
+          ],
+          "betasHbr": [
+            0.010697765031298252,
+            null
+          ],
+          "tStatsHbr": [
+            4.8851495942725585,
+            null
+          ],
+          "seHbo": [
+            0.008561172333423215,
+            null
+          ],
+          "seHbr": [
+            0.002189854133400646,
+            null
+          ],
+          "covHbo": [
+            0.00007329367172257108,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            4.795461125571895e-6,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            5.349785667590678e-27,
+            null
+          ],
+          "pHbr": [
+            1.0546666311737119e-6,
+            null
+          ],
+          "qHbo": [
+            1.3968884798708993e-26,
+            null
+          ],
+          "qHbr": [
+            2.15518833326802e-6,
+            null
+          ],
+          "arOrderHbo": 29,
+          "arOrderHbr": 19,
+          "nuisanceBetasHbo": [
+            0.3264167804553259,
+            -0.0362816572253601
+          ],
+          "nuisanceBetasHbr": [
+            0.015222773219074724,
+            -0.008137529161279406
+          ],
+          "nuisanceSeHbo": [
+            0.03073217253419332,
+            0.00014117960053490648
+          ],
+          "nuisanceSeHbr": [
+            0.007903190873345392,
+            0.00008201000086910527
+          ]
+        },
+        {
+          "channelName": "S16-D15",
+          "sourceIndex": 16,
+          "detectorIndex": 15,
+          "separationMm": 30.008792061660863,
+          "betasHbo": [
+            0.026132168809315813,
+            null
+          ],
+          "tStatsHbo": [
+            2.5947046054110188,
+            null
+          ],
+          "betasHbr": [
+            -0.011939720581549016,
+            null
+          ],
+          "tStatsHbr": [
+            -4.795599832334682,
+            null
+          ],
+          "seHbo": [
+            0.010071346370149253,
+            null
+          ],
+          "seHbr": [
+            0.002489724121901202,
+            null
+          ],
+          "covHbo": [
+            0.00010143201770751853,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            6.19872620317671e-6,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            0.009485437994567992,
+            null
+          ],
+          "pHbr": [
+            1.6527983902669066e-6,
+            null
+          ],
+          "qHbo": [
+            0.010873550871821843,
+            null
+          ],
+          "qHbr": [
+            3.2367301809393588e-6,
+            null
+          ],
+          "arOrderHbo": 37,
+          "arOrderHbr": 35,
+          "nuisanceBetasHbo": [
+            0.3587864372180347,
+            0.001751194186083515
+          ],
+          "nuisanceBetasHbr": [
+            -0.0069996092666218136,
+            0.01948185324418049
+          ],
+          "nuisanceSeHbo": [
+            0.04000739481797205,
+            0.0004124424806938622
+          ],
+          "nuisanceSeHbr": [
+            0.005030501349330577,
+            0.00004018881588732716
+          ]
+        },
+        {
+          "channelName": "S16-D16",
+          "sourceIndex": 16,
+          "detectorIndex": 16,
+          "separationMm": 31.03936996783278,
+          "betasHbo": [
+            0.04031486994343318,
+            null
+          ],
+          "tStatsHbo": [
+            2.5783445789473745,
+            null
+          ],
+          "betasHbr": [
+            0.019335949396631136,
+            null
+          ],
+          "tStatsHbr": [
+            9.095993221703353,
+            null
+          ],
+          "seHbo": [
+            0.015635951172939026,
+            null
+          ],
+          "seHbr": [
+            0.0021257655898967577,
+            null
+          ],
+          "covHbo": [
+            0.0002444829690825333,
+            null,
+            null,
+            null
+          ],
+          "covHbr": [
+            4.51887934318911e-6,
+            null,
+            null,
+            null
+          ],
+          "dfeHbo": 7588.0,
+          "dfeHbr": 7588.0,
+          "pHbo": [
+            0.00994616868027201,
+            null
+          ],
+          "pHbr": [
+            1.1788088343865985e-19,
+            null
+          ],
+          "qHbo": [
+            0.011130236380304394,
+            null
+          ],
+          "qHbr": [
+            5.540401521617013e-19,
+            null
+          ],
+          "arOrderHbo": 25,
+          "arOrderHbr": 36,
+          "nuisanceBetasHbo": [
+            0.34152756258602507,
+            -0.034881883988448284
+          ],
+          "nuisanceBetasHbr": [
+            -0.027821208817058393,
+            -0.026315759605935667
+          ],
+          "nuisanceSeHbo": [
+            0.04355132842467407,
+            0.00010202123537569843
+          ],
+          "nuisanceSeHbr": [
+            0.0067512356738865615,
+            0.00005841342630878508
+          ]
+        }
+      ],
+      "conditionNames": [
+        "QUIET",
+        "NOISE"
+      ],
+      "hrfModel": "Canonical",
+      "samplingRate": 12.207031249999998,
+      "contrasts": [
+        {
+          "contrastName": "QUIET>NOISE",
+          "tStatsHbo": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "tStatsHbr": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "effectsHbo": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "effectsHbr": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "seHbo": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "seHbr": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "pHbo": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "pHbr": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "qHbo": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "qHbr": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "confoundedWithSession": false
+        },
+        {
+          "contrastName": "NOISE>QUIET",
+          "tStatsHbo": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "tStatsHbr": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "effectsHbo": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "effectsHbr": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "seHbo": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "seHbr": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "pHbo": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "pHbr": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "qHbo": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "qHbr": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "confoundedWithSession": false
+        }
+      ],
+      "regressors": [
+        {
+          "name": "QUIET",
+          "role": "tested",
+          "kind": "condition",
+          "conditionIdx": 0
+        },
+        {
+          "name": "QUIET_tderiv",
+          "role": "nuisance",
+          "kind": "temporalDerivative",
+          "conditionIdx": 0
+        },
+        {
+          "name": "intercept",
+          "role": "nuisance",
+          "kind": "intercept"
+        }
+      ],
+      "nuisanceColumns": [
+        "QUIET_tderiv",
+        "intercept"
+      ],
+      "excludedChannels": [],
+      "inference": {
+        "solver": "arIrls",
+        "inferential": true,
+        "reason": "AR-IRLS solver (BIC-AR prewhitening + robust IRLS) with a single tested effect per condition × chromophore (canonical HRF β)",
+        "correction": "Benjamini-Hochberg FDR",
+        "families": "condition × chromophore, across channels",
+        "arPmaxSamples": 49
+      },
+      "shortChannels": {
+        "mode": "auto",
+        "glm": false,
+        "preprocessing": false,
+        "combination": "neither",
+        "nShortChannels": 0,
+        "thresholdMm": 15.0,
+        "columns": [],
+        "reason": "auto: no short channel in the analysed block"
+      },
+      "provenance": {
+        "SchemaVersion": "1.0",
+        "ComputedAt": "2026-09-21T09:29:46.984354086+00:00",
+        "GeneratedBy": [
+          {
+            "Name": "NIRWizard",
+            "Version": "0.2.1"
+          }
+        ],
+        "Sources": [
+          {
+            "Path": "/home/adam/dev/lydia-adept/piano-noise/data/processed/sub_01/quiet_1_preprocessed.snirf",
+            "SHA256": "78462d60b8d52c1d151662b9448972dba0578a356fc95a2f23781afd59acb308"
+          }
+        ],
+        "Parameters": {
+          "Pipeline": {
+            "status": "none",
+            "steps": []
+          },
+          "Quality": {
+            "bad_channels": [],
+            "manual_marks": [],
+            "qc_applied": false,
+            "status": "no QC performed"
+          },
+          "Model": {
+            "analysis": "subject GLM",
+            "ar_order_selected": {
+              "S1-D1": {
+                "HbO": 32,
+                "HbR": 20
+              },
+              "S1-D2": {
+                "HbO": 30,
+                "HbR": 18
+              },
+              "S1-D3": {
+                "HbO": 30,
+                "HbR": 20
+              },
+              "S10-D5": {
+                "HbO": 30,
+                "HbR": 38
+              },
+              "S10-D8": {
+                "HbO": 34,
+                "HbR": 38
+              },
+              "S10-D9": {
+                "HbO": 28,
+                "HbR": 24
+              },
+              "S11-D10": {
+                "HbO": 28,
+                "HbR": 36
+              },
+              "S11-D6": {
+                "HbO": 32,
+                "HbR": 25
+              },
+              "S11-D9": {
+                "HbO": 36,
+                "HbR": 23
+              },
+              "S12-D10": {
+                "HbO": 39,
+                "HbR": 24
+              },
+              "S12-D12": {
+                "HbO": 24,
+                "HbR": 11
+              },
+              "S12-D15": {
+                "HbO": 21,
+                "HbR": 13
+              },
+              "S12-D7": {
+                "HbO": 29,
+                "HbR": 23
+              },
+              "S13-D11": {
+                "HbO": 22,
+                "HbR": 24
+              },
+              "S13-D8": {
+                "HbO": 29,
+                "HbR": 19
+              },
+              "S14-D10": {
+                "HbO": 30,
+                "HbR": 13
+              },
+              "S14-D12": {
+                "HbO": 31,
+                "HbR": 21
+              },
+              "S15-D11": {
+                "HbO": 36,
+                "HbR": 10
+              },
+              "S15-D13": {
+                "HbO": 23,
+                "HbR": 12
+              },
+              "S15-D14": {
+                "HbO": 37,
+                "HbR": 23
+              },
+              "S16-D12": {
+                "HbO": 29,
+                "HbR": 19
+              },
+              "S16-D15": {
+                "HbO": 37,
+                "HbR": 35
+              },
+              "S16-D16": {
+                "HbO": 25,
+                "HbR": 36
+              },
+              "S2-D1": {
+                "HbO": 34,
+                "HbR": 32
+              },
+              "S2-D4": {
+                "HbO": 36,
+                "HbR": 21
+              },
+              "S3-D1": {
+                "HbO": 35,
+                "HbR": 33
+              },
+              "S3-D3": {
+                "HbO": 34,
+                "HbR": 23
+              },
+              "S3-D4": {
+                "HbO": 23,
+                "HbR": 25
+              },
+              "S4-D2": {
+                "HbO": 31,
+                "HbR": 29
+              },
+              "S4-D3": {
+                "HbO": 27,
+                "HbR": 24
+              },
+              "S4-D7": {
+                "HbO": 28,
+                "HbR": 29
+              },
+              "S5-D2": {
+                "HbO": 35,
+                "HbR": 34
+              },
+              "S5-D7": {
+                "HbO": 26,
+                "HbR": 36
+              },
+              "S6-D3": {
+                "HbO": 33,
+                "HbR": 31
+              },
+              "S6-D5": {
+                "HbO": 30,
+                "HbR": 27
+              },
+              "S6-D6": {
+                "HbO": 33,
+                "HbR": 32
+              },
+              "S6-D9": {
+                "HbO": 28,
+                "HbR": 22
+              },
+              "S7-D4": {
+                "HbO": 35,
+                "HbR": 31
+              },
+              "S7-D5": {
+                "HbO": 36,
+                "HbR": 28
+              },
+              "S7-D8": {
+                "HbO": 36,
+                "HbR": 34
+              },
+              "S8-D10": {
+                "HbO": 35,
+                "HbR": 21
+              },
+              "S8-D6": {
+                "HbO": 35,
+                "HbR": 31
+              },
+              "S8-D7": {
+                "HbO": 30,
+                "HbR": 32
+              },
+              "S9-D11": {
+                "HbO": 22,
+                "HbR": 25
+              },
+              "S9-D13": {
+                "HbO": 23,
+                "HbR": 13
+              },
+              "S9-D4": {
+                "HbO": 21,
+                "HbR": 31
+              },
+              "S9-D8": {
+                "HbO": 21,
+                "HbR": 10
+              }
+            },
+            "basis": {
+              "derivatives_role": "nuisance (never tested)",
+              "dispersion_derivative": false,
+              "kernel_samples": 391,
+              "model": "canonical (spm_hrf)",
+              "normalization": "unit sum",
+              "params": {
+                "kernelLengthS": 32.0,
+                "responseDelayS": 6.0,
+                "responseDispersion": 1.0,
+                "responseUndershootRatio": 6.0,
+                "undershootDelayS": 16.0,
+                "undershootDispersion": 1.0
+              },
+              "parity_oracle": "spm_hrf",
+              "temporal_derivative": true
+            },
+            "conditions": [
+              "QUIET",
+              "NOISE"
+            ],
+            "conditions_fitted": [
+              {
+                "duration_s_as_used": {
+                  "max": 40.0,
+                  "mean": 40.0,
+                  "min": 40.0
+                },
+                "n_onsets": 6,
+                "name": "QUIET",
+                "regressor": "boxcar of event duration ⊗ HRF"
+              }
+            ],
+            "contrastWeightRule": "balanced: the positive weights are rescaled to sum to +1 and the negative weights to sum to −1, each sign on its own. A contrast of one sign is then a mean amplitude against baseline, a contrast of both signs a difference of means; its effect c'β is in the β unit",
+            "contrastWeights": [
+              {
+                "appliedWeights": {
+                  "NOISE": -1.0,
+                  "QUIET": 1.0
+                },
+                "enteredWeights": {
+                  "NOISE": -1.0,
+                  "QUIET": 1.0
+                },
+                "id": "contrast-1789980734026",
+                "kind": "difference",
+                "name": "QUIET>NOISE"
+              },
+              {
+                "appliedWeights": {
+                  "NOISE": 1.0,
+                  "QUIET": -1.0
+                },
+                "enteredWeights": {
+                  "NOISE": 1.0,
+                  "QUIET": -1.0
+                },
+                "id": "contrast-1789980734550",
+                "kind": "difference",
+                "name": "NOISE>QUIET"
+              }
+            ],
+            "contrasts": [
+              {
+                "conditions": [
+                  "QUIET",
+                  "NOISE"
+                ],
+                "id": "contrast-1789980734026",
+                "name": "QUIET>NOISE",
+                "weights": [
+                  1.0,
+                  -1.0
+                ]
+              },
+              {
+                "conditions": [
+                  "QUIET",
+                  "NOISE"
+                ],
+                "id": "contrast-1789980734550",
+                "name": "NOISE>QUIET",
+                "weights": [
+                  -1.0,
+                  1.0
+                ]
+              }
+            ],
+            "design_columns": [
+              {
+                "conditionIdx": 0,
+                "kind": "condition",
+                "name": "QUIET",
+                "role": "tested"
+              },
+              {
+                "conditionIdx": 0,
+                "kind": "temporalDerivative",
+                "name": "QUIET_tderiv",
+                "role": "nuisance"
+              },
+              {
+                "kind": "intercept",
+                "name": "intercept",
+                "role": "nuisance"
+              }
+            ],
+            "drift": {
+              "basis": "none",
+              "cutoff_s": null,
+              "n_terms": 0
+            },
+            "inference": {
+              "arPmaxSamples": 49,
+              "correction": "Benjamini-Hochberg FDR",
+              "families": "condition × chromophore, across channels",
+              "inferential": true,
+              "reason": "AR-IRLS solver (BIC-AR prewhitening + robust IRLS) with a single tested effect per condition × chromophore (canonical HRF β)",
+              "solver": "arIrls"
+            },
+            "intercept": true,
+            "n_timepoints": 7591,
+            "runs": null,
+            "sampling_rate_hz": 12.207031249999998,
+            "short_channel_regression": {
+              "columns": [],
+              "combination": "neither",
+              "glm": false,
+              "mode": "auto",
+              "n_short_channels": 0,
+              "preprocessing": false,
+              "reason": "auto: no short channel in the analysed block",
+              "regressor": "mean of the short channels' series, one column per chromophore (HbO fit ← short HbO, HbR fit ← short HbR); nuisance, never tested",
+              "short_channels_in_channel_list": true,
+              "short_threshold_mm": 15.0
+            },
+            "solver": "AR-IRLS",
+            "solver_settings": {
+              "ar_estimator": "Yule-Walker (Levinson-Durbin), order by BIC over 0..Pmax",
+              "convergence_tolerance": 0.01,
+              "covariance": "σ²·E[ψ²]/E[ψ′]²·(XᵀX)⁻¹ on the whitened design (Street–Carroll–Ruppert)",
+              "dfe": "n − p (not adjusted)",
+              "max_outer_iterations": 10,
+              "name": "AR-IRLS",
+              "pmax_s": 4.0,
+              "pmax_samples": 49,
+              "reference": "Barker, Aarabi & Huppert 2013 (doi:10.1364/BOE.4.001366); AnalyzIR nirs.math.ar_irls",
+              "robust_weight": "Tukey bisquare",
+              "tune": 4.685
+            }
+          }
+        },
+        "Exclusions": [],
+        "Statistics": {
+          "solver": "AR-IRLS",
+          "inferential": true,
+          "status_reason": "AR-IRLS solver (BIC-AR prewhitening + robust IRLS) with a single tested effect per condition × chromophore (canonical HRF β)",
+          "correction": "Benjamini-Hochberg FDR",
+          "families": "condition × chromophore, across channels",
+          "df_convention": "residual dfe = n − p from the whitened robust fit"
+        }
+      }
+    }
+  }
+}

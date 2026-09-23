@@ -1,0 +1,20 @@
+# NIRWizard 0.2.1 — per-subject laterality (Seghier LI) of the cohort
+# source: /home/adam/dev/lydia-adept/piano-noise/data/processed/sub_01/quiet_1_preprocessed.snirf sha256=78462d60b8d52c1d151662b9448972dba0578a356fc95a2f23781afd59acb308
+# source: /home/adam/dev/lydia-adept/piano-noise/data/processed/sub_01/noise_1_preprocessed.snirf sha256=f46d1973c5b582e15e30373a3a8b7d7548c81910f6dcc7ee46757c35ae7ae71b
+# source: /home/adam/dev/lydia-adept/piano-noise/data/processed/sub_01/quiet_2_preprocessed.snirf sha256=3bb2e157ffd84a08e76ddf359088f450afc8e090a06a4e194f22959fdf568af2
+# source: /home/adam/dev/lydia-adept/piano-noise/data/processed/sub_01/noise_2_preprocessed.snirf sha256=4389eb7eac0e3b695e6c2f9d5627e765bdf03668c5521131bed0a4ab440ccf82
+# statistics: solver=one-sample t of per-subject Seghier LI (unweighted); inferential; correction=Benjamini-Hochberg FDR; families=condition × chromophore, across ROI pairs
+# the left/right values this result carries (left_value / right_value in the subject part, mean_l / mean_r in the record) are activation magnitudes, not raw coefficients: HbO raw, HbR negated (ΔHbR falls with activation) so that positive = left-dominant holds for every chromophore, HbT the raw HbO + HbR sum (a physical concentration, not negated)
+# sign_case: bothPositive = both regions moved in the activation direction (the case the left-dominant reading is written for); bothNegative = both moved against it, inverting the reading; opposite = the two disagree in sign, so |LI| = 1 whatever the magnitudes; notApplicable = a contrast column (no activation direction) or an undefined cell
+# values: mean of the block-averaged curve over the response window; response window [-9.9, 49.9] s relative to stimulus onset
+# block average: epoch −10…50 s around onset; baseline: subtract the mean of the full pre-stimulus window per epoch
+# note: the response window starts before stimulus onset, so the magnitude averages the pre-onset baseline together with the response and is biased towards zero; a post-onset window (the 5–15 s default) is the response magnitude
+# note: HbR laterality: the LI denominator |L| + |R| is unstable when HbR amplitudes are near zero (low SNR); HbO is the primary display.
+# provenance: laterality_cohort_ba_mean_m9p9_49p9s.json (authoritative sidecar, schema 1.0)
+subject,roi_pair,condition,signal,li,left_value,right_value,column_kind,sign_case
+sub_01,Hemispheres,QUIET,HbO,2.127547e-1,1.389756e-1,9.021434e-2,condition,bothPositive
+sub_01,Hemispheres,QUIET,HbR,-1.000000e0,-1.867489e-2,2.444135e-4,condition,opposite
+sub_01,Hemispheres,QUIET,HbT,2.733238e-1,1.576505e-1,8.996992e-2,condition,bothPositive
+sub_01,Hemispheres,NOISE,HbO,3.498859e-2,1.029085e-1,9.595071e-2,condition,bothPositive
+sub_01,Hemispheres,NOISE,HbR,-1.000000e0,-1.504806e-2,1.833365e-2,condition,opposite
+sub_01,Hemispheres,NOISE,HbT,2.062625e-1,1.179566e-1,7.761706e-2,condition,bothPositive

@@ -1,0 +1,14 @@
+{
+  "display": {
+    "caption": "Cortex: Group movie, HbR, NOISE · Edges: Connectivity, off · Probe: Hidden · Coordinates: Hidden · Head: Cortex opaque, scalp hidden · Camera: views anterior, right, left, superior, 800 × 800 export",
+    "layers": {
+      "camera": "views anterior, right, left, superior, 800 × 800 export",
+      "coordinates": "Hidden",
+      "cortex": "Group movie, HbR, NOISE",
+      "edges": "Connectivity, off",
+      "head": "Cortex opaque, scalp hidden",
+      "probe": "Hidden"
+    }
+  },
+  "generator": "NIRWizard 0.2.1"
+}

@@ -1,0 +1,15 @@
+# NIRWizard 0.2.1 — Cohort QC per-run census
+# source: /home/adam/dev/lydia-adept/piano-noise/data/sub_01/quiet_1.snirf sha256=e939fc19e79534c83f2642a1668060cacaf491d80b9ded5638dbf28244de65a5
+# source: /home/adam/dev/lydia-adept/piano-noise/data/sub_01/noise_1.snirf sha256=224c2e624e780db2e3859fdecf4463c6f7ee929f4f96616fea1f7145f9c21d32
+# source: /home/adam/dev/lydia-adept/piano-noise/data/sub_01/quiet_2.snirf sha256=35db05026efa7c53d452fe1912411b151f93d21a3ca22f77d7f2d841d2b0c3fd
+# source: /home/adam/dev/lydia-adept/piano-noise/data/sub_01/noise_2.snirf sha256=b4eb39f3588d24542b397c465f3c59d2f3b471efcdc07776b3bb5dd36e3f3bd5
+# statistics: solver=QC metrics (cohort pass); descriptive (no p/q); correction=none; families=n/a (no correction applied)
+# thresholds as applied: SCI>=0.8 PSP>=0.1 q=0.75 SNR>=2 SD 0-45 mm; amplitude gate not applied
+# <gate>_n_fail counts channels whose status names that gate; a channel failing two gates is counted in both
+# status=failed: the run could not be judged; its numeric cells are empty (missing, never zero) and the reason is in the exclusion ledger too
+# provenance: cohort_qc.json (authoritative sidecar, schema 1.0)
+subject,run,file,sampling_rate,n_samples,window_s,n_windows,n_channels,n_bad,windows_n_fail,sci_n_fail,psp_n_fail,snr_n_fail,mean_amplitude_n_fail,sd_distance_n_fail,gvtd_median,engine,status,reason
+sub_01,run 1,/home/adam/dev/lydia-adept/piano-noise/data/sub_01/quiet_1.snirf,12.207031249999998,7591,5,124,47,28,28,11,26,0,0,0,9.497846e-3,native,judged,
+sub_01,run 2,/home/adam/dev/lydia-adept/piano-noise/data/sub_01/noise_1.snirf,12.207031249999998,6295,5,103,47,26,26,13,24,0,0,0,9.868520e-3,native,judged,
+sub_01,run 3,/home/adam/dev/lydia-adept/piano-noise/data/sub_01/quiet_2.snirf,12.207031249999998,6083,5,99,47,23,23,13,22,0,0,0,1.038878e-2,native,judged,
+sub_01,run 4,/home/adam/dev/lydia-adept/piano-noise/data/sub_01/noise_2.snirf,12.207031249999998,6190,5,101,47,29,29,11,27,0,0,0,1.070206e-2,native,judged,

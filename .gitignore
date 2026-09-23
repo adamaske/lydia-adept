@@ -28,3 +28,9 @@ __pycache__/
 # Paper PDFs stay local (copyright); the repo is public
 literature/*.pdf
 !piano-noise/logs/*.log
+
+# Rendered movie frames (thousands of PNGs, regenerable from NIRWizard)
+piano-noise/analysis/**/*_frames/
+# Regenerable intermediates
+piano-noise/data/processed/
+piano-noise/archive/**/*.nirw

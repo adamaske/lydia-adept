@@ -1,0 +1,110 @@
+{
+  "SchemaVersion": "1.0",
+  "ComputedAt": "2026-09-21T07:36:30.924655260+00:00",
+  "GeneratedBy": [
+    {
+      "Name": "NIRWizard",
+      "Version": "0.2.1"
+    },
+    {
+      "Name": "native",
+      "Version": "0.2.1",
+      "Description": "QC metrics engine (SCI/PSP/SNR/mean amplitude/SD distance/GVTD), native Rust"
+    }
+  ],
+  "Sources": [
+    {
+      "Path": "/home/adam/dev/lydia-adept/piano-noise/data/sub_01/quiet_1.snirf",
+      "SHA256": "e939fc19e79534c83f2642a1668060cacaf491d80b9ded5638dbf28244de65a5"
+    },
+    {
+      "Path": "/home/adam/dev/lydia-adept/piano-noise/data/sub_01/noise_1.snirf",
+      "SHA256": "224c2e624e780db2e3859fdecf4463c6f7ee929f4f96616fea1f7145f9c21d32"
+    },
+    {
+      "Path": "/home/adam/dev/lydia-adept/piano-noise/data/sub_01/quiet_2.snirf",
+      "SHA256": "35db05026efa7c53d452fe1912411b151f93d21a3ca22f77d7f2d841d2b0c3fd"
+    },
+    {
+      "Path": "/home/adam/dev/lydia-adept/piano-noise/data/sub_01/noise_2.snirf",
+      "SHA256": "b4eb39f3588d24542b397c465f3c59d2f3b471efcdc07776b3bb5dd36e3f3bd5"
+    }
+  ],
+  "Parameters": {
+    "Quality": {
+      "cardiac_band_hz": "0.5-2.5 Hz",
+      "engine": "native",
+      "engine_version": "0.2.1",
+      "n_judged": 4,
+      "n_runs": 4,
+      "note": "band, window and engine are per run; the per-run facts are the `runs` array and the cohort_qc_runs part",
+      "runs": [
+        {
+          "file": "/home/adam/dev/lydia-adept/piano-noise/data/sub_01/quiet_1.snirf",
+          "gvtd_median": 0.009497846166416982,
+          "n_bad": 28,
+          "n_channels": 47,
+          "reason": null,
+          "run": "run 1",
+          "status": "judged",
+          "subject": "sub_01"
+        },
+        {
+          "file": "/home/adam/dev/lydia-adept/piano-noise/data/sub_01/noise_1.snirf",
+          "gvtd_median": 0.009868519559014449,
+          "n_bad": 26,
+          "n_channels": 47,
+          "reason": null,
+          "run": "run 2",
+          "status": "judged",
+          "subject": "sub_01"
+        },
+        {
+          "file": "/home/adam/dev/lydia-adept/piano-noise/data/sub_01/quiet_2.snirf",
+          "gvtd_median": 0.010388776629282656,
+          "n_bad": 23,
+          "n_channels": 47,
+          "reason": null,
+          "run": "run 3",
+          "status": "judged",
+          "subject": "sub_01"
+        },
+        {
+          "file": "/home/adam/dev/lydia-adept/piano-noise/data/sub_01/noise_2.snirf",
+          "gvtd_median": 0.01070205941851336,
+          "n_bad": 29,
+          "n_channels": 47,
+          "reason": null,
+          "run": "run 4",
+          "status": "judged",
+          "subject": "sub_01"
+        }
+      ],
+      "scope": "cohort",
+      "snr_convention": "SNR = mean(raw intensity) / std(raw intensity) per wavelength (population std), channel value = minimum over wavelengths; Homer3 convention, not dB",
+      "status": "cohort QC — one pass over every enabled run at the study-wide thresholds",
+      "thresholds": {
+        "mean_amplitude_range": "not applied",
+        "psp": 0.1,
+        "q": 0.75,
+        "sci": 0.8,
+        "sd_range_mm": [
+          0.0,
+          45.0
+        ],
+        "snr": 2.0
+      },
+      "verdict_rule": "window good iff SCI >= sci and PSP >= psp; channel good iff good-window fraction >= q and SNR, mean-amplitude and SD-distance gates pass",
+      "window_overlap": "none",
+      "window_s": 5.0
+    }
+  },
+  "Exclusions": [],
+  "Statistics": {
+    "solver": "QC metrics (cohort pass)",
+    "inferential": false,
+    "status_reason": "quality metrics and threshold verdicts over a cohort; no inference",
+    "correction": "none",
+    "families": "n/a (no correction applied)"
+  }
+}

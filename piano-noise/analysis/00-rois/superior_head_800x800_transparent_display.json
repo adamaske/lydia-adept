@@ -1,0 +1,30 @@
+{
+  "display": {
+    "caption": "Cortex: ROI tint · Edges: Connectivity, off · Probe: Hidden · Coordinates: Hidden · Head: Cortex opaque, scalp hidden · Camera: Anterior, 800 × 800 export",
+    "capture": {
+      "background": "transparent",
+      "camera": {
+        "distance": 1523.5800530728409,
+        "fov": 10.0,
+        "pitch": 1.5207963267948965,
+        "yaw": 3.141592653589793
+      },
+      "preset": null,
+      "scale": 1,
+      "size": {
+        "height": 800,
+        "width": 800
+      },
+      "view": "superior"
+    },
+    "layers": {
+      "camera": "Anterior, 800 × 800 export",
+      "coordinates": "Hidden",
+      "cortex": "ROI tint",
+      "edges": "Connectivity, off",
+      "head": "Cortex opaque, scalp hidden",
+      "probe": "Hidden"
+    }
+  },
+  "generator": "NIRWizard 0.2.1"
+}

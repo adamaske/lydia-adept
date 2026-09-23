@@ -1,0 +1,9 @@
+# NIRWizard 0.2.1 — subject GLM nuisance-regressor coefficients (descriptive)
+# source: /home/adam/dev/lydia-adept/piano-noise/data/processed/sub_01/quiet_1_preprocessed.snirf sha256=78462d60b8d52c1d151662b9448972dba0578a356fc95a2f23781afd59acb308
+# source: /home/adam/dev/lydia-adept/piano-noise/data/processed/sub_01/noise_1_preprocessed.snirf sha256=f46d1973c5b582e15e30373a3a8b7d7548c81910f6dcc7ee46757c35ae7ae71b
+# source: /home/adam/dev/lydia-adept/piano-noise/data/processed/sub_01/quiet_2_preprocessed.snirf sha256=3bb2e157ffd84a08e76ddf359088f450afc8e090a06a4e194f22959fdf568af2
+# source: /home/adam/dev/lydia-adept/piano-noise/data/processed/sub_01/noise_2_preprocessed.snirf sha256=4389eb7eac0e3b695e6c2f9d5627e765bdf03668c5521131bed0a4ab440ccf82
+# statistics: solver=AR-IRLS per run + precision-weighted fixed effects across runs; inferential; correction=Benjamini-Hochberg FDR; families=condition × chromophore, across channels
+# regressors: 
+# provenance: glm_results.json (authoritative sidecar, schema 1.0)
+channel,signal,regressor,beta,se

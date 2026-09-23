@@ -1,0 +1,25 @@
+# NIRWizard 0.2.1 — cohort laterality (one-sample t of per-subject LI)
+# source: /home/adam/dev/lydia-adept/piano-noise/data/processed/sub_01/quiet_1_preprocessed.snirf sha256=78462d60b8d52c1d151662b9448972dba0578a356fc95a2f23781afd59acb308
+# source: /home/adam/dev/lydia-adept/piano-noise/data/processed/sub_01/noise_1_preprocessed.snirf sha256=f46d1973c5b582e15e30373a3a8b7d7548c81910f6dcc7ee46757c35ae7ae71b
+# source: /home/adam/dev/lydia-adept/piano-noise/data/processed/sub_01/quiet_2_preprocessed.snirf sha256=3bb2e157ffd84a08e76ddf359088f450afc8e090a06a4e194f22959fdf568af2
+# source: /home/adam/dev/lydia-adept/piano-noise/data/processed/sub_01/noise_2_preprocessed.snirf sha256=4389eb7eac0e3b695e6c2f9d5627e765bdf03668c5521131bed0a4ab440ccf82
+# statistics: solver=one-sample t of per-subject Seghier LI (unweighted); inferential; correction=Benjamini-Hochberg FDR; families=condition × chromophore, across ROI pairs
+# primary chromophore = HbO; q = Benjamini-Hochberg FDR across ROI pairs within condition × signal
+# the left/right values this result carries (left_value / right_value in the subject part, mean_l / mean_r in the record) are activation magnitudes, not raw coefficients: HbO raw, HbR negated (ΔHbR falls with activation) so that positive = left-dominant holds for every chromophore, HbT the raw HbO + HbR sum (a physical concentration, not negated)
+# sign_case: bothPositive = both regions moved in the activation direction (the case the left-dominant reading is written for); bothNegative = both moved against it, inverting the reading; opposite = the two disagree in sign, so |LI| = 1 whatever the magnitudes; notApplicable = a contrast column (no activation direction) or an undefined cell
+# values: signed extremum of the block-averaged curve over the response window: the sample with the largest absolute value, sign preserved (so a downward excursion reports negative); response window [-9.9, 49.9] s relative to stimulus onset
+# block average: epoch −10…50 s around onset; baseline: subtract the mean of the full pre-stimulus window per epoch
+# note: the response window starts before stimulus onset, so the magnitude averages the pre-onset baseline together with the response and is biased towards zero; a post-onset window (the 5–15 s default) is the response magnitude
+# note: HbR laterality: the LI denominator |L| + |R| is unstable when HbR amplitudes are near zero (low SNR); HbO is the primary display.
+# n_subjects = 1 included, 0 excluded
+# pipeline homogeneity: all 1 subject processed with the same pipeline (derived from cedalion-recommended@1, 4 deviations [5815491b] (inherited from the input files))
+# units: μM (all 1 subject)
+# caveat: HbR laterality: the LI denominator |L| + |R| is unstable when HbR amplitudes are near zero (low SNR); HbO is the primary display.
+# provenance: laterality_cohort_ba_peak_m9p9_49p9s.json (authoritative sidecar, schema 1.0)
+roi_pair,condition,signal,mean_li,t,df,p,q,n_subjects,primary_chromophore,column_kind,n_both_positive,n_both_negative,n_opposite
+Hemispheres,QUIET,HbO,5.607224e-2,NaN,NaN,NaN,NaN,1,true,condition,1,0,0
+Hemispheres,QUIET,HbR,-1.000000e0,NaN,NaN,NaN,NaN,1,false,condition,0,0,1
+Hemispheres,QUIET,HbT,9.781451e-2,NaN,NaN,NaN,NaN,1,false,condition,1,0,0
+Hemispheres,NOISE,HbO,5.372812e-3,NaN,NaN,NaN,NaN,1,true,condition,1,0,0
+Hemispheres,NOISE,HbR,-1.000000e0,NaN,NaN,NaN,NaN,1,false,condition,0,0,1
+Hemispheres,NOISE,HbT,7.968006e-2,NaN,NaN,NaN,NaN,1,false,condition,1,0,0

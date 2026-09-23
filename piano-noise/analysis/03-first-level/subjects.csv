@@ -1,0 +1,2 @@
+label,folder,path,sha256,included,exclusion_reason,n_channels,posture,n_runs,run_policy
+sub_01,sub_01,/home/adam/dev/lydia-adept/piano-noise/data/processed/sub_01/quiet_1_preprocessed.snirf,78462d60b8d52c1d151662b9448972dba0578a356fc95a2f23781afd59acb308,true,,47,inferential,4,perRun

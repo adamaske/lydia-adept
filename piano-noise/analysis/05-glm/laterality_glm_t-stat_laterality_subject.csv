@@ -1,0 +1,51 @@
+# NIRWizard 0.2.1 — subject laterality (Seghier LI)
+# source: /home/adam/dev/lydia-adept/piano-noise/data/raw/sub_01/quiet_1.snirf sha256=e939fc19e79534c83f2642a1668060cacaf491d80b9ded5638dbf28244de65a5
+# source: /home/adam/dev/lydia-adept/piano-noise/data/raw/sub_01/quiet_2.snirf sha256=35db05026efa7c53d452fe1912411b151f93d21a3ca22f77d7f2d841d2b0c3fd
+# source: /home/adam/dev/lydia-adept/piano-noise/data/raw/sub_01/noise_1.snirf sha256=224c2e624e780db2e3859fdecf4463c6f7ee929f4f96616fea1f7145f9c21d32
+# source: /home/adam/dev/lydia-adept/piano-noise/data/raw/sub_01/noise_2.snirf sha256=b4eb39f3588d24542b397c465f3c59d2f3b471efcdc07776b3bb5dd36e3f3bd5
+# statistics: solver=Seghier LI (single subject); descriptive (no p/q); correction=none; families=condition × chromophore, across ROI pairs
+# source=glm; primary chromophore=HbO; LI = (L − R)/(|L| + |R|), positive = left
+# the left/right values this result carries (left_value / right_value in the subject part, mean_l / mean_r in the record) are activation magnitudes, not raw coefficients: HbO raw, HbR negated (ΔHbR falls with activation) so that positive = left-dominant holds for every chromophore, HbT the raw HbO + HbR sum (a physical concentration, not negated)
+# sign_case: bothPositive = both regions moved in the activation direction (the case the left-dominant reading is written for); bothNegative = both moved against it, inverting the reading; opposite = the two disagree in sign, so |LI| = 1 whatever the magnitudes; notApplicable = a contrast column (no activation direction) or an undefined cell
+# values: t-statistic
+# note: t-statistics are not additive, so HbT is the β sum (β_hbo + β_hbr, or c'β for a contrast) on a useT result as well; its HbO and HbR rows are t-statistics
+# note: HbR laterality: the LI denominator |L| + |R| is unstable when HbR amplitudes are near zero (low SNR); HbO is the primary display.
+# caveat: HbR laterality: the LI denominator |L| + |R| is unstable when HbR amplitudes are near zero (low SNR); HbO is the primary display.
+# provenance: laterality_glm_t-stat.json (authoritative sidecar, schema 1.0)
+roi_pair,condition,signal,li,left_value,right_value,column_kind,sign_case
+Hemispheres,QUIET,HbO,1.598488e-1,1.913354e1,1.385962e1,condition,bothPositive
+Left VLPFC | Right VLPFC,QUIET,HbO,3.070219e-1,2.070488e1,1.097765e1,condition,bothPositive
+Left DLPFC | Right DLPFC,QUIET,HbO,9.610146e-2,2.140681e1,1.765309e1,condition,bothPositive
+Left Temporal | Right Temporal,QUIET,HbO,2.145477e-1,2.556353e1,1.653203e1,condition,bothPositive
+Left PMA | Right PMA,QUIET,HbO,-9.359350e-2,1.454922e1,1.755385e1,condition,bothPositive
+Left SMA | Right SMA,QUIET,HbO,2.647930e-1,1.186326e1,6.895952e0,condition,bothPositive
+Hemispheres,QUIET,HbR,-1.000000e0,-6.522213e0,1.334859e0,condition,opposite
+Left VLPFC | Right VLPFC,QUIET,HbR,-7.827830e-1,-1.275117e1,-1.553622e0,condition,bothNegative
+Left DLPFC | Right DLPFC,QUIET,HbR,-5.215678e-1,2.356240e0,7.493598e0,condition,bothPositive
+Left Temporal | Right Temporal,QUIET,HbR,-3.056144e-1,-1.294995e1,-6.887378e0,condition,bothNegative
+Left PMA | Right PMA,QUIET,HbR,-1.000000e0,-2.964558e0,2.299472e0,condition,opposite
+Left SMA | Right SMA,QUIET,HbR,-1.000000e0,-3.692940e0,2.127829e-1,condition,opposite
+Hemispheres,QUIET,HbT,1.514192e-1,1.713486e-1,1.262817e-1,condition,bothPositive
+Left VLPFC | Right VLPFC,QUIET,HbT,3.792677e-1,2.517165e-1,1.132837e-1,condition,bothPositive
+Left DLPFC | Right DLPFC,QUIET,HbT,6.202628e-2,1.911564e-1,1.688280e-1,condition,bothPositive
+Left Temporal | Right Temporal,QUIET,HbT,1.130508e-1,2.103480e-1,1.676186e-1,condition,bothPositive
+Left PMA | Right PMA,QUIET,HbT,-1.415404e-1,1.085192e-1,1.443039e-1,condition,bothPositive
+Left SMA | Right SMA,QUIET,HbT,2.777157e-1,7.490196e-2,4.234159e-2,condition,bothPositive
+Hemispheres,NOISE,HbO,3.487071e-1,1.829060e1,8.832562e0,condition,bothPositive
+Left VLPFC | Right VLPFC,NOISE,HbO,4.038709e-1,2.338559e1,9.930279e0,condition,bothPositive
+Left DLPFC | Right DLPFC,NOISE,HbO,3.454565e-1,1.636193e1,7.959821e0,condition,bothPositive
+Left Temporal | Right Temporal,NOISE,HbO,8.288384e-2,2.299902e1,1.947834e1,condition,bothPositive
+Left PMA | Right PMA,NOISE,HbO,3.028261e-1,1.685368e1,9.018812e0,condition,bothPositive
+Left SMA | Right SMA,NOISE,HbO,1.000000e0,1.070661e1,-2.580294e0,condition,opposite
+Hemispheres,NOISE,HbR,-1.000000e0,-5.248972e0,4.087359e0,condition,opposite
+Left VLPFC | Right VLPFC,NOISE,HbR,-1.000000e0,-7.622268e0,1.749597e0,condition,opposite
+Left DLPFC | Right DLPFC,NOISE,HbR,-1.000000e0,-2.340203e0,8.709995e0,condition,opposite
+Left Temporal | Right Temporal,NOISE,HbR,-3.555414e-2,-3.307689e0,-3.080560e0,condition,bothNegative
+Left PMA | Right PMA,NOISE,HbR,-1.000000e0,-8.978083e-1,9.679124e0,condition,opposite
+Left SMA | Right SMA,NOISE,HbR,-1.000000e0,-1.024286e1,9.512740e-1,condition,opposite
+Hemispheres,NOISE,HbT,3.766300e-1,1.597517e-1,7.233929e-2,condition,bothPositive
+Left VLPFC | Right VLPFC,NOISE,HbT,4.732033e-1,2.768032e-1,9.898091e-2,condition,bothPositive
+Left DLPFC | Right DLPFC,NOISE,HbT,2.870939e-1,1.405822e-1,7.786682e-2,condition,bothPositive
+Left Temporal | Right Temporal,NOISE,HbT,1.920302e-2,1.801283e-1,1.733406e-1,condition,bothPositive
+Left PMA | Right PMA,NOISE,HbT,4.580265e-1,1.199229e-1,4.457742e-2,condition,bothPositive
+Left SMA | Right SMA,NOISE,HbT,1.000000e0,7.454128e-2,-1.961882e-2,condition,opposite
