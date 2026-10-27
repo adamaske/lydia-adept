@@ -46,7 +46,23 @@ SESSION_END                                          (~26 min)
 Each marker is pushed right after the screen flip that shows PLAY/REST, before
 the cue beep starts, and its LSL timestamp is in the session JSON.
 
-## Setup
+## Acquisition PC (Windows 11)
+
+Once, in a terminal (needs git and uv; uv fetches Python 3.10 itself):
+
+```bat
+git clone https://github.com/adamaske/lydia-adept "%USERPROFILE%\Desktop\LYDIA-ADEPT"
+```
+
+Then in `Desktop\LYDIA-ADEPT`:
+
+- `run-piano-noise.bat`: double-click to run a session. The first run builds
+  `.venv-psychopy` (a few minutes, needs internet). If anything fails, the window stays open with the error.
+- `check-piano-noise-triggers.bat`: trigger check without Aurora (see below). Run it once after setup.
+
+Before a session day, `git pull` there. After it, commit `data/` and push.
+
+## Setup (other machines)
 
 PsychoPy needs Python 3.10:
 
