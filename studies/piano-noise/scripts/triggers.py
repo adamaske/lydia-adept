@@ -15,7 +15,7 @@ TRIGGERS = {
     3:  ("ROOM_NATURAL",  "Pushed right after SESSION_START: natural (untreated) room"),
     4:  ("ROOM_ADJUSTED", "Pushed right after SESSION_START: acoustically adjusted room"),
 
-    10: ("BASELINE",      "Baseline rest onset (60 s, before run 1; hands on keys, eyes on cross)"),
+    10: ("BASELINE",      "Baseline rest onset (60 s, before run 1; hands on the keys)"),
 
     11: ("RUN_START",     "Run onset (3 s before the first play block; a run = N play/rest blocks, ~7 min)"),
 

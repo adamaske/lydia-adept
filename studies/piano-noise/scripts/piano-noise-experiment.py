@@ -8,7 +8,8 @@ rows as run_session.py; differences:
   - start screen shows whether Aurora is listening on the LSL stream; N plays the babble
     for level calibration (~65 dB SPL), SPACE starts
   - pilot runs (Studio's pilot toggle / --pilot) go to data/pilot/ (logs in data/pilot/logs/)
-  - full-screen participant display (fixation cross, "PLAY" / "REST" labels)
+  - small conductor window (phase, run/block, countdown, session clock) to keep next to Aurora;
+    the player is at the piano and only hears the cues, so there is no participant display
   - cues and babble through psychopy.sound; markers are pushed on the screen flip
   - Escape aborts (ABORT marker, logs still written)
 
@@ -19,7 +20,7 @@ rows as run_session.py; differences:
 In Studio, install pylsl (and mido + python-rtmidi for MIDI) via Tools > Plugins/Packages.
 Run with the PsychoPy venv (Python 3.10, see requirements-psychopy.txt):
     .venv-psychopy/bin/python scripts/piano-noise-experiment.py
-    .venv-psychopy/bin/python scripts/piano-noise-experiment.py --no-lsl --speed 20 --windowed   # dry run
+    .venv-psychopy/bin/python scripts/piano-noise-experiment.py --no-lsl --speed 20   # dry run
 PsychoPy Studio: add this file in the Runner; the pilot toggle (orange) = the dry run above.
 """
 import argparse
@@ -64,11 +65,10 @@ def main():
     p.add_argument("--stream-name", default="Trigger")
     p.add_argument("--no-lsl", action="store_true")
     p.add_argument("--speed", type=float, default=1.0, help="time scale for dry runs")
-    p.add_argument("--windowed", action="store_true")
-    p.add_argument("--pilot", action="store_true", help="PsychoPy Studio pilot mode = dry run (no LSL, windowed, x20)")
+    p.add_argument("--pilot", action="store_true", help="PsychoPy Studio pilot mode = dry run (no LSL, x20)")
     args, _ = p.parse_known_args()  # Studio's Runner also passes --prefs-json etc.
     if args.pilot:
-        args.windowed, args.speed = True, 20.0
+        args.speed = 20.0
 
     try:
         with open(LAST_DIALOG) as f:
@@ -175,10 +175,11 @@ def main():
             session["midi"] = {"error": str(e)}
 
     # --- display + sound ----------------------------------------------------
-    win = visual.Window(fullscr=not args.windowed, size=(1280, 720), color="black", units="height", allowGUI=args.windowed)
-    win.mouseVisible = False
-    cross = visual.ShapeStim(win, vertices="cross", size=0.08, fillColor="white", lineColor="white")
-    label = visual.TextStim(win, "", pos=(0, 0.15), height=0.06, color="white")
+    win = visual.Window(size=(560, 320), pos=(40, 40), color=(-0.8, -0.8, -0.8), units="height", allowGUI=True,
+                        title="Piano-noise conductor" + (" [PILOT]" if args.pilot else ""))
+    text = lambda y, h, **kw: visual.TextStim(win, "", pos=(0, y), height=h, wrapWidth=1.7, **kw)
+    title, where, left, clock_txt = text(0.3, 0.13, bold=True), text(0.13, 0.065), text(-0.06, 0.11), text(-0.36, 0.045)
+    session_t0 = [None]
     def beeps(n, rate=44100):
         """n x 150 ms 1 kHz beeps, 120 ms apart, as one sound so it can start on a flip without blocking."""
         t = np.arange(int(0.15 * rate)) / rate
@@ -189,32 +190,54 @@ def main():
     play_cue, rest_cue = beeps(1), beeps(2)
     babble = sound.Sound(args.noise, loops=-1, volume=args.noise_volume) if (args.noise and cond == "N") else None
 
-    def phase(text, marker, seconds, sounds=()):
-        """Show text above the cross; marker and sounds start on the same flip. Hold for seconds/speed.
-        Returns the marker's LSL time."""
-        label.text = text
+    total_s = session["planned_duration_s"] / args.speed
+
+    def draw(remaining):
+        left.text = f"{remaining:.0f} s left"
+        if session_t0[0] is not None:
+            m, sec = divmod(int(core.getTime() - session_t0[0]), 60)
+            tm, tsec = divmod(int(total_s), 60)
+            clock_txt.text = f"session {m:02d}:{sec:02d} / {tm:02d}:{tsec:02d}    ESC: abort (click here first)"
+        for t in (title, where, left, clock_txt):
+            t.draw()
+
+    def phase(name, marker, seconds, sounds=(), info="", color="white"):
+        """Show the phase in the conductor window; marker and sounds start on the same flip.
+        Hold for seconds/speed. Returns the marker's LSL time."""
+        title.text, title.color, where.text = name, color, info
+        hold = seconds / args.speed
         ts = []
-        cross.draw(); label.draw()
+        draw(hold)
         if marker:  # first on the flip, so the timestamp is not delayed by the sound start-up
             win.callOnFlip(lambda: ts.append(push(marker)))
         for snd in sounds:
             win.callOnFlip(snd.play)
         t0 = win.flip()  # block duration counts from the marker flip
+        if session_t0[0] is None:
+            session_t0[0] = t0
         save()
-        while core.getTime() - t0 < seconds / args.speed:
+        shown = None
+        while core.getTime() - t0 < hold:
             if event.getKeys(["escape"]):
                 raise Abort
-            cross.draw(); label.draw(); win.flip()
-        over = core.getTime() - t0 - seconds / args.speed
-        if over > 0.1:  # one frame is ~17 ms; more means the compositor throttled a hidden/covered window
-            print(f"  !! {marker or 'phase'} held {over:.2f} s too long: keep the participant window fullscreen and in front")
+            remaining = int(hold - (core.getTime() - t0) + 0.999)
+            if remaining != shown:  # re-render text once a second, not every frame
+                shown = remaining
+                draw(remaining)
+            else:
+                for t in (title, where, left, clock_txt):
+                    t.draw()
+            win.flip()
+        over = core.getTime() - t0 - hold
+        if over > 0.1:  # one frame is ~17 ms; more means the window was minimised/throttled
+            print(f"  !! {marker or 'phase'} held {over:.2f} s too long: keep the conductor window visible (not minimised)")
         return ts[0] if ts else None
 
     # --- run ----------------------------------------------------------------
     save()
-    status = visual.TextStim(win, "", pos=(0, -0.3), height=0.03)
-    label.text = "Hold your hands on the keys and look at the cross."
-    label.pos = (0, 0.1)
+    status = text(-0.12, 0.05)
+    title.text = f"sub-{subject:02d} ses-{session_n:02d} {condition.upper()}"
+    where.text = f"{args.runs} runs x {args.blocks} blocks, ~{total_s / 60:.0f} min"
     calib = sound.Sound(args.noise, loops=-1, volume=args.noise_volume) if args.noise else None
     calib_on = False
     event.clearEvents()
@@ -229,7 +252,7 @@ def main():
                                          "(F: start anyway, markers are lost)"), "red"
         status.text += ("\nN: babble " + ("ON" if calib_on else "off") + " (level check)" if calib else "") + \
             "\nSPACE: start    ESC: quit"
-        label.draw(); status.draw(); win.flip()
+        title.draw(); where.draw(); status.draw(); win.flip()
         keys = event.getKeys(["space", "escape", "n", "f"])
         if "space" in keys and not listening:
             keys.remove("space")
@@ -246,23 +269,23 @@ def main():
             break
     if calib:
         calib.stop()
-    label.pos = (0, 0.15)
 
     done = 0
     try:
-        phase("", "SESSION_START", MARKER_GAP_S)
+        phase("STARTING", "SESSION_START", MARKER_GAP_S)
         if room:
-            phase("", "ROOM_NATURAL" if room == "natural" else "ROOM_ADJUSTED", MARKER_GAP_S)
-        phase("", "BASELINE", args.baseline)
+            phase("STARTING", "ROOM_NATURAL" if room == "natural" else "ROOM_ADJUSTED", MARKER_GAP_S)
+        phase("BASELINE", "BASELINE", args.baseline, info="player still, hands on the keys")
         for r, run in enumerate(sched, 1):
-            phase("Get ready", "RUN_START", 3.0)
+            phase("GET READY", "RUN_START", 3.0, info=f"run {r}/{len(sched)}")
             for b, blk in enumerate(run, 1):
                 print(f"run {r} block {b}/{args.blocks}: {condition.upper()} play {blk['play_s']:.0f} s")
+                where_txt = f"run {r}/{len(sched)}   block {b}/{args.blocks}   {condition.upper()}"
                 t_play = phase("PLAY", "PLAY_NOISE" if cond == "N" else "PLAY_QUIET", blk["play_s"],
-                               [play_cue] + ([babble] if babble else []))
+                               [play_cue] + ([babble] if babble else []), info=where_txt, color="lightgreen")
                 if babble:
                     babble.stop()
-                t_rest = phase("REST", "REST", blk["rest_s"], [rest_cue])
+                t_rest = phase("REST", "REST", blk["rest_s"], [rest_cue], info=where_txt, color="lightskyblue")
                 t_end = clock()
                 rec = {"run": r, "block": b, "cond": cond, "planned_play_s": blk["play_s"], "planned_rest_s": blk["rest_s"],
                        "play_s": round(t_rest - t_play, 3), "rest_s": round(t_end - t_rest, 3),
@@ -272,8 +295,9 @@ def main():
                 append_csv(blocks_csv, {"subject": subject, "session": session_n, "condition": condition, "room": room,
                                         "date": f"{started:%Y-%m-%d}", **rec})
             if r < len(sched):
-                phase("Break - relax, keep the cap still", "RUN_REST", args.run_rest)
-        phase("Finished - thank you!", "SESSION_END", MARKER_GAP_S, [rest_cue])
+                phase("RUN BREAK", "RUN_REST", args.run_rest, info=f"after run {r}/{len(sched)} - keep the cap still",
+                      color="khaki")
+        phase("FINISHED", "SESSION_END", MARKER_GAP_S, [rest_cue], info="stop the Aurora recording")
         session["completed"] = True
         print("Session complete. Stop the Aurora recording now.")
     except Abort:

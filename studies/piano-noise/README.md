@@ -11,7 +11,7 @@ montage/cap_56 … cap_62/     WizardHat exports of montage PianoNoise_62 (16 S 
                              nirsite/ (the folder Aurora loads), panels/*.stl (print), .snirf/.nirwmontage, cap.yaml
 montage/PianoNoise-Montage*  montage drawings
 stimuli/                     babble/noise WAVs (not in git)
-scripts/piano-noise-experiment.py  the experiment (PsychoPy): dialog, participant screen, LSL markers
+scripts/piano-noise-experiment.py  the experiment (PsychoPy): dialog, conductor window, cues, LSL markers
 scripts/check_triggers.py    listens on the LSL "Trigger" stream like Aurora; checks markers against the session log
 scripts/triggers.py          marker code table (single source of truth)
 scripts/run_session.py       terminal-only runner (first round); also holds the schedule/CSV helpers the PsychoPy script uses
@@ -90,11 +90,13 @@ LSL stream as the trigger source.
    'Trigger'"). SPACE does nothing while it is red; F starts anyway, but then the markers are lost.
    With a noise file, N toggles the babble to set the level (~65 dB SPL at the head).
 4. SPACE. The session runs by itself. Esc aborts (ABORT marker, logs are still written).
-   Keep the participant window fullscreen and in front. If it is covered, the system can
-   slow its redraws, and phases then run long. The console prints `!! … held … too long` when that happens.
+   The player only hears the cues (1 beep = play, 2 = rest), so there is no participant screen. A small
+   conductor window (top left) shows the phase, run/block, the countdown and the session clock. Keep it
+   next to Aurora's signal view. For Esc, click the window first. Don't minimise it: a minimised window can
+   be redrawn slowly and phases then run long. The console prints `!! … held … too long` when that happens.
 5. Stop the Aurora recording after SESSION_END. Commit `data/logs/`, `data/*.csv`, `data/raw/`.
 
-Dry run, no participant: Studio's pilot toggle, or `--pilot` (no LSL, windowed, x20 speed, writes to `data/pilot/`).
+Dry run, no participant: Studio's pilot toggle, or `--pilot` (no LSL, x20 speed, writes to `data/pilot/`).
 
 ### Checking the triggers
 
