@@ -5,7 +5,8 @@ mental workload and task performance, measured with mobile non-invasive
 neuroimaging (primarily fNIRS, plus EEG).
 
 ```
-literature/        reading notes (notes.tex, biblatex/biber) + references.bib; paper PDFs stay local
+literature/        paper PDFs (local only) + a snapshot of notes.tex/references.bib; the notes now
+                   live in the Overleaf project (report/literature/), edit them there
 audio/             lab soundscape recording and spectral analysis
 studies/<study>/   one folder per study, layout below
 report/            the Overleaf project (own git repo, not tracked here): main.tex is the
