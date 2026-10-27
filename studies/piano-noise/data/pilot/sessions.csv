@@ -1,0 +1,4 @@
+subject,session,condition,room,date,blocks_completed,blocks_planned,seed,noise_file,midi_events,completed,log,comment
+1,12,quiet,natural,2026-10-05 12:52,0,18,1791197574,manual,,0,sub-01_ses-12_quiet_20261005_125254,
+1,13,quiet,,2026-10-05 12:58,6,18,1791197929,manual,,0,sub-01_ses-13_quiet_20261005_125849,
+1,12,quiet,,2026-10-27 08:40,4,4,1793086832,manual,,1,sub-01_ses-12_quiet_20261027_084032,pilot

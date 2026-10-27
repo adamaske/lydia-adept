@@ -1,0 +1,7 @@
+# PsychoPy experiment env. PsychoPy needs Python 3.10 (system 3.14 won't work).
+#   uv venv --python 3.10 .venv-psychopy && uv pip install -p .venv-psychopy -r requirements-psychopy.txt
+psychopy==2026.2.4
+pylsl>=1.16
+mido>=1.3
+python-rtmidi>=1.5
+psychopy-sounddevice                     # audio backend on Linux

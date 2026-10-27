@@ -1,0 +1,202 @@
+{
+  "subject": 1,
+  "session": 12,
+  "condition": "quiet",
+  "room": "",
+  "started": "2026-10-27T08:40:32.502347",
+  "runner": "psychopy",
+  "params": {
+    "runs": 2,
+    "blocks": 2,
+    "play": 40.0,
+    "play_jitter": 8.0,
+    "rest": 30.0,
+    "rest_jitter": 5.0,
+    "baseline": 60.0,
+    "run_rest": 120.0,
+    "noise": null,
+    "noise_volume": 1.0,
+    "midi": null,
+    "stream_name": "Trigger",
+    "no_lsl": false,
+    "speed": 20.0,
+    "windowed": true,
+    "pilot": true
+  },
+  "seed": 1793086832,
+  "comment": "pilot",
+  "triggers": {
+    "1": "SESSION_START",
+    "2": "SESSION_END",
+    "3": "ROOM_NATURAL",
+    "4": "ROOM_ADJUSTED",
+    "10": "BASELINE",
+    "11": "RUN_START",
+    "20": "PLAY_QUIET",
+    "21": "PLAY_NOISE",
+    "30": "REST",
+    "40": "RUN_REST",
+    "99": "ABORT"
+  },
+  "schedule": [
+    [
+      {
+        "cond": "Q",
+        "play_s": 47.7,
+        "rest_s": 30.0
+      },
+      {
+        "cond": "Q",
+        "play_s": 39.9,
+        "rest_s": 26.2
+      }
+    ],
+    [
+      {
+        "cond": "Q",
+        "play_s": 38.4,
+        "rest_s": 30.1
+      },
+      {
+        "cond": "Q",
+        "play_s": 36.0,
+        "rest_s": 27.5
+      }
+    ]
+  ],
+  "planned_duration_s": 455.8,
+  "markers": [
+    {
+      "code": 1,
+      "name": "SESSION_START",
+      "t_wall": 1793086840.807216,
+      "t_lsl": 1885.107070263
+    },
+    {
+      "code": 10,
+      "name": "BASELINE",
+      "t_wall": 1793086840.874022,
+      "t_lsl": 1885.173894997
+    },
+    {
+      "code": 11,
+      "name": "RUN_START",
+      "t_wall": 1793086843.892969,
+      "t_lsl": 1888.192837009
+    },
+    {
+      "code": 20,
+      "name": "PLAY_QUIET",
+      "t_wall": 1793086844.843759,
+      "t_lsl": 1889.143636139
+    },
+    {
+      "code": 30,
+      "name": "REST",
+      "t_wall": 1793086847.829577,
+      "t_lsl": 1892.129443108
+    },
+    {
+      "code": 20,
+      "name": "PLAY_QUIET",
+      "t_wall": 1793086849.84775,
+      "t_lsl": 1894.147621058
+    },
+    {
+      "code": 30,
+      "name": "REST",
+      "t_wall": 1793086851.865961,
+      "t_lsl": 1896.165833782
+    },
+    {
+      "code": 40,
+      "name": "RUN_REST",
+      "t_wall": 1793086853.884285,
+      "t_lsl": 1898.184155241
+    },
+    {
+      "code": 11,
+      "name": "RUN_START",
+      "t_wall": 1793086860.356086,
+      "t_lsl": 1904.655954982
+    },
+    {
+      "code": 20,
+      "name": "PLAY_QUIET",
+      "t_wall": 1793086860.522394,
+      "t_lsl": 1904.822262318
+    },
+    {
+      "code": 30,
+      "name": "REST",
+      "t_wall": 1793086862.858033,
+      "t_lsl": 1907.157905511
+    },
+    {
+      "code": 20,
+      "name": "PLAY_QUIET",
+      "t_wall": 1793086864.959871,
+      "t_lsl": 1909.259681507
+    },
+    {
+      "code": 30,
+      "name": "REST",
+      "t_wall": 1793086866.928021,
+      "t_lsl": 1911.227893479
+    },
+    {
+      "code": 2,
+      "name": "SESSION_END",
+      "t_wall": 1793086868.84622,
+      "t_lsl": 1913.146092658
+    }
+  ],
+  "blocks": [
+    {
+      "run": 1,
+      "block": 1,
+      "cond": "Q",
+      "planned_play_s": 47.7,
+      "planned_rest_s": 30.0,
+      "play_s": 2.986,
+      "rest_s": 2.002,
+      "t_play_lsl": 1889.1436,
+      "t_rest_lsl": 1892.1294
+    },
+    {
+      "run": 1,
+      "block": 2,
+      "cond": "Q",
+      "planned_play_s": 39.9,
+      "planned_rest_s": 26.2,
+      "play_s": 2.018,
+      "rest_s": 1.871,
+      "t_play_lsl": 1894.1476,
+      "t_rest_lsl": 1896.1658
+    },
+    {
+      "run": 2,
+      "block": 1,
+      "cond": "Q",
+      "planned_play_s": 38.4,
+      "planned_rest_s": 30.1,
+      "play_s": 2.336,
+      "rest_s": 2.085,
+      "t_play_lsl": 1904.8223,
+      "t_rest_lsl": 1907.1579
+    },
+    {
+      "run": 2,
+      "block": 2,
+      "cond": "Q",
+      "planned_play_s": 36.0,
+      "planned_rest_s": 27.5,
+      "play_s": 1.968,
+      "rest_s": 1.434,
+      "t_play_lsl": 1909.2597,
+      "t_rest_lsl": 1911.2279
+    }
+  ],
+  "completed": true,
+  "ended": "2026-10-27T08:41:08.896394"
+}

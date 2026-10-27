@@ -19,18 +19,24 @@ build/
 .DS_Store
 Thumbs.db
 
-# piano-noise
-piano-noise/.venv/
-piano-noise/stimuli/*.wav
+# Python
 __pycache__/
-!piano-noise/montage/out/**/*.aux
+.venv/
+.venv-psychopy/
+
+# studies
+studies/*/stimuli/*.wav
+studies/*/data/processed/
+studies/*/archive/**/*.nirw
+# Rendered movie frames (thousands of PNGs, regenerable from NIRWizard)
+studies/*/analysis/**/*_frames/
+studies/*/archive/**/*_frames/
+studies/*/scripts/.last_dialog.json
+studies/*/scripts/lastParams.pickle
 
 # Paper PDFs stay local (copyright); the repo is public
 literature/*.pdf
-!piano-noise/logs/*.log
+!studies/*/data/logs/*.log
 
-# Rendered movie frames (thousands of PNGs, regenerable from NIRWizard)
-piano-noise/analysis/**/*_frames/
-# Regenerable intermediates
-piano-noise/data/processed/
-piano-noise/archive/**/*.nirw
+# Overleaf project, its own git repo (git.overleaf.com)
+/report/

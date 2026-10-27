@@ -1,0 +1,84 @@
+# Resolved cap file (format 1): every parameter, no profile reference.
+# Trailing comments say which layer set the value: default, cap profile, cap file or app.
+
+probe: PianoNoise_62.nirwmontage
+sd: "colin27 (design head)"  # default
+base_only: false  # default
+head_circumference_cm: 58.0  # app
+circumference_mode: "mesh"  # default
+probe_scaling: "uniform"  # app
+anchor_stiffness: null  # default
+bed_size_mm: 320.0  # app
+out: regenerated
+cache_dir: "/home/adam/.cache/com.adamaske.wizardhat/flatten-cache"  # app
+overrides:
+  print:
+    line_width_mm: 0.6  # default
+    layer_mm: 0.3  # default
+    first_layer_mm: 0.4  # default
+    strut_width_mm: 1.3  # cap profile
+    lattice_height_mm: 1.0  # app
+  panel:
+    hex_edge_mm: 10.0  # default
+    border_width_mm: 2.0  # default
+    ear_ring_height_mm: 0.8  # default
+    pad_height_mm: 1.5  # default
+    peg_height_mm: 6.25  # default
+    split_mid: true  # default
+    max_mesh_edge_mm: 2.0  # default
+    side_template: "side_template.json"  # default
+  joint:
+    type: "pin-snap"  # app
+    pin_d: 3.0  # default
+    clearance: 0.4  # app
+    pad_d: 9.0  # default
+    snap_head_extra: 0.8  # default
+    eyelet_stretch_max: 0.35  # default
+    snap_gap: 0.1  # default
+    snap_head_h: 1.2  # default
+    stake_head_extra: 2.0  # default
+    stake_head_h: 0.6  # default
+    stake_loss: 1.3  # default
+    max_unjoined_mm: 20.0  # default
+    joint_spacing_extra: 1.0  # default
+    end_joint_max_mm: 10.0  # default
+    max_shift_mm: 5.0  # default
+    strut_w: null  # default
+    tab_width_mm: 4.0  # default
+    tab_overlap_mm: 6.0  # default
+    weld_tab_width_mm: 2.0  # default
+    seam_hold: "ring-joint-v2"  # cap profile
+    seam_hold_reach_mm: 6.0  # default
+    stay_count: 3  # default
+    stay_spread_deg: 90.0  # default
+    stay_overlap_mm: 1.5  # default
+    stay_max_mm: 15.0  # default
+    collar_height_mm: 0.7  # default
+    collar_clearance: 0.4  # default
+    tongue_clearance: 0.1  # default
+    ring_joint_gap_mm: 0.5  # default
+    split_clearance: 0.2  # default
+  grommets:
+    "#NIRX2":
+      type: "ring"  # default
+      bore_d: 8.9  # cap profile
+      outer_d: 13.0  # default
+      tick_outer_d: 20.5  # default
+      tick_width: 0.8  # default
+      ticks_deg: [0, 90, 180, 270]  # default
+      height: 1.3  # cap profile
+      keepout_r: 5.0  # default
+    "#PMRK1":
+      type: "ring"  # default
+      bore_d: 2.0  # default
+      outer_d: 3.6  # default
+      tick_outer_d: 20.0  # default
+      tick_width: 0.8  # default
+      ticks_deg: [0, 90, 180, 270]  # default
+      height: 1.0  # default
+      keepout_r: 1.0  # default
+  grommet_map: {}
+resolved:
+  montage_sha256: "462500d28590162d972521c66a2f1dd41cc44ef047e62de4ef95abd6eb1ed790"
+  head_model_sha256: "bf7a8721a5a13176d4bf48365201960e65f7939f10855fab265e7ac8da576c5c"
+  engine: "wh-cap 0.0.4"
